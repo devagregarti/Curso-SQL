@@ -1,0 +1,66 @@
+
+1. 
+Entidade
+
+	• Representa um objeto do mundo real (ex: Cliente, Produto, Pedido).
+	• No modelo relacional, se torna uma tabela.
+
+
+
+2. 
+Atributo
+
+	• Características ou propriedades de uma entidade (ex: nome, data de nascimento).
+	• No modelo relacional, viram colunas da tabela.
+
+
+
+3. 
+Relacionamento
+
+	• Associação entre duas ou mais entidades (ex: Cliente faz Pedido).
+	• Pode ser:
+		○ 1:1 (um para um)
+		○ 1:N (um para muitos)
+		○ N:N (muitos para muitos)
+
+
+
+4. 
+Chave Primária (Primary Key)
+
+	• Identifica de forma única um registro em uma tabela.
+	• Ex: CPF, ID.
+
+
+
+5. 
+Chave Estrangeira (Foreign Key)
+
+	• Cria um vínculo entre duas tabelas, referenciando a chave primária de outra tabela.
+
+
+
+6. 
+Normalização
+
+	• Processo de organizar os dados para reduzir redundância e dependência.
+	• Existem várias formas normais (1FN, 2FN, 3FN…).
+
+
+
+7. 
+Modelo Conceitual, Lógico e Físico
+
+	• Conceitual: visão mais abstrata (entidades, relacionamentos).
+	• Lógico: estrutura das tabelas, atributos, tipos de dados.
+	• Físico: como os dados serão armazenados no SGBD.
+
+
+
+8. 
+Integridade dos Dados
+
+	• Integridade de entidade: chaves primárias não podem ser nulas.
+	• Integridade referencial: chaves estrangeiras devem corresponder a registros válidos.
+	• Integridade de domínio: os valores inseridos devem estar dentro de regras definidas (ex: tipos e restrições).

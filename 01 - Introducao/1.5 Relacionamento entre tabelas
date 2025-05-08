@@ -1,0 +1,48 @@
+
+1. Tipos de Relacionamentos
+
+	• 1:1 (Um para Um)
+		○ Exemplo: Pessoa ↔ CPF (cada pessoa tem um único CPF).
+	• 1:N (Um para Muitos)
+		○ Exemplo: Cliente → Pedidos (um cliente pode fazer vários pedidos).
+	• N:N (Muitos para Muitos)
+		○ Exemplo: Aluno ↔ Curso (um aluno pode fazer vários cursos e um curso pode ter vários alunos).
+		○ Resolvido por meio de uma tabela intermediária (tabela de junção).
+
+
+
+2. Chave Primária (Primary Key)
+
+	• Identifica unicamente cada registro em uma tabela.
+	• Necessária para definir relacionamentos com outras tabelas.
+
+
+3. Chave Estrangeira (Foreign Key)
+
+	• Conecta uma tabela à chave primária de outra tabela.
+	• Garante integridade referencial.
+
+4. Joins (Junções)
+
+	• Utilizados para consultar dados de múltiplas tabelas relacionadas:
+		○ INNER JOIN – Retorna apenas correspondências.
+		○ LEFT JOIN (ou LEFT OUTER JOIN) – Todos da tabela da esquerda + correspondências da direita.
+		○ RIGHT JOIN – O oposto do LEFT JOIN.
+		○ FULL JOIN – Tudo de ambas as tabelas, com ou sem correspondência.
+		○ CROSS JOIN – Produto cartesiano (todas as combinações possíveis).
+
+
+
+5. Tabelas Associativas (ou de junção)
+
+	• Usadas para modelar relacionamentos N:N.
+	• Contêm chaves estrangeiras apontando para as tabelas principais.
+	• Ex: tabela aluno_curso(aluno_id, curso_id).
+
+
+
+6. Regras de Integridade Referencial
+
+	• ON DELETE CASCADE – Apaga registros filhos ao excluir o pai.
+	• ON UPDATE CASCADE – Atualiza os registros filhos ao atualizar o pai.
+	• ON DELETE SET NULL – Define como NULL os registros filhos.

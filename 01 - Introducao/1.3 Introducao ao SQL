@@ -1,0 +1,25 @@
+
+	• O que é SQL: Linguagem de consulta estruturada usada para manipulação e gerenciamento de dados em bancos relacionais.
+	
+
+	1. DDL (Data Definition Language) – Linguagem de Definição de Dados
+Ex: CREATE, ALTER, DROP, TRUNCATE
+Serve para definir e modificar a estrutura do banco de dados (tabelas, esquemas, etc.).
+	2. DML (Data Manipulation Language) – Linguagem de Manipulação de Dados
+Ex: SELECT, INSERT, UPDATE, DELETE
+Usada para consultar e modificar os dados dentro das tabelas.
+	3. DCL (Data Control Language) – Linguagem de Controle de Dados
+Ex: GRANT, REVOKE
+Controla o acesso aos dados, ou seja, permissões de usuários.
+
+Além dessas, também existe:
+
+	1. TCL (Transaction Control Language) – Linguagem de Controle de Transações
+Ex: COMMIT, ROLLBACK, SAVEPOINT, SET TRANSACTION
+Usada para gerenciar transações e garantir integridade dos dados.
+
+Quer um resumo em tabela para facilitar a memorização?
+
+		
+	• Filtros e Funções SQL: Uso de WHERE, ORDER BY, GROUP BY, HAVING para consultas mais complexas.
+	• Funções Agregadas: COUNT(), SUM(), AVG(), MIN(), MAX().

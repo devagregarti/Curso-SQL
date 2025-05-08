@@ -1,0 +1,6 @@
+
+	• Transações: O que são e por que são importantes para garantir a consistência dos dados.
+		○ Introdução aos conceitos de ACID (Atomicidade, Consistência, Isolamento, Durabilidade).
+	• Comandos de Controle de Transações:
+		○ BEGIN TRANSACTION, COMMIT, ROLLBACK.
+	• Concorrência de Transações: Introdução aos problemas de concorrência como dirty reads, phantom reads, e lost updates.

@@ -1,0 +1,5 @@
+
+	• Tipos de Dados: Explicação sobre os principais tipos de dados em SQL, como:
+		○ INT, VARCHAR, TEXT, DATE, BOOLEAN, DECIMAL.
+	• Armazenamento de Dados em Tabelas: Como os dados são armazenados em linhas e colunas.
+	• Índices: O que são índices, como eles melhoram o desempenho de consultas, e os custos de criar muitos índices.

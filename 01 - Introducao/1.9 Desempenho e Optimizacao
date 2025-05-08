@@ -1,0 +1,3 @@
+
+	• Otimização de Consultas: Noções básicas sobre como melhorar o desempenho das consultas, como uso de índices adequados e evitar subconsultas desnecessárias.
+	• Análise do Plano de Execução: Introdução ao uso de EXPLAIN ou EXPLAIN ANALYZE para entender como o banco executa uma consulta.
