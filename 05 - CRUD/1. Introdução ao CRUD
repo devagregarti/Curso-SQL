@@ -1,9 +1,112 @@
-CRUD é o acrônimo de Create, Read, Update e Delete, que representam as quatro operações básicas usadas para manipular dados em um banco relacional:
-	•	Create (Criar): Insere novos registros em uma tabela com o comando INSERT. Usado quando você precisa adicionar dados ao sistema, como cadastrar um novo usuário ou produto.
-	•	Read (Ler): Recupera dados existentes usando SELECT. É a operação mais comum, usada para consultar e exibir informações — desde buscas simples até relatórios complexos.
-	•	Update (Atualizar): Modifica dados existentes com UPDATE. Serve para corrigir ou alterar informações sem apagar o registro, como mudar o e-mail de um cliente.
-	•	Delete (Deletar): Remove registros com DELETE. Deve ser usado com cautela, já que a exclusão é, muitas vezes, irreversível.
+Introdução ao CRUD
+	• Definição de CRUD: Explicar o que significa CRUD e a importância dessas operações na manipulação de dados em bancos de dados relacionais.
+	• Relação com a Persistência de Dados: Discutir como CRUD é essencial para a criação de aplicações que requerem armazenamento e recuperação de dados.
+2. Create (Criar)
+	• Comando INSERT:
+		○ Sintaxe básica para inserir novos registros em uma tabela.
+		○ Exemplo:
 
-Essas operações formam a base da interação com qualquer banco de dados SQL. Saber quando e como usá-las corretamente é essencial para manter a consistência, integridade e segurança dos dados. Além disso, cada operação pode ter implicações de performance e deve respeitar regras de negócio e restrições de integridade referencial.
+sql
+Copy code
+INSERT INTO Alunos (Nome, Idade) VALUES ('Maria', 20);
+	• Inserção Múltipla:
+		○ Como inserir vários registros em uma única instrução.
+		○ Exemplo:
 
-Esse conjunto é fundamental em aplicações web, APIs e sistemas internos — basicamente, qualquer software que precise lidar com dados persistentes.
+sql
+Copy code
+INSERT INTO Alunos (Nome, Idade) VALUES ('João', 22), ('Ana', 19);
+	• Inserção com SELECT:
+		○ Usar o comando INSERT com uma consulta SELECT para inserir dados de uma tabela em outra.
+		○ Exemplo:
+
+sql
+Copy code
+INSERT INTO Alunos_Ativos (Nome, Idade) SELECT Nome, Idade FROM Alunos WHERE Ativo = 1;
+3. Read (Ler)
+	• Comando SELECT:
+		○ Sintaxe básica para consultar dados em uma tabela.
+		○ Exemplo:
+
+sql
+Copy code
+SELECT * FROM Alunos;
+	• Filtros e Condições:
+		○ Uso da cláusula WHERE para filtrar resultados.
+		○ Exemplo:
+
+sql
+Copy code
+SELECT * FROM Alunos WHERE Idade > 18;
+	• Ordenação de Resultados:
+		○ Uso da cláusula ORDER BY para ordenar resultados.
+		○ Exemplo:
+
+sql
+Copy code
+SELECT * FROM Alunos ORDER BY Nome ASC;
+	• Limitação de Resultados:
+		○ Uso da cláusula LIMIT (ou TOP) para limitar o número de resultados retornados.
+		○ Exemplo:
+
+sql
+Copy code
+SELECT * FROM Alunos LIMIT 5;
+	• Juntando Tabelas (JOIN):
+		○ Introdução às operações de junção (INNER JOIN, LEFT JOIN, etc.) para combinar dados de múltiplas tabelas.
+		○ Exemplo:
+
+sql
+Copy code
+SELECT Alunos.Nome, Cursos.Nome FROM Alunos INNER JOIN Cursos ON Alunos.CursoID = Cursos.ID;
+4. Update (Atualizar)
+	• Comando UPDATE:
+		○ Sintaxe para atualizar registros existentes em uma tabela.
+		○ Exemplo:
+
+sql
+Copy code
+UPDATE Alunos SET Idade = 21 WHERE Nome = 'Maria';
+	• Atualização em Massa:
+		○ Como atualizar múltiplos registros de uma vez com base em condições específicas.
+		○ Exemplo:
+
+sql
+Copy code
+UPDATE Alunos SET Ativo = 1 WHERE Idade >= 18;
+5. Delete (Excluir)
+	• Comando DELETE:
+		○ Sintaxe para excluir registros de uma tabela.
+		○ Exemplo:
+
+sql
+Copy code
+DELETE FROM Alunos WHERE Nome = 'João';
+	• Exclusão em Massa:
+		○ Como excluir múltiplos registros com base em condições.
+		○ Exemplo:
+
+sql
+Copy code
+DELETE FROM Alunos WHERE Idade < 18;
+6. Transações
+	• Introdução a Transações:
+		○ Explicar o conceito de transações e sua importância para garantir a integridade dos dados.
+	• Comandos COMMIT e ROLLBACK:
+		○ Como usar COMMIT para salvar as alterações e ROLLBACK para desfazer alterações em caso de erro.
+		○ Exemplo:
+
+sql
+Copy code
+BEGIN TRANSACTION;
+UPDATE Alunos SET Idade = 21 WHERE Nome = 'Maria';
+COMMIT;
+7. Erros Comuns e Como Evitá-los
+	• Erros de Sintaxe: Discussão sobre os erros mais comuns que ocorrem ao usar comandos CRUD e como corrigi-los.
+	• Condições de Exclusão Incorreta: A importância de usar a cláusula WHERE ao executar DELETE e UPDATE para evitar exclusões ou atualizações acidentais em massa.
+8. Exemplos Práticos e Exercícios
+	• Prática de CRUD: Propor exercícios onde os alunos implementem operações CRUD em um banco de dados, criando tabelas, inserindo dados, realizando consultas, atualizando e excluindo registros.
+	• Desafios com Transações: Criar cenários que exigem o uso de transações para manipulação segura dos dados.
+9. Boas Práticas para Operações CRUD
+	• Validação de Dados: Discutir a importância de validar dados antes de realizar operações CRUD para garantir a integridade dos dados.
+Backup e Recuperação: A importância de ter um plano de backup antes de executar operações que alterem ou exclu
