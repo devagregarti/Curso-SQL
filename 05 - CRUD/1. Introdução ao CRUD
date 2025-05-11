@@ -1,1 +1,9 @@
+CRUD é o acrônimo de Create, Read, Update e Delete, que representam as quatro operações básicas usadas para manipular dados em um banco relacional:
+	•	Create (Criar): Insere novos registros em uma tabela com o comando INSERT. Usado quando você precisa adicionar dados ao sistema, como cadastrar um novo usuário ou produto.
+	•	Read (Ler): Recupera dados existentes usando SELECT. É a operação mais comum, usada para consultar e exibir informações — desde buscas simples até relatórios complexos.
+	•	Update (Atualizar): Modifica dados existentes com UPDATE. Serve para corrigir ou alterar informações sem apagar o registro, como mudar o e-mail de um cliente.
+	•	Delete (Deletar): Remove registros com DELETE. Deve ser usado com cautela, já que a exclusão é, muitas vezes, irreversível.
 
+Essas operações formam a base da interação com qualquer banco de dados SQL. Saber quando e como usá-las corretamente é essencial para manter a consistência, integridade e segurança dos dados. Além disso, cada operação pode ter implicações de performance e deve respeitar regras de negócio e restrições de integridade referencial.
+
+Esse conjunto é fundamental em aplicações web, APIs e sistemas internos — basicamente, qualquer software que precise lidar com dados persistentes.
