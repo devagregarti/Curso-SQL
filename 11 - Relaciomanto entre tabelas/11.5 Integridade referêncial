@@ -1,1 +1,3 @@
-c
+	•	O que é e por que é importante.
+	•	ON DELETE CASCADE, ON UPDATE SET NULL, etc.
+	•	Como o banco se comporta com alterações e deleções.
