@@ -1,1 +1,48 @@
-c
+ENUM
+Lista de valores fixos (tipo enumerado)
+✔
+✖
+✖
+✖
+SET
+Conjunto de valores fixos (MySQL)
+✔
+✖
+✖
+✖
+UUID
+Identificador único universal
+✔
+✔
+✖*
+✔*
+JSON
+Armazenamento de dados JSON
+✔
+✔
+✔
+✔
+XML
+Armazenamento de dados XML
+✖
+✔
+✔
+✔
+GEOMETRY
+Dados geoespaciais (GIS)
+✔
+✔
+✖
+✖
+ARRAY
+Vetores de dados
+✖
+✔
+✖
+✖
+ROWTYPE
+Tipo baseado em linha de tabela (PL/SQL)
+
+
+
+
