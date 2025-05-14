@@ -1,0 +1,72 @@
+Tipo SQL
+Descrição
+MySQL
+PostgreSQL
+SQL Server
+Oracle
+INT / INTEGER
+Inteiro comum
+✔
+✔
+✔
+✔
+SMALLINT
+Inteiro pequeno
+✔
+✔
+✔
+✔
+BIGINT
+Inteiro grande
+✔
+✔
+✔
+✔
+TINYINT
+Inteiro muito pequeno
+✔
+✖
+✔
+✖
+DECIMAL(p,s)
+Número exato com precisão
+✔
+✔
+✔
+✔
+NUMERIC(p,s)
+Similar ao DECIMAL
+✔
+✔
+✔
+✔
+FLOAT(p)
+Ponto flutuante
+✔
+✔
+✔
+✔
+REAL
+Ponto flutuante de precisão simples
+✔
+✔
+✔
+✔
+DOUBLE PRECISION
+Ponto flutuante de precisão dupla
+✔
+✔
+✖
+✖
+MONEY
+Valores monetários
+✔
+✔
+✔
+✖
+SMALLMONEY
+Valores monetários pequenos
+✖
+
+
+
