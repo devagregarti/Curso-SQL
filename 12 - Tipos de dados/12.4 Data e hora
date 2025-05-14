@@ -1,1 +1,42 @@
-f
+DATE
+Data (sem hora)
+✔
+✔
+✔
+✔
+TIME
+Hora (sem data)
+✔
+✔
+✔
+✔
+DATETIME
+Data e hora
+✔
+✔*
+✔
+✖
+TIMESTAMP
+Data e hora com timezone
+✔
+✔
+✔*
+✔
+SMALLDATETIME
+Data/hora com menos precisão
+✖
+✖
+✔
+✖
+DATETIME2
+Versão mais precisa de DATETIME
+✖
+✖
+✔
+✖
+INTERVAL
+Diferença de tempo (ex: 5 dias)
+
+
+
+
