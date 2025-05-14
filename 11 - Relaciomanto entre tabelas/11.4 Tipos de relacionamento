@@ -1,1 +1,9 @@
-c
+	•	1 para 1 (One-to-One):
+	•	Quando usar.
+	•	Exemplo prático.
+	•	1 para Muitos (One-to-Many):
+	•	O mais comum.
+	•	Exemplo com clientes e pedidos, por exemplo.
+	•	Muitos para Muitos (Many-to-Many):
+	•	Uso de tabela intermediária (junction table).
+	•	Exemplo com alunos e cursos.
