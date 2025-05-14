@@ -1,1 +1,30 @@
-c
+cBINARY(n)
+Dados binários fixos
+✔
+✖
+✔
+✖
+VARBINARY(n)
+Dados binários variáveis
+✔
+✖
+✔
+✖
+BLOB
+Binary Large Object
+✔
+✔
+✖
+✔
+IMAGE
+Obsoleto, usado para imagens
+✖
+✖
+✔
+✖
+BYTEA
+Dados binários (PostgreSQL)
+
+
+
+
