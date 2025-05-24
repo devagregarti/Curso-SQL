@@ -1,0 +1,14 @@
+🔹 5. Funções de Conversão (Casting)
+Convertem valores entre tipos.
+
+Função / Sintaxe	Descrição
+CAST(valor AS tipo)	Converte explicitamente o tipo
+::tipo	Atalho para CAST
+TO_CHAR()	Converte número/data para texto formatado
+TO_DATE()	Converte texto em data
+
+Exemplo:
+sql
+Copy code
+SELECT CAST(123 AS TEXT);
+SELECT '2024-01-01'::DATE;

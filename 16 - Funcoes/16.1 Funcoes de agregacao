@@ -1,0 +1,13 @@
+Usadas para resumir dados — geralmente junto com GROUP BY.
+
+Função	Descrição
+COUNT()	Conta linhas (ou valores distintos)
+SUM()	Soma valores numéricos
+AVG()	Média aritmética
+MAX()	Valor máximo
+MIN()	Valor mínimo
+
+Exemplo:
+sql
+Copy code
+SELECT categoria, COUNT(*) FROM produtos GROUP BY categoria;

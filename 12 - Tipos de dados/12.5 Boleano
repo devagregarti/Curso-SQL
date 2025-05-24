@@ -1,12 +1,5 @@
-BOOLEAN
-Verdadeiro/Falso
-✔*
-✔
-✖
-✖
-BIT
-Bit (0 ou 1)
-✔
-✖
+🟨 Tipo Booleano
 
-
+| Tipo     | Descrição                        |
+|----------|----------------------------------|
+| BOOLEAN  | Valores TRUE, FALSE ou NULL     |

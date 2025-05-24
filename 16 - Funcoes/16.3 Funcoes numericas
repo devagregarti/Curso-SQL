@@ -1,0 +1,11 @@
+🔹 3. Funções Numéricas
+Usadas em valores numéricos.
+
+Função	Descrição
+ROUND(x, n)	Arredonda para n casas decimais
+CEIL(x)	Arredonda para cima (teto)
+FLOOR(x)	Arredonda para baixo (piso)
+ABS(x)	Valor absoluto
+POWER(x,y)	Potência (x elevado a y)
+MOD(x,y)	Resto da divisão de x por y
+RANDOM()	Gera número aleatório entre 0 e 1

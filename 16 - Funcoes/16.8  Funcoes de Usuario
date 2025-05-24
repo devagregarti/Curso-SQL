@@ -1,0 +1,11 @@
+
+🔹 8. Funções Definidas pelo Usuário (UDFs)
+Você pode criar suas próprias funções usando CREATE FUNCTION.
+
+sql
+Copy code
+CREATE FUNCTION dobro(numero INT) RETURNS INT AS $$
+BEGIN
+  RETURN numero * 2;
+END;
+$$ LANGUAGE plpgsql;

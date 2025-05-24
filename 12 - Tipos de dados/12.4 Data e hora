@@ -1,42 +1,10 @@
-DATE
-Data (sem hora)
-✔
-✔
-✔
-✔
-TIME
-Hora (sem data)
-✔
-✔
-✔
-✔
-DATETIME
-Data e hora
-✔
-✔*
-✔
-✖
-TIMESTAMP
-Data e hora com timezone
-✔
-✔
-✔*
-✔
-SMALLDATETIME
-Data/hora com menos precisão
-✖
-✖
-✔
-✖
-DATETIME2
-Versão mais precisa de DATETIME
-✖
-✖
-✔
-✖
-INTERVAL
-Diferença de tempo (ex: 5 dias)
+🟧 Tipos de Data e Hora
 
-
-
-
+| Tipo                    | Descrição                                |
+|-------------------------|-------------------------------------------|
+| DATE                    | Apenas a data (AAAA-MM-DD)               |
+| TIME                    | Apenas a hora (sem fuso)                 |
+| TIME WITH TIME ZONE     | Hora com fuso horário                    |
+| TIMESTAMP               | Data e hora (sem fuso)                   |
+| TIMESTAMP WITH TIME ZONE| Data e hora com fuso                     |
+| INTERVAL                | Intervalo de tempo (duração)             |

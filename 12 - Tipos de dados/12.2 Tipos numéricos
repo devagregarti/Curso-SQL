@@ -1,72 +1,13 @@
-Tipo SQL
-Descrição
-MySQL
-PostgreSQL
-SQL Server
-Oracle
-INT / INTEGER
-Inteiro comum
-✔
-✔
-✔
-✔
-SMALLINT
-Inteiro pequeno
-✔
-✔
-✔
-✔
-BIGINT
-Inteiro grande
-✔
-✔
-✔
-✔
-TINYINT
-Inteiro muito pequeno
-✔
-✖
-✔
-✖
-DECIMAL(p,s)
-Número exato com precisão
-✔
-✔
-✔
-✔
-NUMERIC(p,s)
-Similar ao DECIMAL
-✔
-✔
-✔
-✔
-FLOAT(p)
-Ponto flutuante
-✔
-✔
-✔
-✔
-REAL
-Ponto flutuante de precisão simples
-✔
-✔
-✔
-✔
-DOUBLE PRECISION
-Ponto flutuante de precisão dupla
-✔
-✔
-✖
-✖
-MONEY
-Valores monetários
-✔
-✔
-✔
-✖
-SMALLMONEY
-Valores monetários pequenos
-✖
+🟩 Tipos Numéricos
 
-
-
+| Tipo               | Tamanho  | Descrição                                       |
+|--------------------|----------|--------------------------------------------------|
+| SMALLINT           | 2 bytes  | Inteiro pequeno (-32.768 a 32.767)              |
+| INTEGER / INT      | 4 bytes  | Inteiro padrão (-2^31 a 2^31-1)                 |
+| BIGINT             | 8 bytes  | Inteiro grande (-2^63 a 2^63-1)                 |
+| SERIAL             | 4 bytes  | Inteiro com auto incremento (INTEGER + SEQUENCE) |
+| BIGSERIAL          | 8 bytes  | BIGINT com auto incremento                     |
+| REAL / FLOAT4      | 4 bytes  | Ponto flutuante de precisão simples             |
+| DOUBLE PRECISION   | 8 bytes  | Ponto flutuante de precisão dupla               |
+| NUMERIC(p,s)       | Variável | Número com precisão e escala exatas            |
+| DECIMAL(p,s)       | Variável | Igual ao NUMERIC                               |

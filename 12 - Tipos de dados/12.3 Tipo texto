@@ -1,0 +1,8 @@
+🟦 Tipos de Texto
+
+| Tipo       | Descrição                                             |
+|------------|--------------------------------------------------------|
+| CHAR(n)    | Cadeia de caracteres de tamanho fixo                   |
+| VARCHAR(n) | Cadeia de caracteres de tamanho variável               |
+| TEXT       | Texto de tamanho ilimitado                            |
+| NAME       | Tipo interno para nomes de objetos                    |

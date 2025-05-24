@@ -1,0 +1,18 @@
+🔹 6. Funções de Controle de Fluxo (Lógicas)
+Executam lógica condicional.
+
+Função	Descrição
+CASE WHEN THEN	Estrutura condicional
+COALESCE()	Retorna o primeiro valor não nulo
+NULLIF(x, y)	Retorna NULL se x = y, senão retorna x
+
+Exemplo:
+sql
+Copy code
+SELECT 
+  nome,
+  CASE 
+    WHEN idade >= 18 THEN 'Adulto'
+    ELSE 'Menor'
+  END AS categoria
+FROM pessoas;

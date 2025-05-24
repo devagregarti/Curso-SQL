@@ -1,0 +1,15 @@
+🔹 4. Funções de Data e Hora
+Manipulam valores de data e hora.
+
+Função	Descrição
+CURRENT_DATE	Data atual
+CURRENT_TIMESTAMP	Data e hora atual
+NOW()	Data e hora atual (como CURRENT_TIMESTAMP)
+AGE(data)	Diferença entre datas
+DATE_PART()	Extrai parte da data (ano, mês, etc.)
+TO_CHAR()	Formata data/hora para texto
+
+Exemplo:
+sql
+Copy code
+SELECT NOW(), DATE_PART('year', AGE(birthdate)) AS idade FROM clientes;

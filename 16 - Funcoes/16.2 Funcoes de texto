@@ -1,0 +1,15 @@
+Manipulam valores do tipo texto (string).
+
+Função	Descrição
+UPPER(texto)	Converte para maiúsculas
+LOWER(texto)	Converte para minúsculas
+LENGTH(texto)	Comprimento da string
+TRIM(texto)	Remove espaços antes/depois
+SUBSTRING()	Extrai parte da string
+REPLACE()	Substitui parte do texto
+CONCAT()	Concatena strings
+
+Exemplo:
+sql
+Copy code
+SELECT UPPER(nome), LENGTH(nome) FROM clientes;

@@ -1,48 +1,61 @@
-ENUM
-Lista de valores fixos (tipo enumerado)
-✔
-✖
-✖
-✖
-SET
-Conjunto de valores fixos (MySQL)
-✔
-✖
-✖
-✖
-UUID
-Identificador único universal
-✔
-✔
-✖*
-✔*
-JSON
-Armazenamento de dados JSON
-✔
-✔
-✔
-✔
-XML
-Armazenamento de dados XML
-✖
-✔
-✔
-✔
-GEOMETRY
-Dados geoespaciais (GIS)
-✔
-✔
-✖
-✖
-ARRAY
-Vetores de dados
-✖
-✔
-✖
-✖
-ROWTYPE
-Tipo baseado em linha de tabela (PL/SQL)
+🟪 Tipo Enumerado
+
+| Tipo | Descrição                                    |
+|------|-----------------------------------------------|
+| ENUM | Lista fixa de valores definidos pelo usuário |
 
 
+🟦 Tipos Geométricos
+
+| Tipo     | Descrição                 |
+|----------|----------------------------|
+| POINT    | Um ponto (x, y)           |
+| LINE     | Linha infinita            |
+| LSEG     | Segmento de linha         |
+| BOX      | Retângulo                 |
+| CIRCLE   | Círculo                   |
+| POLYGON  | Polígono fechado          |
+| PATH     | Caminho aberto ou fechado |
+
+🟫 Tipos de Rede
+
+| Tipo     | Descrição                              |
+|----------|-----------------------------------------|
+| CIDR     | Bloco de IPs                           |
+| INET     | Endereço IP                            |
+| MACADDR  | Endereço MAC                           |
+| MACADDR8 | Endereço MAC com 8 bytes               |
 
 
+🟨 JSON e XML
+
+| Tipo   | Descrição                                 |
+|--------|--------------------------------------------|
+| JSON   | Texto JSON armazenado como string         |
+| JSONB  | JSON armazenado em binário (mais eficiente)|
+| XML    | Texto em formato XML                      |
+
+🟩 UUID
+
+| Tipo | Descrição                                |
+|------|-------------------------------------------|
+| UUID | Identificador universal único (128 bits) |
+
+🟧 Arrays e Compostos
+
+| Tipo     | Descrição                                     |
+|----------|-----------------------------------------------|
+| ARRAY    | Qualquer tipo pode ser array (ex: INTEGER[]) |
+| RECORD   | Linha com vários campos                      |
+| ROW      | Tipo composto personalizado                  |
+
+🟥 Outros Tipos
+
+| Tipo       | Descrição                                  |
+|------------|--------------------------------------------|
+| TSQUERY    | Para busca textual                         |
+| TSVECTOR   | Vetor de palavras para busca textual       |
+| BIT        | Cadeia de bits                             |
+| BIT VARYING| Cadeia de bits de tamanho variável         |
+| OID        | Object Identifier (interno do PostgreSQL)  |
+| PG_LSN     | Log Sequence Number (replicação)           |
