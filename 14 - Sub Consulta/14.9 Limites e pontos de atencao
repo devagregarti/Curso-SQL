@@ -1,0 +1,4 @@
+🔹 9. Limitações de Subqueries
+LIMIT e OFFSET em subqueries às vezes precisam de alias ou CTEs.
+
+Subqueries não são ideais para todos os cenários de performance.

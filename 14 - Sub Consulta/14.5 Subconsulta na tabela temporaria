@@ -1,0 +1,5 @@
+SELECT categoria, AVG(preco) AS media
+FROM (
+    SELECT * FROM produtos WHERE preco > 0
+) AS produtos_filtrados
+GROUP BY categoria;

@@ -1,0 +1,11 @@
+-- Clientes que já fizeram pedidos
+SELECT * FROM clientes c
+WHERE EXISTS (
+    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
+);
+
+-- Clientes que nunca fizeram pedidos
+SELECT * FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
+);

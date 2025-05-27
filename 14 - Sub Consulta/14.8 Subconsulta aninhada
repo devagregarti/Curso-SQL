@@ -1,0 +1,7 @@
+SELECT nome FROM clientes
+WHERE id IN (
+    SELECT cliente_id FROM pedidos
+    WHERE id IN (
+        SELECT pedido_id FROM pagamentos WHERE metodo = 'PIX'
+    )
+);

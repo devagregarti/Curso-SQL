@@ -1,0 +1,20 @@
+ 3. Subconsulta no WHERE (Subquery de Filtro)
+▪️ Comparação com um valor escalar
+sql
+Copiar
+Editar
+SELECT * FROM produtos
+WHERE preco > (SELECT AVG(preco) FROM produtos);
+▪️ Subquery com IN
+sql
+Copiar
+Editar
+SELECT * FROM clientes
+WHERE id IN (SELECT cliente_id FROM pedidos WHERE total > 100);
+▪️ Subquery com NOT IN
+sql
+Copiar
+Editar
+SELECT * FROM clientes
+WHERE id NOT IN (SELECT cliente_id FROM pedidos);
+⚠️ Nota didática: Explique o problema de NULL com NOT IN — ele pode causar a exclusão de todos os resultados.

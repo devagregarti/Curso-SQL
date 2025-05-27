@@ -1,0 +1,7 @@
+SELECT nome,
+       CASE
+           WHEN id IN (SELECT cliente_id FROM pedidos WHERE total > 100)
+           THEN 'Cliente Ativo'
+           ELSE 'Cliente Inativo'
+       END AS status
+FROM clientes;

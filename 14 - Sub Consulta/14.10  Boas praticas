@@ -1,0 +1,15 @@
+🔹 10. Melhores Práticas
+Prefira CTEs (com WITH) para subqueries longas.
+
+Use subqueries correlacionadas com cautela.
+
+Teste a performance com EXPLAIN.
+
+✳️ BÔNUS: Comparar com CTEs (Common Table Expressions)
+sql
+Copiar
+Editar
+WITH pedidos_ricos AS (
+    SELECT cliente_id FROM pedidos WHERE total > 100
+)
+SELECT * FROM clientes WHERE id IN (SELECT cliente_id FROM pedidos_ricos);
