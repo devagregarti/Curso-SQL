@@ -1,0 +1,4 @@
+WITH pedidos_2023 AS (
+    SELECT * FROM pedidos WHERE EXTRACT(YEAR FROM data_pedido) = 2023
+)
+SELECT cliente_id, COUNT(*) FROM pedidos_2023 GROUP BY cliente_id;

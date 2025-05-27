@@ -1,0 +1,7 @@
+-- ORDER BY (ascendente e descendente)
+SELECT * FROM produtos ORDER BY preco ASC;
+SELECT * FROM produtos ORDER BY preco DESC;
+
+-- LIMIT e OFFSET
+SELECT * FROM clientes LIMIT 10;
+SELECT * FROM clientes LIMIT 10 OFFSET 10;

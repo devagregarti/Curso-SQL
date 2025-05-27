@@ -1,0 +1,23 @@
+-- Selecionar todas as colunas de uma tabela
+SELECT * FROM clientes;
+
+-- Selecionar colunas específicas
+SELECT nome, email FROM clientes;
+
+-- Renomear colunas na saída
+SELECT nome AS "Nome do Cliente", email AS "E-mail" FROM clientes;
+
+-- Seleção com cláusula WHERE
+SELECT * FROM clientes WHERE cidade = 'Dublin';
+
+-- Comparações
+SELECT * FROM produtos WHERE preco > 50;
+
+-- BETWEEN
+SELECT * FROM pedidos WHERE data_pedido BETWEEN '2023-01-01' AND '2023-12-31';
+
+-- LIKE (com curingas)
+SELECT * FROM clientes WHERE nome LIKE 'Jo%';
+
+-- IS NULL / IS NOT NULL
+SELECT * FROM produtos WHERE desconto IS NULL;

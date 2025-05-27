@@ -1,0 +1,7 @@
+SELECT nome,
+       CASE
+           WHEN idade < 18 THEN 'Menor de idade'
+           WHEN idade BETWEEN 18 AND 59 THEN 'Adulto'
+           ELSE 'Idoso'
+       END AS faixa_etaria
+FROM clientes;

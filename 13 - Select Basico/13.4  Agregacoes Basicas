@@ -1,0 +1,6 @@
+-- COUNT, AVG, SUM, MIN, MAX
+SELECT COUNT(*) FROM clientes;
+SELECT AVG(preco) FROM produtos;
+SELECT SUM(total) FROM pedidos;
+SELECT MIN(data_pedido) FROM pedidos;
+SELECT MAX(preco) FROM produtos;

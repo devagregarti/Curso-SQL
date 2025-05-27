@@ -1,0 +1,8 @@
+-- Data atual
+SELECT NOW();
+
+-- Extraindo partes da data
+SELECT EXTRACT(YEAR FROM data_pedido) FROM pedidos;
+
+-- Diferença entre datas
+SELECT data_entrega - data_pedido AS dias_para_entrega FROM pedidos;
