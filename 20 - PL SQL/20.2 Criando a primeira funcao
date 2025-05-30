@@ -1,0 +1,14 @@
+ Criando sua primeira função
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION saudacao()
+RETURNS TEXT AS $$
+BEGIN
+    RETURN 'Olá, mundo!';
+END;
+$$ LANGUAGE plpgsql;
+sql
+Copy
+Edit
+SELECT saudacao();

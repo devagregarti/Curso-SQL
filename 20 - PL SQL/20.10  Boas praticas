@@ -1,0 +1,7 @@
+Sempre nomear funções e variáveis com clareza.
+
+Utilizar RAISE NOTICE para depuração.
+
+Tratar exceções comuns.
+
+Evitar lógica excessiva dentro do banco — usar quando necessário.

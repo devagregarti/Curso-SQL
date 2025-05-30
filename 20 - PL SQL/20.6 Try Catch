@@ -1,0 +1,13 @@
+CREATE OR REPLACE FUNCTION dividir(a NUMERIC, b NUMERIC)
+RETURNS NUMERIC AS $$
+DECLARE
+    resultado NUMERIC;
+BEGIN
+    resultado := a / b;
+    RETURN resultado;
+EXCEPTION
+    WHEN division_by_zero THEN
+        RAISE NOTICE 'Divisão por zero não permitida.';
+        RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

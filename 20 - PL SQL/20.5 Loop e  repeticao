@@ -1,0 +1,29 @@
+FOR LOOP
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION contar_ate(de INT)
+RETURNS VOID AS $$
+DECLARE
+    i INT;
+BEGIN
+    FOR i IN 1..de LOOP
+        RAISE NOTICE 'Valor: %', i;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+WHILE LOOP
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION loop_enquanto()
+RETURNS VOID AS $$
+DECLARE
+    i INT := 1;
+BEGIN
+    WHILE i <= 5 LOOP
+        RAISE NOTICE 'i = %', i;
+        i := i + 1;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;

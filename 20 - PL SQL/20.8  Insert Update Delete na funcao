@@ -1,0 +1,7 @@
+CREATE OR REPLACE FUNCTION inserir_venda(cli TEXT, val NUMERIC)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO vendas (cliente, valor, data_venda)
+    VALUES (cli, val, CURRENT_DATE);
+END;
+$$ LANGUAGE plpgsql;

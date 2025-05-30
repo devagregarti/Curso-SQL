@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION verificar_idade(idade INT)
+RETURNS TEXT AS $$
+BEGIN
+    IF idade < 18 THEN
+        RETURN 'Menor de idade';
+    ELSIF idade >= 18 AND idade < 60 THEN
+        RETURN 'Adulto';
+    ELSE
+        RETURN 'Idoso';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION somar(val1 INT, val2 INT)
+RETURNS INT AS $$
+DECLARE
+    resultado INT;
+BEGIN
+    resultado := val1 + val2;
+    RETURN resultado;
+END;
+$$ LANGUAGE plpgsql;

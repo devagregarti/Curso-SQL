@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION listar_clientes()
+RETURNS TABLE(nome TEXT, total NUMERIC) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT cliente, SUM(valor)
+    FROM vendas
+    GROUP BY cliente;
+END;
+$$ LANGUAGE plpgsql;

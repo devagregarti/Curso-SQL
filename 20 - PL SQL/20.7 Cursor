@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION ler_vendas()
+RETURNS VOID AS $$
+DECLARE
+    v RECORD;
+    cur CURSOR FOR SELECT cliente, valor FROM vendas;
+BEGIN
+    OPEN cur;
+    LOOP
+        FETCH cur INTO v;
+        EXIT WHEN NOT FOUND;
+        RAISE NOTICE 'Cliente: %, Valor: %', v.cliente, v.valor;
+    END LOOP;
+    CLOSE cur;
+END;
+$$ LANGUAGE plpgsql;
