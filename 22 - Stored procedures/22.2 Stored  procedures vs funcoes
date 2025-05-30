@@ -1,0 +1,6 @@
+| Característica       | Função (`FUNCTION`) | Procedimento (`PROCEDURE`) |
+| -------------------- | ------------------- | -------------------------- |
+| Pode retornar valor  | ✅ Sim               | ❌ Não obrigatoriamente     |
+| Pode usar `CALL`     | ❌ Não               | ✅ Sim                      |
+| Suporte a transações | ❌ Limitado          | ✅ Total (BEGIN, COMMIT...) |
+| Ideal para...        | Lógica de cálculo   | Fluxos de controle e ações |

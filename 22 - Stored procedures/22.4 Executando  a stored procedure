@@ -1,0 +1,1 @@
+CALL inserir_cliente('Carlos Silva', '11999999999');

@@ -1,0 +1,8 @@
+CREATE PROCEDURE inserir_cliente(nome TEXT, telefone TEXT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO clientes (nome, telefone, data_registro)
+    VALUES (nome, telefone, CURRENT_DATE);
+END;
+$$;

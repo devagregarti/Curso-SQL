@@ -1,0 +1,10 @@
+CREATE OR REPLACE PROCEDURE inserir_cliente(nome TEXT, telefone TEXT)
+-- Mesma lógica acima com melhorias, se necessário
+
+
+
+7. Excluindo uma Procedure
+sql
+Copy
+Edit
+DROP PROCEDURE inserir_cliente(TEXT, TEXT);

@@ -1,0 +1,20 @@
+CREATE PROCEDURE transferir_valores(origem INT, destino INT, valor NUMERIC)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    BEGIN
+        UPDATE contas SET saldo = saldo - valor WHERE id = origem;
+        UPDATE contas SET saldo = saldo + valor WHERE id = destino;
+
+        IF valor < 0 THEN
+            RAISE EXCEPTION 'Valor inválido!';
+        END IF;
+
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK;
+            RAISE NOTICE 'Transação cancelada!';
+    END;
+END;
+$$;

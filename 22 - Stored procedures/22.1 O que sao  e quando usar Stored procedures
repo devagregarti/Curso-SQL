@@ -1,0 +1,12 @@
+
+Stored Procedures são blocos de código armazenados no banco que executam ações (como inserções, atualizações, controle de transações), sem a obrigação de retornar um valor.
+
+
+🧠 9. Quando usar Stored Procedure
+Para automatizar processos administrativos
+
+Para sequenciar várias instruções SQL com controle de erro
+
+Para inserções, atualizações ou deletes em massa
+
+Quando for necessário controle explícito de transações

@@ -1,0 +1,16 @@
+CREATE PROCEDURE gerar_n_vendas(cli TEXT, qtd INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    i INT := 1;
+BEGIN
+    WHILE i <= qtd LOOP
+        INSERT INTO vendas (cliente, valor, data_venda)
+        VALUES (cli, (random() * 100)::NUMERIC(10,2), CURRENT_DATE);
+        i := i + 1;
+    END LOOP;
+END;
+$$;
+
+
+CALL gerar_n_vendas('Maria', 5);
