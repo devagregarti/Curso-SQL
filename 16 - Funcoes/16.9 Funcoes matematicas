@@ -1,0 +1,8 @@
+Função	Exemplo	Resultado
+ROUND()	ROUND(123.456, 2)	123.46
+CEIL()	CEIL(2.1)	3
+FLOOR()	FLOOR(2.9)	2
+ABS()	ABS(-10)	10
+
+SELECT ROUND(AVG(valor), 2) AS media_arredondada
+FROM vendas;

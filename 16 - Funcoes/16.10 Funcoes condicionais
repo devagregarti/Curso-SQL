@@ -1,0 +1,31 @@
+ COALESCE(): Substitui NULL por outro valor
+sql
+Copy code
+SELECT cliente, COALESCE(valor, 0) AS valor_corrigido
+FROM vendas;
+🟨 CASE: if...else no SQL
+sql
+Copy code
+SELECT cliente,
+       CASE 
+         WHEN valor > 200 THEN 'Alto'
+         ELSE 'Normal'
+       END AS categoria
+FROM vendas;
+
+📌 Extras úteis
+DISTINCT: elimina duplicatas
+
+sql
+Copy code
+SELECT DISTINCT cliente FROM vendas;
+LIMIT: limita o número de linhas
+
+sql
+Copy code
+SELECT * FROM vendas LIMIT 2;
+ORDER BY: ordena os dados
+
+sql
+Copy code
+SELECT * FROM vendas ORDER BY valor DESC;
