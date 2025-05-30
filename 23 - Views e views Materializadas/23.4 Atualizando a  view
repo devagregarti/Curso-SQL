@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW clientes_ativos AS
+SELECT id, nome, telefone
+FROM clientes
+WHERE ativo = true;

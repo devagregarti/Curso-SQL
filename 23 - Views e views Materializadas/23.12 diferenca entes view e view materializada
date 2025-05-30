@@ -1,0 +1,21 @@
+| Característica         | VIEW       | MATERIALIZED VIEW              |
+| ---------------------- | ---------- | ------------------------------ |
+| Armazena dados         | ❌ Não      | ✅ Sim                          |
+| Sempre atualizada      | ✅ Sim      | ❌ Não (requer `REFRESH`)       |
+| Performance            | Mais lenta | Mais rápida para consultas     |
+| Atualização automática | Sim        | Não (a menos que use triggers) |
+
+
+
+💡 7. Quando usar cada uma
+VIEW:
+
+Quando os dados precisam estar sempre atualizados.
+
+Para abstração e organização de consultas.
+
+MATERIALIZED VIEW:
+
+Quando a consulta é muito pesada e não muda com frequência.
+
+Para relatórios, dashboards e análises periódicas.

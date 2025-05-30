@@ -1,0 +1,2 @@
+SELECT * FROM clientes_ativos;
+O PostgreSQL executa a consulta original toda vez que a View é chamada.

@@ -1,0 +1,2 @@
+REFRESH MATERIALIZED VIEW resumo_vendas;
+Essa operação recalcula os dados com base nas tabelas originais.

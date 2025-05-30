@@ -1,0 +1,16 @@
+ 6. Benefícios de uma View
+Reutilização de lógica complexa.
+
+Oculta a complexidade do SQL.
+
+Melhora a organização e segurança.
+
+Útil para relatórios e dashboards.
+
+⚠️ 7. Limitações da View
+Não melhora performance.
+
+Não armazena dados.
+
+Algumas Views não são atualizáveis diretamente.
+

@@ -1,0 +1,4 @@
+CREATE VIEW clientes_ativos AS
+SELECT id, nome, email
+FROM clientes
+WHERE ativo = true;
