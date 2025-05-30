@@ -1,0 +1,11 @@
+3. 📊 SUM(), AVG(), COUNT()... como janela
+Você pode usar funções de agregação como funções de janela!
+
+sql
+Copy
+Edit
+SELECT cliente, valor,
+       SUM(valor) OVER (PARTITION BY cliente) AS total_cliente
+FROM vendas;
+🧠 Explicação: soma o total de vendas de cada cliente, sem agrupar.
+

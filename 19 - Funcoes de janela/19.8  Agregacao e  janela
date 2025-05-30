@@ -1,0 +1,19 @@
+🧠 Comparativo entre agregação tradicional e janela
+🟥 Agregação tradicional (GROUP BY):
+sql
+Copy
+Edit
+SELECT cliente, SUM(valor)
+FROM vendas
+GROUP BY cliente;
+➡️ Resultado agrupado, sem detalhes linha a linha.
+
+✅ Função de janela:
+sql
+Copy
+Edit
+SELECT cliente, valor,
+       SUM(valor) OVER (PARTITION BY cliente) AS total_cliente
+FROM vendas;
+➡️ Mantém cada linha individual, mas com a soma por cliente junto.
+

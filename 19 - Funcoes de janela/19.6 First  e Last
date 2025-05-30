@@ -1,0 +1,11 @@
+5. ⏱️ FIRST_VALUE() e LAST_VALUE()
+sql
+Copy
+Edit
+SELECT cliente, valor,
+       FIRST_VALUE(valor) OVER (PARTITION BY cliente ORDER BY data_venda) AS primeira_venda,
+       LAST_VALUE(valor) OVER (PARTITION BY cliente ORDER BY data_venda ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS ultima_venda
+FROM vendas;
+
+
+ Use ROWS BETWEEN... para garantir que o PostgreSQL olhe a janela inteira para o LAST_VALUE().

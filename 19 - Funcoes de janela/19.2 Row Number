@@ -1,0 +1,9 @@
+Numera as linhas de cada grupo ou do resultado completo.
+
+sql
+Copy
+Edit
+SELECT cliente, valor, data_venda,
+       ROW_NUMBER() OVER (PARTITION BY cliente ORDER BY data_venda) AS ordem
+FROM vendas;
+🧠 Explicação: numera as vendas por cliente, em ordem de data.

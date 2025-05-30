@@ -1,0 +1,11 @@
+2. 🔁 RANK() e DENSE_RANK()
+RANK() pula números em caso de empate.
+
+DENSE_RANK() não pula.
+
+sql
+Copy
+Edit
+SELECT cliente, valor,
+       RANK() OVER (ORDER BY valor DESC) AS ranking
+FROM vendas;

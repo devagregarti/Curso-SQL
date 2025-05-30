@@ -1,0 +1,12 @@
+4. 🪜 LAG() e LEAD()
+LAG(): valor da linha anterior
+
+LEAD(): valor da próxima linha
+
+sql
+Copy
+Edit
+SELECT cliente, data_venda, valor,
+       LAG(valor) OVER (PARTITION BY cliente ORDER BY data_venda) AS venda_anterior,
+       LEAD(valor) OVER (PARTITION BY cliente ORDER BY data_venda) AS proxima_venda
+FROM vendas;

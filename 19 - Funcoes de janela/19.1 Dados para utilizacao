@@ -1,0 +1,15 @@
+
+CREATE TABLE vendas (
+    id SERIAL PRIMARY KEY,
+    cliente TEXT,
+    valor NUMERIC,
+    data_venda DATE
+);
+
+INSERT INTO vendas (cliente, valor, data_venda) VALUES
+('João', 100.00, '2024-01-01'),
+('Maria', 250.00, '2024-01-02'),
+('João', 150.00, '2024-01-03'),
+('Pedro', 300.00, '2024-01-04'),
+('Maria', 100.00, '2024-01-05'),
+('João', 200.00, '2024-01-06');

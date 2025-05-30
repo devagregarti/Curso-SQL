@@ -1,0 +1,5 @@
+<função> OVER (
+  PARTITION BY <coluna_para_dividir>
+  ORDER BY <coluna_para_ordenar>
+  ROWS BETWEEN ... -- opcional
+)
