@@ -1,0 +1,2 @@
+SELECT cliente, valor, dobro(valor) AS valor_dobrado
+FROM vendas;

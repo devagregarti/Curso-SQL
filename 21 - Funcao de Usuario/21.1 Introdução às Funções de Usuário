@@ -1,0 +1,7 @@
+Blocos reutilizáveis de código SQL ou PL/pgSQL.
+
+Podem retornar um valor único, uma tabela, ou nenhum valor.
+
+Podem ser usadas em SELECTs, WHERE, JOINS etc.
+
+

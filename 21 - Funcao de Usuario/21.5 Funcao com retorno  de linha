@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION info_cliente(nome_cli TEXT)
+RETURNS TABLE(nome TEXT, total NUMERIC) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT cliente, SUM(valor)
+    FROM vendas
+    WHERE cliente = nome_cli
+    GROUP BY cliente;
+END;
+$$ LANGUAGE plpgsql;
+sql
+Copy
+Edit
+SELECT * FROM info_cliente('João');

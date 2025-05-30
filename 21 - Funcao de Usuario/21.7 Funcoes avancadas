@@ -1,0 +1,16 @@
+🔐 Funções com IMMUTABLE, STABLE, VOLATILE
+IMMUTABLE: sempre retorna o mesmo resultado para os mesmos argumentos (ex: matemáticas puras).
+
+STABLE: depende apenas de leituras do banco (ex: SELECT).
+
+VOLATILE: pode mudar mesmo com mesmos parâmetros (ex: NOW()).
+
+sql
+Copy
+Edit
+CREATE FUNCTION aleatorio()
+RETURNS INT AS $$
+BEGIN
+    RETURN floor(random() * 100)::INT;
+END;
+$$ LANGUAGE plpgsql VOLATILE;

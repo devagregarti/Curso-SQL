@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION soma(a INT, b INT)
+RETURNS INT AS $$
+BEGIN
+    RETURN a + b;
+END;
+$$ LANGUAGE plpgsql;.
+
+
+SELECT soma(5, 7); -- Resultado: 12

@@ -1,0 +1,10 @@
+CREATE OR REPLACE FUNCTION dobro(numero INT)
+RETURNS INT AS $$
+BEGIN
+    RETURN numero * 2;
+END;
+$$ LANGUAGE plpgsql;
+sql
+Copy
+Edit
+SELECT dobro(10); -- Resultado: 20

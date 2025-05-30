@@ -1,0 +1,28 @@
+Atualizando
+
+CREATE OR REPLACE FUNCTION dobro(numero INT)
+RETURNS INT AS $$
+BEGIN
+    RETURN numero * 2;
+END;
+$$ LANGUAGE plpgsql;
+O OR REPLACE permite atualizar sem apagar a função anterio
+
+
+Deletando
+
+DROP FUNCTION nome_funcao(tipo_argumento);
+-- Ex: DROP FUNCTION soma(INT, INT);
+
+
+
+✅ Dica prática: listar funções do banco
+sql
+Copy
+Edit
+-- Ver funções criadas pelo usuário
+SELECT proname, proargtypes, prosrc
+FROM pg_proc
+WHERE pronamespace IN (
+    SELECT oid FROM pg_namespace WHERE nspname = 'public'
+);

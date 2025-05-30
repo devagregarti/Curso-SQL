@@ -1,0 +1,10 @@
+CREATE OR REPLACE FUNCTION log_mensagem(msg TEXT)
+RETURNS VOID AS $$
+BEGIN
+    RAISE NOTICE 'Mensagem: %', msg;
+END;
+$$ LANGUAGE plpgsql;
+sql
+Copy
+Edit
+SELECT log_mensagem('Olá do PostgreSQL');
