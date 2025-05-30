@@ -1,0 +1,10 @@
+5. ❌ CROSS JOIN
+Faz o produto cartesiano: junta todas as linhas da tabela A com todas da tabela B.
+
+sql
+Copy code
+SELECT clientes.nome, pedidos.produto
+FROM clientes
+CROSS JOIN pedidos;
+🟢 Explicação:
+Gera todas as combinações possíveis entre clientes e pedidos. Cuidado, pode gerar muitos resultados.

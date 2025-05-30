@@ -1,0 +1,7 @@
+📌 Dica extra: Usando alias (apelidos)
+sql
+Copy code
+SELECT c.nome, p.produto
+FROM clientes c
+JOIN pedidos p ON c.id = p.cliente_id;
+🧠 Fica mais legível e usado em consultas mais longas.

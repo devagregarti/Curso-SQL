@@ -1,0 +1,10 @@
+4. 🔁 FULL JOIN (ou FULL OUTER JOIN)
+Retorna tudo de ambas as tabelas, preenchendo com NULL onde não houver correspondência.
+
+sql
+Copy code
+SELECT clientes.nome, pedidos.produto
+FROM clientes
+FULL JOIN pedidos ON clientes.id = pedidos.cliente_id;
+🟢 Explicação:
+Mostra todos os clientes e todos os pedidos, inclusive os que não têm correspondência.

@@ -1,0 +1,10 @@
+1. ✅ INNER JOIN
+Retorna apenas as linhas com correspondência nas duas tabelas.
+
+sql
+Copy code
+SELECT clientes.nome, pedidos.produto
+FROM clientes
+INNER JOIN pedidos ON clientes.id = pedidos.cliente_id;
+🟢 Explicação:
+Mostra apenas os clientes que têm pedidos.

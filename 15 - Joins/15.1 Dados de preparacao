@@ -1,0 +1,21 @@
+-- Tabela de clientes
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT
+);
+
+-- Tabela de pedidos
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    produto TEXT,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+
+-- Dados de exemplo
+INSERT INTO clientes (nome) VALUES ('João'), ('Maria'), ('Pedro');
+
+INSERT INTO pedidos (cliente_id, produto) VALUES 
+(1, 'Livro'),
+(1, 'Caderno'),
+(2, 'Caneta');

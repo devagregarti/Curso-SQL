@@ -1,0 +1,10 @@
+➡️ RIGHT JOIN (ou RIGHT OUTER JOIN)
+Retorna todos os registros da tabela da direita e os correspondentes da esquerda. Onde não houver correspondência, retorna NULL.
+
+sql
+Copy code
+SELECT clientes.nome, pedidos.produto
+FROM clientes
+RIGHT JOIN pedidos ON clientes.id = pedidos.cliente_id;
+🟢 Explicação:
+Mostra todos os pedidos, mesmo que o cliente não exista (caso raro, geralmente só acontece com dados corrompidos).
