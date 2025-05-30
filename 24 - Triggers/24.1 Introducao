@@ -1,0 +1,18 @@
+
+📘 1. O que é uma Trigger?
+É um gatilho automático que executa uma função sempre que ocorre um evento (INSERT, UPDATE, DELETE).
+
+Serve para:
+
+Auditar alterações.
+
+Atualizar dados relacionados.
+
+
+
+
+🧠 2. Como funciona uma Trigger?
+A Trigger depende de uma função (trigger function).
+
+Essa função é executada automaticamente no momento configurado.
+

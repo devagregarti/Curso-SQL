@@ -1,0 +1,30 @@
+CREATE OR REPLACE FUNCTION log_insercao_cliente()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO log_clientes (cliente_id, nome, data_insercao)
+    VALUES (NEW.id, NEW.nome, CURRENT_TIMESTAMP);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+Excluindo 
+
+
+DROP TRIGGER cliente_insert_log ON clientes;
+Se quiser excluir também a função:
+
+sql
+Copy
+Edit
+DROP FUNCTION log_insercao_cliente();
+
+
+
+Verificando triggers existentes
+
+
+SELECT tgname, tgrelid::regclass AS tabela
+FROM pg_trigger
+WHERE NOT tgisinternal;
