@@ -1,0 +1,9 @@
+🧪 Exemplo:
+sql
+Copy
+Edit
+-- Adiciona o usuário ao grupo
+GRANT equipe_dados TO ana;
+
+-- Agora ana herda as permissões atribuídas a equipe_dados
+⚠️ Por padrão, a herança é imediata. Se não quiser, use SET ROLE explicitamente.

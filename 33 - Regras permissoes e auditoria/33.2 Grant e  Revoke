@@ -1,0 +1,24 @@
+👥 2. Atribuição de Permissões (GRANT e REVOKE)
+GRANT: concede permissões.
+
+REVOKE: remove permissões.
+
+📋 Permissões comuns:
+SELECT, INSERT, UPDATE, DELETE
+
+ALL PRIVILEGES
+
+USAGE e EXECUTE (em funções e schemas)
+
+🧪 Exemplo:
+sql
+Copy
+Edit
+-- Conceder leitura em uma tabela
+GRANT SELECT ON clientes TO ana;
+
+-- Dar permissões de escrita
+GRANT INSERT, UPDATE ON pedidos TO equipe_dados;
+
+-- Retirar permissões
+REVOKE UPDATE ON pedidos FROM ana;

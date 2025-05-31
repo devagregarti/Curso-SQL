@@ -1,0 +1,17 @@
+Verifique atividades gerais no arquivo de log.
+
+Configure o postgresql.conf com:
+
+ini
+Copy
+Edit
+logging_collector = on
+log_statement = 'all'  -- ou 'mod' para apenas modificações
+log_line_prefix = '%m [%p] %u@%d '
+🔍 5. Ver atividades com pg_stat_activity
+sql
+Copy
+Edit
+SELECT pid, usename, application_name, query, state
+FROM pg_stat_activity
+WHERE state != 'idle';

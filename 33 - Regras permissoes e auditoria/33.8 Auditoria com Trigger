@@ -1,0 +1,29 @@
+🔍 2. Auditoria simples com triggers
+Crie uma tabela de log e uma trigger para armazenar alterações.
+
+🧪 Exemplo:
+
+
+CREATE TABLE log_alteracoes (
+  usuario TEXT,
+  tabela TEXT,
+  operacao TEXT,
+  data TIMESTAMP DEFAULT now(),
+  dados JSONB
+);
+
+
+CREATE OR REPLACE FUNCTION registrar_log()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO log_alteracoes(usuario, tabela, operacao, dados)
+  VALUES (current_user, TG_TABLE_NAME, TG_OP, row_to_json(NEW));
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE TRIGGER log_clientes
+AFTER INSERT OR UPDATE OR DELETE ON clientes
+FOR EACH ROW EXECUTE FUNCTION registrar_log();

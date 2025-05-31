@@ -1,0 +1,10 @@
+
+🧪 Exemplo:
+sql
+Copy
+Edit
+-- Permitir conexão ao banco
+GRANT CONNECT ON DATABASE sistema TO equipe_dados;
+
+-- Permitir criação de tabelas em um schema
+GRANT CREATE ON SCHEMA public TO ana;

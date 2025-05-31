@@ -1,0 +1,20 @@
+Aplicacoes praticas
+ Necessidade vs  excesso 
+
+ Concentios  
+      Roles
+      Usuarios
+      Grupos 
+      Grant 
+      Revoke
+      Heranca
+      Schema
+      Auditoria
+      Logs
+      
+
+      -- Criação de um usuário com senha
+CREATE ROLE ana LOGIN PASSWORD 'senha123';
+
+-- Criando um grupo
+CREATE ROLE equipe_dados;

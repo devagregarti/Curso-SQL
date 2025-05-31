@@ -1,0 +1,8 @@
+| Recurso            | O que faz                                  |
+| ------------------ | ------------------------------------------ |
+| `CREATE ROLE`      | Cria usuários ou grupos                    |
+| `GRANT` / `REVOKE` | Concede ou retira permissões               |
+| `pg_stat_activity` | Visualiza sessões e queries em execução    |
+| Triggers de log    | Capturam alterações de dados               |
+| `pgaudit`          | Auditoria completa (DDL, DML, SELECT etc.) |
+| `log_statement`    | Configura o nível de log                   |

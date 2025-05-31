@@ -1,0 +1,12 @@
+📜 6. Verificando permissões
+sql
+Copy
+Edit
+-- Ver permissões de uma tabela
+\z clientes
+
+-- Ver roles existentes
+\du
+
+-- Ver permissões no schema
+SELECT * FROM information_schema.role_table_grants WHERE table_name = 'clientes';

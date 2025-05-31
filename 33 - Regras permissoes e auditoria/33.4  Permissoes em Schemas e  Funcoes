@@ -1,0 +1,12 @@
+🛡️ 4. Permissões em Schemas e Funções
+Para acessar objetos dentro de um schema, é preciso USAGE no schema + permissão no objeto.
+
+🧪 Exemplo:
+sql
+Copy
+Edit
+-- Permitir acesso ao schema
+GRANT USAGE ON SCHEMA vendas TO ana;
+
+-- Permitir execução de uma função
+GRANT EXECUTE ON FUNCTION gerar_relatorio(int) TO equipe_dados;
