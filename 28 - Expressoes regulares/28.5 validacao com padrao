@@ -15,3 +15,20 @@ FROM clientes
 WHERE nome ~ '\s\w+\s\w+';
 
 Explica: Detecta nomes com dois sobrenomes ou nomes longos (padrões comuns em cadastros mal segmentados
+
+📌 Exemplo 6: Remover caracteres especiais do nome
+
+SELECT REGEXP_REPLACE(nome, '[^a-zA-Z\s]', '', 'g') AS nome_limpo
+FROM clientes;
+
+Explica: Remove acentos, símbolos e pontuações do nome.
+
+📌 Exemplo 7: Padronizar telefones tirando tudo que não for númer
+
+SELECT REGEXP_REPLACE(telefone, '\D', '', 'g') AS telefone_limpo
+FROM clientes;
+
+Explica: Mantém só os dígitos, útil para normalização antes de análise.
+
+
+
