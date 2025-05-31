@@ -1,0 +1,10 @@
+
+ChatGPT said:
+Excelente escolha! O controle de concorrência é um dos pilares do PostgreSQL como banco de dados transacional. A seguir, organizei os principais tópicos, com explicações diretas, exemplos práticos e recomendações claras que você pode usar no seu curso.
+
+🧩 Módulo: Controle de Concorrência no PostgreSQL
+📌 1. O que é Concorrência?
+Ocorre quando vários usuários acessam e modificam os mesmos dados simultaneamente.
+
+O PostgreSQL precisa garantir que as operações sejam consistentes, isoladas e corretas, mesmo com acessos concorrentes.
+

@@ -1,0 +1,10 @@
+🔒 2. MVCC (Multi-Version Concurrency Control)
+Sistema usado pelo PostgreSQL para lidar com concorrência.
+
+Cada transação vê um snapshot dos dados, evitando bloqueios de leitura.
+
+🧠 Conceito:
+Ao invés de bloquear, o PostgreSQL cria versões dos dados modificados.
+
+Leitores não bloqueiam escritores e vice-versa.
+

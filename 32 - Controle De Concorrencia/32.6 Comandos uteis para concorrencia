@@ -1,0 +1,18 @@
+| Comando                 | O que faz                                       |
+| ----------------------- | ----------------------------------------------- |
+| `SELECT ... FOR UPDATE` | Bloqueia linhas para edição por outra transação |
+| `SELECT ... FOR SHARE`  | Permite leitura, mas bloqueia escrita           |
+| `LOCK TABLE tabela`     | Bloqueia a tabela inteira                       |
+| `NOWAIT`                | Erro se a linha/tabela já estiver bloqueada     |
+| `SKIP LOCKED`           | Ignora registros já travados                    |
+
+
+🧪 Exemplo:
+sql
+Copy
+Edit
+-- Pega o primeiro pedido não processado, evitando bloqueios:
+SELECT * FROM pedidos
+WHERE status = 'pendente'
+FOR UPDATE SKIP LOCKED
+LIMIT 1;

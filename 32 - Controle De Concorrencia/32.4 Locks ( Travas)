@@ -1,0 +1,12 @@
+🔄 4. Locks (Travas)
+PostgreSQL usa diferentes tipos de locks para proteger dados:
+
+🔐 Tipos de Locks mais comuns:
+Row-level locks (linha): SELECT ... FOR UPDATE
+
+Table-level locks: LOCK TABLE
+
+BEGIN;
+SELECT * FROM produtos WHERE id = 1 FOR UPDATE;
+-- essa linha fica bloqueada até COMMIT
+COMMIT;

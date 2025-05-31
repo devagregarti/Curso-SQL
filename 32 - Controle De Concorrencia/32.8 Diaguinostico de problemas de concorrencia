@@ -1,0 +1,16 @@
+🔍 8. Diagnóstico de problemas de concorrência
+Query lenta? Veja se está esperando por lock.
+
+Use pg_stat_activity para identificar sessões bloqueadas:
+
+sql
+Copy
+Edit
+SELECT pid, wait_event_type, wait_event, query
+FROM pg_stat_activity
+WHERE state != 'idle';
+
+🧠 9. Estratégias para lidar com concorrência
+Otimismo: assume que conflitos são raros (ex: UPDATE ... WHERE versão = x)
+
+Pessimismo: bloqueia o recurso até a transação acabar (ex: FOR UPDATE)

@@ -1,0 +1,9 @@
+Ocorrem quando duas transações esperam uma pela outra indefinidamente.
+
+O PostgreSQL detecta e mata uma das transações para resolver.
+
+🧠 Evite deadlocks:
+Sempre bloqueie os recursos na mesma ordem.
+
+Use transações curtas.
+

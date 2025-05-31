@@ -1,0 +1,6 @@
+📉 7. Visualizar locks em andamento
+sql
+Copy
+Edit
+SELECT * FROM pg_locks pl
+JOIN pg_stat_activity sa ON pl.pid = sa.pid;

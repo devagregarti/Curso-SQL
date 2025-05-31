@@ -1,0 +1,8 @@
+| Conceito                 | O que faz                                      |
+| ------------------------ | ---------------------------------------------- |
+| MVCC                     | Evita bloqueios entre leitores e escritores    |
+| Nível de Isolamento      | Define visibilidade dos dados entre transações |
+| Locks                    | Controla acesso a linhas/tabelas               |
+| Deadlock                 | Ocorre quando duas transações se bloqueiam     |
+| FOR UPDATE / SKIP LOCKED | Técnicas para concorrência em processamento    |
+| pg\_locks / pg\_stat     | Monitoramento de transações                    |

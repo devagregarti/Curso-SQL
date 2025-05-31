@@ -1,0 +1,20 @@
+ 3. Tipos de Isolamento de Transações
+Níveis de isolamento definem o que uma transação pode ver enquanto outras estão ocorrendo.
+
+
+| Nível                     | Permite leitura suja? | Permite leitura não repetível? | Permite phantom reads? |
+| ------------------------- | --------------------- | ------------------------------ | ---------------------- |
+| READ UNCOMMITTED          | Sim                   | Sim                            | Sim                    |
+| READ COMMITTED *(padrão)* | Não                   | Sim                            | Sim                    |
+| REPEATABLE READ           | Não                   | Não                            | Sim                    |
+| SERIALIZABLE              | Não                   | Não                            | Não                    |
+
+
+🧪 Exemplo:
+sql
+Copy
+Edit
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+BEGIN;
+-- consultas aqui
+COMMIT;
