@@ -1,0 +1,15 @@
+2. Validação de formatos comuns
+
+📌 Exemplo 1: Verificar se um e-mail está no formato correto
+
+SELECT nome, email
+FROM clientes
+WHERE email ~* '^[a-z0-9._%-]+@[a-z0-9.-]+\.[a-z]{2,}$';
+
+
+SELECT nome, email
+FROM clientes
+WHERE email ~* '^[a-z0-9._%-]+@[a-z0-9.-]+\.[a-z]{2,}$';
+
+Explica: Valida e-mails com letras, números e terminações comuns (.com, .org, etc.)
+
