@@ -1,0 +1,10 @@
+4. Filtrar dados com base em padrões comerciais
+
+📌 Exemplo 4: Buscar produtos que comecem com “Promo”
+
+SELECT nome_produto
+FROM produtos
+WHERE nome_produto ~* '^promo';
+
+Explica: Útil para buscar promoções automaticamente
+
