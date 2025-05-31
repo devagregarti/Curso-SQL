@@ -1,0 +1,29 @@
+🔁 3. O que é uma CTE Recursiva?
+É uma CTE que chama a si mesma até atingir uma condição de parada.
+
+Muito útil para navegar estruturas hierárquicas, como:
+
+Categorias e subcategorias.
+
+Hierarquia de funcionários.
+
+Pastas e subpastas.
+
+🧠 4. Estrutura de uma CTE Recursiva
+sql
+Copy
+Edit
+WITH RECURSIVE nome_cte AS (
+    -- Parte base (nível 1 da hierarquia)
+    SELECT ...
+    FROM ...
+    WHERE condição_inicial
+
+    UNION ALL
+
+    -- Parte recursiva (nível 2+)
+    SELECT ...
+    FROM nome_cte
+    JOIN tabela ON condição_de_continuação
+)
+SELECT * FROM nome_cte;

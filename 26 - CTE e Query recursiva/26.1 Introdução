@@ -1,0 +1,5 @@
+
+📘 1. O que é uma CTE?
+Uma CTE (Common Table Expression) é uma subconsulta nomeada temporária que pode ser reutilizada dentro da query principal.
+
+A sintaxe começa com WITH.

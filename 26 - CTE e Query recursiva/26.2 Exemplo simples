@@ -1,0 +1,16 @@
+
+🧪 2. Exemplo simples de CTE
+sql
+Copy
+Edit
+WITH clientes_ativos AS (
+    SELECT id, nome FROM clientes WHERE ativo = true
+)
+SELECT * FROM clientes_ativos;
+✅ Vantagens da CTE:
+
+Deixa o SQL mais legível.
+
+Pode ser usada várias vezes na mesma consulta.
+
+Ideal para quebrar consultas complexas em partes menores.

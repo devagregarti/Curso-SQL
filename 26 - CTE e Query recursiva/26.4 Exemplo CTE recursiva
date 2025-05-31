@@ -1,0 +1,32 @@
+🧩 5. Exemplo prático: Hierarquia de funcionários
+Imagine esta tabela:
+
+sql
+Copy
+Edit
+CREATE TABLE funcionarios (
+    id SERIAL PRIMARY KEY,
+    nome TEXT,
+    gerente_id INT
+);
+Consulta recursiva para listar hierarquia de um gerente:
+
+sql
+Copy
+Edit
+WITH RECURSIVE hierarquia AS (
+    -- Parte base: o gerente principal
+    SELECT id, nome, gerente_id, 1 AS nivel
+    FROM funcionarios
+    WHERE id = 1  -- gerente raiz
+
+    UNION ALL
+
+    -- Parte recursiva: subordinados diretos
+    SELECT f.id, f.nome, f.gerente_id, h.nivel + 1
+    FROM funcionarios f
+    JOIN hierarquia h ON f.gerente_id = h.id
+)
+SELECT * FROM hierarquia;
+Esse exemplo lista todos os subordinados diretos e indiretos do funcionário com id = 1.
+
