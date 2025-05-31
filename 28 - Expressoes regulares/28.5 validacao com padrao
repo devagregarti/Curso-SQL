@@ -8,3 +8,8 @@ WHERE nome_produto ~* '^promo';
 
 Explica: Útil para buscar promoções automaticamente
 
+📌 Exemplo 5: Encontrar clientes com sobrenomes compostos
+
+SELECT nome
+FROM clientes
+WHERE nome ~ '\s\w+\s\w+';
