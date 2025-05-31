@@ -1,0 +1,5 @@
+CREATE INDEX idx_nome_email ON clientes(nome, email);
+
+
+	Exemplo comercial: buscas por nome e email em interfaces de CRM
+	•	Atenção à ordem das colunas
