@@ -1,0 +1,8 @@
+Indexar o resultado de uma função ou expressão
+
+
+CREATE INDEX idx_lower_email ON clientes(LOWER(email));
+
+
+	Exemplo: buscas por e-mail com ILIKE, sem forçar LOWER(email) sempre na consulta
+
