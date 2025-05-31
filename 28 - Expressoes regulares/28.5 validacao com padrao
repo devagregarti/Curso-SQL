@@ -13,3 +13,5 @@ Explica: Útil para buscar promoções automaticamente
 SELECT nome
 FROM clientes
 WHERE nome ~ '\s\w+\s\w+';
+
+Explica: Detecta nomes com dois sobrenomes ou nomes longos (padrões comuns em cadastros mal segmentados
