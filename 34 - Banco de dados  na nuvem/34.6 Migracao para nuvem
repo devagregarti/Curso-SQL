@@ -1,0 +1,16 @@
+🔄 7. Migração para a nuvem
+🧪 Ferramentas úteis:
+pg_dump + pg_restore
+
+pgAdmin (modo gráfico)
+
+AWS DMS (para grandes volumes de dados)
+
+bash
+Copy
+Edit
+# Exporta o banco local
+pg_dump -U usuario -d banco > banco.sql
+
+# Restaura no servidor da nuvem
+psql -h endereco -U usuario -d banco < banco.sql

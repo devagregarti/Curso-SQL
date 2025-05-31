@@ -1,0 +1,25 @@
+ 3. Principais opções de PostgreSQL como serviço (DBaaS)
+🟡 Amazon RDS for PostgreSQL
+Banco gerenciado pela AWS.
+
+Fácil escalabilidade e integração com outros serviços AWS.
+
+bash
+Copy
+Edit
+# Exemplo de conexão via psql:
+psql -h seu-endereco.rds.amazonaws.com -U usuario -d banco
+🔵 Google Cloud SQL
+Banco gerenciado pelo Google.
+
+Interface web intuitiva para backups, monitoramento e permissões.
+
+🟣 Azure Database for PostgreSQL
+Banco com suporte nativo a rede privada (VNet).
+
+Foco em ambientes corporativos.
+
+🟢 Heroku Postgres
+Ideal para aprendizado e pequenos projetos.
+
+Foco na simplicidade: deploy em poucos cliques.

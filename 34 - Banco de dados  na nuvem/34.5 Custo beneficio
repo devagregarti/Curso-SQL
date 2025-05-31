@@ -1,0 +1,11 @@
+💸 6. Custo
+Serviços como RDS, CloudSQL cobram por:
+
+Armazenamento (GB)
+
+vCPU e RAM da instância
+
+Tráfego de dados
+
+💡 Dica: Para estudo e testes, use planos gratuitos ou créditos iniciais (AWS, Google e Heroku oferecem).
+

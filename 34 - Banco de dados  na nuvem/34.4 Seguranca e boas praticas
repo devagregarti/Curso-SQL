@@ -1,0 +1,8 @@
+🔐 5. Segurança e boas práticas
+Use SSL para conexões.
+
+Crie roles específicas, com mínimos privilégios necessários.
+
+Desative usuários padrão (se possível).
+
+Não exponha sua instância diretamente na internet — use VPN ou VPC.

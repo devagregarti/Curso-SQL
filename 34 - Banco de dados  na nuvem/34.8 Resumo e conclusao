@@ -1,0 +1,8 @@
+| Tópico                          | Descrição rápida                               |
+| ------------------------------- | ---------------------------------------------- |
+| PostgreSQL como serviço (DBaaS) | PostgreSQL sem precisar instalar ou configurar |
+| Principais provedores           | AWS, GCP, Azure, Heroku                        |
+| Segurança                       | Acesso por roles, SSL, VPC                     |
+| Backup e restauração            | Feitos automaticamente                         |
+| Migração                        | `pg_dump`, `pg_restore`, ferramentas nativas   |
+| Custo                           | Baseado em uso de CPU, disco e tráfego         |
