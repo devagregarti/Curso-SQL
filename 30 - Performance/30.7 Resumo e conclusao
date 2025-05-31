@@ -1,0 +1,9 @@
+ | Dica             | Benefício principal              |
+| ---------------- | -------------------------------- |
+| Índices          | Aceleram buscas                  |
+| EXPLAIN ANALYZE  | Ajuda a diagnosticar gargalos    |
+| Evitar SELECT \* | Reduz uso de I/O                 |
+| VACUUM / ANALYZE | Mantém o banco otimizado         |
+| Particionamento  | Divide tabelas grandes em partes |
+| Joins com índice | Aceleram relacionamentos         |
+| LIMIT            | Evita sobrecarga de leitura      |

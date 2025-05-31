@@ -1,0 +1,10 @@
+🛠️ 11. Use Connection Pooling
+Ferramentas como PgBouncer reduzem sobrecarga de conexões frequentes.
+
+📈 12. Monitoramento
+Ferramentas úteis para acompanhar performance:
+
+pg_stat_statements (extensão para ver queries mais pesadas)
+
+pgAdmin, PostgreSQL Dashboard, Prometheus + Grafana
+

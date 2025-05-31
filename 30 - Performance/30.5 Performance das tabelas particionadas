@@ -1,0 +1,25 @@
+8. Tabelas particionadas ajudam na performance
+Já abordado antes, mas vale lembrar:
+
+Tabelas grandes com filtros de data (ex: logs) ficam muito mais rápidas com particionamento.
+
+🧠 9. Use LIMIT quando for possível
+sql
+Copy
+Edit
+SELECT * FROM produtos LIMIT 50;
+Evita retorno desnecessário de milhares de linhas.
+
+🛑 10. Evite subconsultas desnecessárias
+sql
+Copy
+Edit
+-- Evite isso:
+SELECT * FROM (
+   SELECT * FROM pedidos
+) AS sub WHERE total > 100;
+
+-- Prefira:
+SELECT * FROM pedidos WHERE total > 100;
+
+d

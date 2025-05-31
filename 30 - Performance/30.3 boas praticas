@@ -1,0 +1,36 @@
+🧹 **3. Evite SELECT * **
+Use apenas as colunas necessárias:
+
+sql
+Copy
+Edit
+-- Evite:
+SELECT * FROM pedidos;
+
+-- Melhor:
+SELECT id, total FROM pedidos;
+
+
+🧮 4. Filtros inteligentes
+Coloque os filtros mais restritivos primeiro:
+
+sql
+Copy
+Edit
+SELECT * FROM vendas
+WHERE status = 'finalizado' AND data > CURRENT_DATE - INTERVAL '30 days';
+
+
+🔄 5. Joins eficientes
+Prefira INNER JOIN se possível (é mais rápido que LEFT JOIN).
+
+Certifique-se de que as colunas usadas no JOIN tenham índices.
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos p
+JOIN clientes c ON c.id = p.cliente_id;
+
+
+

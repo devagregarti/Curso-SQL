@@ -1,0 +1,22 @@
+PostgreSQL toma decisões com base em estatísticas. Sempre mantenha atualizadas:
+
+sql
+Copy
+Edit
+ANALYZE clientes;
+Ou combine com VACUUM:
+
+sql
+Copy
+Edit
+VACUUM ANALYZE;
+🧽 7. VACUUM
+PostgreSQL não remove linhas deletadas imediatamente — ele marca para limpeza.
+
+sql
+Copy
+Edit
+VACUUM tabela;
+VACUUM limpa dados mortos.
+
+AUTOVACUUM geralmente está ativado automaticamente, mas às vezes precisa ser manual.

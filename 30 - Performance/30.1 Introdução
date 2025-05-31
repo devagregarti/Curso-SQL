@@ -1,0 +1,9 @@
+Possiveis problemas de performance
+
+Conhecimento chave -  Indices
+
+Índices aceleram leitura, mas podem deixar a escrita mais lenta (inserts/updates).
+
+Evite indexar colunas com muitos valores repetidos.
+
+

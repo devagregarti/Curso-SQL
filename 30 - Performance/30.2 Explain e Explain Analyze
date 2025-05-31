@@ -1,0 +1,7 @@
+** Ferramentas para entender como uma query é executada.
+
+
+EXPLAIN ANALYZE SELECT * FROM clientes WHERE email = 'x@email.com';
+
+
+Mostra se está usando index scan, sequential scan, tempo de execução etc.
