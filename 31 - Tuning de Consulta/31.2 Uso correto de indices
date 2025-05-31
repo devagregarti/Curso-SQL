@@ -1,0 +1,13 @@
+🗂️ 2. Use índices corretamente
+🧠 Quando usar:
+Em colunas de WHERE, JOIN, ORDER BY, GROUP BY.
+
+sql
+Copy
+Edit
+CREATE INDEX idx_email ON clientes(email);
+⚠️ Cuidado:
+Índices demais podem prejudicar performance de escrita.
+
+Não use índice em colunas com poucos valores distintos (ex: ativo BOOLEAN).
+
