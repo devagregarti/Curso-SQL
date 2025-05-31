@@ -3,3 +3,6 @@
 SELECT nome, telefone
 FROM clientes
 WHERE telefone ~ '^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$';
+
+
+Explica: Aceita formatos com ou sem parênteses, com ou sem traço
