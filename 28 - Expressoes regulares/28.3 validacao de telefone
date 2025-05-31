@@ -1,0 +1,5 @@
+📌 Exemplo 2: Validar número de telefone (formato brasileiro)
+
+SELECT nome, telefone
+FROM clientes
+WHERE telefone ~ '^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$';
