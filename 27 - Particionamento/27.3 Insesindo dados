@@ -1,0 +1,2 @@
+INSERT INTO vendas (data_venda, valor)
+VALUES ('2024-03-15', 200.00);

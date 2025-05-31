@@ -1,0 +1,20 @@
+
+📘 1. O que é particionamento?
+É a divisão de uma tabela grande em partes menores, chamadas partições, que são armazenadas separadamente, mas acessadas como se fossem uma só tabela.
+
+
+🧠 2. Por que usar particionamento?
+Melhor desempenho em consultas com filtros.
+
+Mais fácil de manter (excluir uma partição inteira, por exemplo).
+
+Evita sobrecarga em tabelas com milhões de linhas.
+
+
+
+📂 3. Tipos de particionamento suportados
+Tipo	Explicação	Exemplo comum
+RANGE	Partição por intervalo de valores	Datas (ano, mês)
+LIST	Partição por valor específico	Região, estado, tipo
+HASH	Distribuição balanceada por hash	ID de cliente
+

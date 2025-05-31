@@ -1,0 +1,12 @@
+CREATE TABLE pedidos (
+    id SERIAL,
+    estado TEXT NOT NULL,
+    valor NUMERIC
+) PARTITION BY LIST (estado);
+
+
+CREATE TABLE pedidos_sp PARTITION OF pedidos
+FOR VALUES IN ('SP');
+
+CREATE TABLE pedidos_rj PARTITION OF pedidos
+FOR VALUES IN ('RJ');

@@ -1,0 +1,16 @@
+⚠️ 12. Dicas importantes
+Chave primária deve incluir a coluna de particionamento.
+
+Partições devem cobrir todos os valores esperados (senão dá erro ao inserir).
+
+O particionamento é transparente para SELECT, UPDATE, DELETE.
+
+
+
+| Recurso        | Serve para...                            |
+| -------------- | ---------------------------------------- |
+| `PARTITION BY` | Criar tabela particionada                |
+| `FOR VALUES`   | Definir intervalo ou lista para partição |
+| `HASH`         | Distribuir linhas uniformemente          |
+| `LIST`         | Categorizar valores fixos                |
+| `RANGE`        | Dividir por datas, faixas, números       |

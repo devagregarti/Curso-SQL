@@ -1,0 +1,13 @@
+CREATE TABLE acessos (
+    id SERIAL,
+    usuario_id INT
+) PARTITION BY HASH (usuario_id);
+sql
+Copy
+Edit
+
+
+
+
+CREATE TABLE acessos_p0 PARTITION OF acessos FOR VALUES WITH (MODULUS 4, REMAINDER 0);
+CREATE TABLE acessos_p1 PARTITION OF acessos FOR VALUES WITH (MODULUS 4, REMAINDER 1);

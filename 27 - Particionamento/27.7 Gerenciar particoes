@@ -1,0 +1,15 @@
+🧹 10. Gerenciar partições
+Excluir uma partição inteira:
+
+sql
+Copy
+Edit
+DROP TABLE vendas_2024;
+Ver as partições existentes:
+
+sql
+Copy
+Edit
+SELECT inhrelid::regclass AS particao
+FROM pg_inherits
+WHERE inhparent = 'vendas'::regclass;

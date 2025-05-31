@@ -1,0 +1,14 @@
+-- Criando a tabela
+CREATE TABLE vendas (
+    id SERIAL,
+    data_venda DATE NOT NULL,
+    valor NUMERIC,
+    PRIMARY KEY (id, data_venda)
+) PARTITION BY RANGE (data_venda);
+
+-- Criando a particao
+CREATE TABLE vendas_2024 PARTITION OF vendas
+FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+
+CREATE TABLE vendas_2025 PARTITION OF vendas
+FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
