@@ -1,0 +1,16 @@
+⚠️ 8. Dicas práticas de uso
+Use transações sempre que executar duas ou mais alterações dependentes.
+
+Combine com tratamento de erros em procedures ou scripts de backend.
+
+Em sistemas críticos, sempre use transações com controle de exceções.
+
+
+
+BEGIN inicia
+
+COMMIT confirma
+
+ROLLBACK cancela
+
+Ideal para ações em lote, integrações entre tabelas e manutenção da consistência

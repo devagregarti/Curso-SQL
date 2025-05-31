@@ -1,0 +1,6 @@
+| Propriedade      | Significado breve                         |
+| ---------------- | ----------------------------------------- |
+| **Atomicidade**  | Tudo ou nada                              |
+| **Consistência** | O banco sempre estará em um estado válido |
+| **Isolamento**   | Transações não interferem entre si        |
+| **Durabilidade** | Após `COMMIT`, os dados não se perdem     |

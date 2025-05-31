@@ -1,0 +1,5 @@
+| Comando                        | O que faz                                              |
+| ------------------------------ | ------------------------------------------------------ |
+| `BEGIN` ou `START TRANSACTION` | Inicia a transação                                     |
+| `COMMIT`                       | Salva todas as alterações feitas durante a transação   |
+| `ROLLBACK`                     | Cancela todas as alterações feitas durante a transação |

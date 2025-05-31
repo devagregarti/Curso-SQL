@@ -1,0 +1,3 @@
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+Garante que duas transações simultâneas não gerem dados corrompidos.
+Pode causar erros se houver conflito — isso é intencional para proteger os dados.

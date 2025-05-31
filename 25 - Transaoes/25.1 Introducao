@@ -1,0 +1,4 @@
+
+Uma transação é um conjunto de comandos SQL que são executados como uma unidade lógica.
+Ou seja, ou tudo acontece, ou nada acontece.
+
