@@ -1,3 +1,90 @@
+🧱 1. SGBDs (Sistemas Gerenciadores de Banco de Dados)
+Mostre que há diferentes tipos, com foco nos relacionais e também mencione os NoSQL.
 
-	• Introdução às ferramentas mais utilizadas para gerenciar bancos de dados, como phpMyAdmin, MySQL Workbench, ou ferramentas de linha de comando.
-Demonstração de criação de tabelas, inserção de dados e execução de consultas básicas nessas ferramentas.
+🔹 Relacionais:
+PostgreSQL (poderoso e gratuito)
+
+MySQL / MariaDB
+
+SQL Server (Microsoft)
+
+Oracle Database
+
+🔹 Não Relacionais (NoSQL):
+MongoDB (documentos)
+
+Redis (chave-valor, muito usado para cache)
+
+Cassandra (altamente escalável)
+
+🧑‍💻 2. Clientes SQL (interfaces para escrever queries)
+Ferramentas para conectar, consultar e gerenciar o banco de dados.
+
+DBeaver (multi-SGBD, open source)
+
+pgAdmin (específico para PostgreSQL)
+
+DataGrip (pago, da JetBrains)
+
+Azure Data Studio (leve, suporta SQL Server e PostgreSQL)
+
+HeidiSQL (muito leve para MySQL/MariaDB)
+
+🛠️ 3. Ferramentas de Modelagem de Dados
+Para criar e visualizar diagramas ER (entidade-relacionamento) e gerar scripts automaticamente.
+
+dbdiagram.io (ferramenta online gratuita)
+
+SQLDBM (online, visual e fácil)
+
+Lucidchart (também faz diagramas em geral)
+
+MySQL Workbench (para modelar bancos MySQL)
+
+DrawSQL (colaborativo, ideal para ensino)
+
+🧪 4. Ferramentas de Teste e Query Optimization
+Para análise de desempenho, simulação e otimização.
+
+EXPLAIN / EXPLAIN ANALYZE (comando nativo dos SGBDs)
+
+pgBadger (análise de logs no PostgreSQL)
+
+Percona Toolkit (monitoramento e performance para MySQL)
+
+Query Profiler (em DataGrip e DBeaver)
+
+📦 5. Backup, Migração e ETL
+Ferramentas para movimentação de dados com segurança e controle.
+
+pg_dump / pg_restore (PostgreSQL CLI)
+
+mysqldump (MySQL CLI)
+
+Talend (ETL open source)
+
+Pentaho Data Integration (Kettle) (ETL visual)
+
+DBConvert / DBeaver (import/export)
+
+📊 6. Ferramentas de Monitoramento e Administração
+Indicadas para ambientes de produção.
+
+pgAdmin (já vem com painel de estatísticas)
+
+Zabbix (monitoramento de banco e recursos de servidor)
+
+Grafana + Prometheus (para criar dashboards e alertas)
+
+PMM – Percona Monitoring and Management
+
+🌐 7. Ferramentas em Nuvem
+Se quiser introduzir banco de dados em cloud:
+
+Amazon RDS / Aurora (AWS)
+
+Azure SQL Database (Microsoft)
+
+Google Cloud SQL / BigQuery
+
+Supabase (alternativa open source ao Firebase, com PostgreSQL)
