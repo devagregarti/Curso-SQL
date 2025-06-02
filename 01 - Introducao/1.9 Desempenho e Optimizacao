@@ -1,3 +1,58 @@
+ 🔍 Uso de Índices (Indexes)
+O que são índices e como funcionam
 
-	• Otimização de Consultas: Noções básicas sobre como melhorar o desempenho das consultas, como uso de índices adequados e evitar subconsultas desnecessárias.
-	• Análise do Plano de Execução: Introdução ao uso de EXPLAIN ou EXPLAIN ANALYZE para entender como o banco executa uma consulta.
+Quando criar índices (em colunas muito consultadas ou em JOINs)
+
+Cuidado com índices em colunas com muitos valores repetidos (baixa seletividade)
+
+2. 📄 **Evite SELECT ***
+Sempre especifique as colunas necessárias
+
+SELECT * carrega dados desnecessários e afeta o desempenho
+
+3. 🚫 Filtro no lugar certo (WHERE vs HAVING)
+Use WHERE para filtrar linhas antes da agregação
+
+Use HAVING após GROUP BY (para filtrar agregados)
+
+4. 🧠 Evite funções nas colunas do WHERE
+sql
+Copy
+Edit
+-- Evite
+WHERE YEAR(data_criacao) = 2023
+
+-- Melhor
+WHERE data_criacao BETWEEN '2023-01-01' AND '2023-12-31'
+🔹 Funções na coluna impedem o uso do índice.
+
+5. 🪢 JOINs bem planejados
+Verifique se as colunas usadas em JOIN têm índices
+
+Prefira INNER JOIN quando possível (é mais rápido que LEFT JOIN)
+
+6. 📊 Use EXPLAIN (ou EXPLAIN ANALYZE)
+Ferramenta para ver o plano de execução da consulta
+
+Ajuda a entender onde o banco está “sofrendo”
+
+7. 🧹 Evite subqueries desnecessárias
+Prefira JOIN ou CTE (Common Table Expressions) quando possível
+
+8. 🧺 Particionamento de tabelas grandes
+Útil quando há milhões de registros
+
+Melhora leitura e manutenção de dados
+
+9. 📌 LIMIT e paginação
+Para consultas que retornam muitos dados, sempre use LIMIT
+
+Ajuda a reduzir carga em APIs ou interfaces
+
+10. 📦 Manutenção do banco
+Atualizar estatísticas
+
+Reindexar tabelas
+
+Remover registros antigos/desnecessários (archiving)
+
