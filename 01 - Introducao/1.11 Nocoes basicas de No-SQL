@@ -1,5 +1,59 @@
 
-	• Diferenciar bancos de dados relacionais de bancos NoSQL, como MongoDB, Cassandra, etc.
-	• Discussão sobre casos de uso de bancos relacionais versus NoSQL, abordando vantagens e desvantagens.
-Esses tópicos proporcionam uma base sólida para alunos que estão começando a aprender sobre bancos de dados e SQL, e ajudam a preparar o caminho para estudos mais avançados em gerenciamento de banco de dados e otimização de desempenho.
+🧱 O que é NoSQL?
+NoSQL (Not Only SQL) é um tipo de banco de dados projetado para lidar com grandes volumes de dados não estruturados ou semi-estruturados, com alta escalabilidade e flexibilidade.
+
+➡️ Ao contrário dos bancos relacionais (SQL), não usam obrigatoriamente tabelas fixas com colunas e linhas.
+
+🔑 Características principais
+Sem esquema fixo (schema-less) → pode armazenar dados com estrutura flexível.
+
+Alta escalabilidade horizontal → fácil de distribuir entre servidores.
+
+Alto desempenho para leitura/escrita massiva
+
+Não usa SQL tradicional (mas alguns têm linguagens próprias similares)
+
+🧬 Tipos de Bancos NoSQL
+Tipo	Exemplo	Uso comum
+🔹 Documentos	MongoDB, CouchDB	JSON, apps web, e-commerces
+🔹 Chave-valor	Redis, DynamoDB	Cache, sessões, configs rápidas
+🔹 Colunar	Cassandra, HBase	Big Data, logs, análises massivas
+🔹 Grafos	Neo4j, ArangoDB	Redes sociais, mapas, relacionamentos
+
+🗃️ Exemplo simples – MongoDB
+Documento JSON:
+json
+Copy
+Edit
+{
+  "nome": "João",
+  "idade": 30,
+  "enderecos": [
+    { "rua": "Rua A", "cidade": "SP" },
+    { "rua": "Rua B", "cidade": "RJ" }
+  ]
+}
+✅ Flexível: João pode ter 2 endereços, Maria nenhum, e tudo funciona.
+
+🆚 SQL vs NoSQL – Comparativo Rápido
+SQL	NoSQL
+Estrutura rígida	Estrutura flexível
+Relacional (tabelas)	Não-relacional (JSON, chave-valor etc.)
+Escala vertical (mais CPU/memória)	Escala horizontal (mais servidores)
+Ex: PostgreSQL, MySQL	Ex: MongoDB, Redis, Cassandra
+
+🧠 Quando usar NoSQL?
+✅ Sim:
+
+Quando os dados mudam de formato com frequência
+
+Quando há muita leitura/escrita (ex: redes sociais, logs)
+
+Quando precisa de alta escalabilidade
+
+🚫 Não:
+
+Quando há necessidade forte de relacionamentos complexos
+
+Quando precisa de transações fortes e integridade referencial (ex: sistemas bancários)
 
