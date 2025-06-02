@@ -1,0 +1,57 @@
+1. Usuários e Permissões
+O que é: Controlar quem pode fazer o quê no banco de dados.
+
+Exemplo do dia a dia: Assim como em uma empresa nem todo funcionário tem acesso à sala do cofre, no banco de dados nem todo usuário deve poder ver ou modificar todos os dados.
+
+-- Criar um usuário
+CREATE USER joao IDENTIFIED BY 'senha123';
+
+-- Dar permissão para apenas consultar dados
+GRANT SELECT ON vendas TO joao;
+
+
+
+2. Princípio do Menor Privilégio
+O que é: Dar ao usuário apenas o acesso mínimo necessário para realizar seu trabalho.
+
+Exemplo do dia a dia: O caixa do supermercado pode registrar vendas, mas não alterar preços de produtos.
+
+
+-- Dar acesso só à tabela que o usuário precisa
+GRANT SELECT, INSERT ON pedidos TO caixa;
+
+
+
+3. Autenticação
+O que é: Verificar se o usuário é quem diz ser.
+
+Exemplo do dia a dia: Como fazer login com senha no seu e-mail antes de ler mensagens, o banco exige autenticação antes de acesso.
+
+
+
+
+4. Criptografia
+O que é: Proteger dados confidenciais de forma que só pessoas autorizadas possam lê-los.
+
+Exemplo do dia a dia: Seus dados bancários no aplicativo do banco estão criptografados para não serem roubados.
+
+-- Exemplo de campo criptografado (em alguns SGBDs)
+-- Pseudocódigo:
+UPDATE clientes SET senha = ENCRYPT('minhaSenhaSegura') WHERE id = 1;
+
+
+5. SQL Injection e Prevenção
+O que é: Um tipo de ataque onde comandos maliciosos são inseridos em formulários ou URLs.
+
+Exemplo do dia a dia: Um formulário de login sem proteção pode deixar alguém acessar o sistema mesmo sem senha válida.
+
+
+6. Roles (Papéis)
+O que é: Agrupar permissões para facilitar o gerenciamento.
+
+Exemplo do dia a dia: Um gerente tem mais permissões que um estagiário, então podemos criar um "papel" de gerente.
+
+7. Auditoria (Audit Logs)
+O que é: Registrar quem fez o quê no banco de dados.
+
+Exemplo do dia a dia: Como o histórico de transações do seu banco, que mostra tudo o que você fez.
