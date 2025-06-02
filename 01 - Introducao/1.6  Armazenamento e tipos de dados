@@ -1,5 +1,43 @@
+Tipos de Dados em SQL
+1. INT (Integer)
 
-	• Tipos de Dados: Explicação sobre os principais tipos de dados em SQL, como:
-		○ INT, VARCHAR, TEXT, DATE, BOOLEAN, DECIMAL.
-	• Armazenamento de Dados em Tabelas: Como os dados são armazenados em linhas e colunas.
-	• Índices: O que são índices, como eles melhoram o desempenho de consultas, e os custos de criar muitos índices.
+Descrição: Armazena números inteiros, ou seja, sem casas decimais.
+Exemplo:
+idade INT
+— para guardar a idade de uma pessoa.
+Uso comum: idades, contagens, identificadores numéricos.
+2. VARCHAR (Varying Character)
+
+Descrição: Armazena cadeias de caracteres de tamanho variável, até um limite definido.
+Exemplo:
+nome VARCHAR(50)
+— para guardar nomes com até 50 caracteres.
+Uso comum: nomes, títulos, descrições curtas.
+3. TEXT
+
+Descrição: Armazena textos de tamanho variável, sem limite definido.
+Exemplo:
+descricao TEXT
+— para descrições longas ou comentários.
+Uso comum: textos extensos, comentários, artigos.
+4. DATE
+
+Descrição: Armazena datas no formato 'YYYY-MM-DD'.
+Exemplo:
+data_nascimento DATE
+— para guardar a data de nascimento.
+Uso comum: datas de eventos, aniversários.
+5. BOOLEAN
+
+Descrição: Armazena valores verdadeiro ou falso.
+Exemplo:
+ativo BOOLEAN
+— para indicar se um usuário está ativo.
+Uso comum: status, opções binárias.
+6. DECIMAL (ou NUMERIC)
+
+Descrição: Armazena números com casas decimais, ideal para valores financeiros.
+Exemplo:
+preco DECIMAL(10,2)
+— para guardar preços com duas casas decimais.
+Uso comum: valores monetários, medições precisas.
