@@ -1,0 +1,30 @@
+💻 O que é uma Máquina Virtual (VM)?
+Uma máquina virtual (VM) é um computador emulado dentro de outro computador.
+
+🔧 Como funciona?
+Ela roda em cima de um programa chamado hipervisor (ex: VirtualBox, VMware, Hyper-V), que permite criar e gerenciar sistemas operacionais virtuais — como se fosse um computador dentro do seu.
+
+Você pode, por exemplo, rodar Linux dentro do Windows, ou Windows dentro do macOS, sem precisar reiniciar o sistema.
+
+🎯 Para que serve?
+Testar softwares em outros sistemas operacionais
+
+Rodar servidores e bancos de dados isolados
+
+Estudar redes, segurança e administração de sistemas
+
+Evitar danos ao sistema real ao fazer testes
+
+Executar múltiplos ambientes em uma só máquina física
+
+✅ Vantagens:
+Isolamento total entre sistemas
+
+Mais seguro para testes e desenvolvimento
+
+Reutilizável e fácil de apagar ou duplicar
+
+⚠️ Desvantagens:
+Consome mais memória e CPU do que programas comuns
+
+Performance menor do que um sistema instalado diretamente
