@@ -1,0 +1,91 @@
+1. B-tree (padrão e mais comum)
+✅ Quando usar:
+Para buscas de igualdade (=) ou faixas (<, <=, >, >=).
+
+Ideal para colunas como id, email, nome, data.
+
+📌 Exemplo:
+
+CREATE INDEX idx_nome ON clientes(nome);
+💡 Curiosidade:
+É o tipo automático quando você faz CREATE INDEX, a menos que especifique outro.
+
+2. Hash
+✅ Quando usar:
+Para buscas de igualdade exata (=) apenas.
+
+Pode ser mais rápido que B-tree nesse caso, mas não suporta ordenação nem comparação de intervalo.
+
+⚠️ Cuidados:
+Antes do PostgreSQL 10, não era transacional nem confiável.
+
+Não é usado com frequência, pois o B-tree já cobre bem a maioria dos casos.
+
+📌 Exemplo:
+CREATE INDEX idx_email_hash ON clientes USING hash (email);
+3. GIN (Generalized Inverted Index)
+✅ Quando usar:
+Para colunas que armazenam arrays, documentos JSONB, ou busca de texto completo.
+
+📌 Exemplos de uso:
+tags text[], conteudo JSONB, texto_completo tsvector.
+
+
+CREATE INDEX idx_tags ON produtos USING gin (tags);
+
+CREATE INDEX idx_conteudo ON artigos USING gin (conteudo jsonb_path_ops);
+
+-- Texto completo
+CREATE INDEX idx_titulo_gin ON artigos USING gin (to_tsvector('portuguese', titulo));
+4. GiST (Generalized Search Tree)
+✅ Quando usar:
+Para buscas por valores aproximados, dados geográficos, intervalos e similaridade.
+
+📌 Exemplos:
+Com PostGIS (dados espaciais), range types, extensões de busca por similaridade.
+
+
+CREATE INDEX idx_intervalos ON reservas USING gist (periodo);
+
+-- Com extensão pg_trgm (semelhança de strings)
+CREATE INDEX idx_nome_similar ON clientes USING gist (nome gist_trgm_ops);
+5. SP-GiST (Space-partitioned GiST)
+✅ Quando usar:
+Quando os dados podem ser eficientemente particionados no espaço (ex: dados hierárquicos ou de árvore de decisão).
+
+Menos comum, mas útil com tipos de dados como inet, text pattern.
+
+6. BRIN (Block Range Index)
+✅ Quando usar:
+Em tabelas muito grandes onde os dados estão naturalmente ordenados (por exemplo, por data).
+
+Muito leve em termos de espaço e tempo de criação.
+
+⚠️ Atenção:
+Não encontra registros exatos diretamente — ajuda o PostgreSQL a ignorar blocos de disco inteiros que não contêm os dados.
+
+📌 Exemplo:
+
+CREATE INDEX idx_data_brin ON vendas USING brin (data_venda);
+7. Partial Index (índice parcial)
+✅ Quando usar:
+Quando você só precisa indexar parte da tabela (linhas que atendem a uma condição).
+
+📌 Exemplo:
+
+CREATE INDEX idx_clientes_ativos ON clientes(email) WHERE status = 'ativo';
+8. Unique Index
+✅ Quando usar:
+Para garantir que não existam valores duplicados numa coluna ou conjunto de colunas.
+
+📌 Exemplo:
+
+CREATE UNIQUE INDEX idx_email_unique ON clientes(email);
+🧠 Dicas para ensinar
+Use pg_indexes para listar índices existentes:
+
+
+SELECT * FROM pg_indexes WHERE tablename = 'clientes';
+Mostre o plano com EXPLAIN ANALYZE antes e depois de criar o índice.
+
+Dê exemplos visuais de como cada tipo funciona com diferentes tipos de dados.
