@@ -13,9 +13,7 @@ Com índice: o banco navega diretamente até as linhas que interessam.
 
 🧪 Exemplo simples:
 
-sql
-Copy
-Edit
+
 SELECT * FROM clientes WHERE email = 'joao@email.com';
 Se email estiver indexado, a busca será muito mais rápida.
 
@@ -41,9 +39,7 @@ Colunas usadas em cláusulas WHERE, JOIN, ORDER BY, GROUP BY.
 Campos frequentemente pesquisados (como email, cpf, id_produto).
 
 6. Sintaxe básica
-sql
-Copy
-Edit
+
 CREATE INDEX idx_clientes_email ON clientes(email);
 🛑 Tópico: Quando não usar índice?
 7. Cuidado com o excesso de índices
@@ -55,9 +51,7 @@ Cada INSERT, UPDATE e DELETE também atualiza os índices → pode deixar a escr
 
 🧪 Tópico: Testando o impacto na performance
 8. Exemplo prático (PostgreSQL):
-sql
-Copy
-Edit
+
 -- Sem índice
 EXPLAIN ANALYZE SELECT * FROM clientes WHERE telefone = '999999999';
 
@@ -70,26 +64,20 @@ EXPLAIN ANALYZE SELECT * FROM clientes WHERE telefone = '999999999';
 
 📚 Tópico: Índice único (UNIQUE INDEX)
 9. Índices também servem para garantir unicidade:
-sql
-Copy
-Edit
+
 CREATE UNIQUE INDEX idx_email_unique ON clientes(email);
 Garante que dois clientes não possam ter o mesmo email.
 
 🧠 Dica para alunos iniciantes
 10. Use EXPLAIN para entender a performance
-sql
-Copy
-Edit
+
 EXPLAIN SELECT * FROM clientes WHERE nome = 'Ana';
 Ensine a ver se está usando índice (Index Scan) ou não (Seq Scan).
 
 💡 Extras interessantes (se quiser ir além)
 Índice composto: quando o índice cobre mais de uma coluna:
 
-sql
-Copy
-Edit
+
 CREATE INDEX idx_nome_data ON clientes(nome, data_registro);
 Index only scan: quando o índice contém todas as colunas necessárias para a consulta.
 
