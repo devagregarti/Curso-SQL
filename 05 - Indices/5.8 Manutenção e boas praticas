@@ -1,1 +1,124 @@
-.
+.🔧 1. Como monitorar a efetividade dos índices
+🧪 Use pg_stat_user_indexes e pg_stat_user_tables
+Essas views internas mostram quantas vezes um índice foi usado.
+
+📌 Ver índice pouco usado:
+
+
+SELECT
+  relname AS tabela,
+  indexrelname AS indice,
+  idx_scan AS vezes_usado
+FROM
+  pg_stat_user_indexes
+JOIN
+  pg_index ON pg_index.indexrelid = pg_stat_user_indexes.indexrelid
+WHERE
+  idx_scan = 0
+ORDER BY
+  relname;
+Se idx_scan = 0, o índice nunca foi usado desde o último reset das estatísticas.
+
+🔄 Ver estatísticas de leitura geral de índices
+
+SELECT
+  relname,
+  idx_scan,
+  idx_tup_read,
+  idx_tup_fetch
+FROM
+  pg_stat_user_tables
+ORDER BY idx_scan DESC;
+idx_scan: quantas vezes os índices foram usados para buscar dados
+
+idx_tup_read: quantas tuplas foram lidas usando índices
+
+idx_tup_fetch: quantas tuplas foram realmente retornadas após a busca
+
+📉 Use pg_stat_statements para analisar queries reais
+sql
+Copy
+Edit
+-- Ativar a extensão (se ainda não estiver ativa)
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+-- Ver as consultas mais executadas
+SELECT
+  query,
+  calls,
+  total_exec_time,
+  rows
+FROM
+  pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 10;
+Isso ajuda a cruzar quais consultas mais pesadas podem se beneficiar de um índice — ou se estão ignorando os existentes.
+
+🗑 Detectar índices duplicados ou redundantes
+sql
+Copy
+Edit
+SELECT
+  indrelid::regclass AS tabela,
+  indexrelid::regclass AS indice,
+  pg_size_pretty(pg_relation_size(indexrelid)) AS tamanho
+FROM
+  pg_index
+WHERE
+  indisunique = false
+ORDER BY pg_relation_size(indexrelid) DESC;
+Se você tem muitos índices com colunas parecidas (ex: email, email, nome, nome, email), pode haver redundância.
+
+✅ 2. Boas práticas de manutenção de índices
+🧼 1. Remova índices que não estão sendo usados
+Se idx_scan = 0 por muito tempo → candidato à exclusão
+
+Mas cuidado: sempre teste em ambiente de homologação antes!
+
+🔁 2. Reindexe índices corrompidos ou inchados
+Com o tempo, índices podem ficar fragmentados.
+
+Use REINDEX para reconstruí-los:
+
+
+REINDEX INDEX idx_nome;
+-- Ou para todos os índices de uma tabela:
+REINDEX TABLE clientes;
+📏 3. Evite criar índice automaticamente para tudo
+Não indexe colunas com:
+
+Poucos valores distintos
+
+Alta taxa de atualização
+
+Uso raro em filtros/junções
+
+📊 4. Atualize estatísticas com frequência
+O otimizador depende de estatísticas atualizadas.
+
+Execute:
+
+
+ANALYZE;
+-- Ou em tabela específica:
+ANALYZE clientes;
+📆 5. Agende uma revisão periódica dos índices
+A cada 3 a 6 meses, revise:
+
+Quais índices existem
+
+Quais estão sendo usados
+
+Quais poderiam ser otimizados ou removidos
+
+🧠 6. Documente os índices e o motivo de existência
+Em projetos grandes, documente:
+
+Quem criou o índice
+
+Por que foi criado
+
+Qual consulta ele está otimizando
+
+Quando foi a última revisão
+
