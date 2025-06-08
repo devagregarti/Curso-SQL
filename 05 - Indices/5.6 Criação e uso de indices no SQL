@@ -1,1 +1,80 @@
-c
+🧱 1. Índice B-tree (padrão)
+Usado para: igualdade, <, >, BETWEEN, ORDER BY, JOIN, etc.
+
+sql
+Copy
+Edit
+CREATE INDEX idx_nome_cliente ON clientes (nome);
+🔍 2. Índice Hash
+Usado somente para buscas de igualdade = (não ordena, não serve para <, > etc.)
+
+sql
+Copy
+Edit
+CREATE INDEX idx_email_hash ON usuarios USING HASH (email);
+📚 3. Índice GIN (Generalized Inverted Index)
+Usado para: JSONB, ARRAY, tsvector, full-text search, etc.
+
+sql
+Copy
+Edit
+-- Para JSONB
+CREATE INDEX idx_jsonb_gin ON produtos USING GIN (atributos_jsonb);
+
+-- Para full-text search
+CREATE INDEX idx_tsv_gin ON artigos USING GIN (to_tsvector('portuguese', conteudo));
+🌳 4. Índice GiST (Generalized Search Tree)
+Usado para: buscas espaciais, aproximação, trigramas, etc.
+
+sql
+Copy
+Edit
+-- Para extensão PostGIS (geometria)
+CREATE INDEX idx_mapa_gist ON mapas USING GIST (localizacao);
+
+-- Para trigramas (com extensão pg_trgm instalada)
+CREATE INDEX idx_nome_trgm ON clientes USING GIST (nome gist_trgm_ops);
+🧮 5. Índice BRIN (Block Range INdex)
+Leve e eficiente para colunas ordenadas naturalmente (como id, data, etc.)
+
+sql
+Copy
+Edit
+CREATE INDEX idx_data_brin ON vendas USING BRIN (data_compra);
+🔍 6. Índice parcial
+Cria índice só para parte da tabela (útil quando só consulta uma parte dos dados)
+
+sql
+Copy
+Edit
+CREATE INDEX idx_ativos ON usuarios (email) WHERE ativo = true;
+📏 7. Índice multicoluna
+Usado quando a consulta filtra ou ordena por duas ou mais colunas combinadas
+
+sql
+Copy
+Edit
+CREATE INDEX idx_cliente_data ON pedidos (cliente_id, data_pedido);
+🧠 8. Índice único (UNIQUE)
+Garante unicidade e também acelera buscas
+
+sql
+Copy
+Edit
+CREATE UNIQUE INDEX idx_unico_email ON usuarios (email);
+🧼 9. Remover um índice
+sql
+Copy
+Edit
+DROP INDEX idx_nome_cliente;
+📋 Extras
+Ver todos os índices de uma tabela:
+sql
+Copy
+Edit
+\d clientes
+Ver detalhes com consulta:
+sql
+Copy
+Edit
+SELECT * FROM pg_indexes WHERE tablename = 'clientes';

@@ -1,1 +1,103 @@
-esc
+🔍 1. Entenda como a aplicação usa os dados
+Quais são as consultas mais comuns?
+
+Filtros (WHERE)
+
+Junções (JOIN ON)
+
+Ordenações (ORDER BY)
+
+Agrupamentos (GROUP BY)
+
+Quais colunas aparecem com mais frequência nesses comandos?
+
+🧠 Exemplo real:
+Se os usuários da aplicação sempre buscam clientes pelo nome ou email:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes WHERE nome ILIKE 'joão%' OR email = 'joao@email.com';
+→ Essas colunas são boas candidatas a índices.
+
+📊 2. Verifique o volume da tabela
+Tabelas pequenas (centenas de linhas) não precisam de índice.
+
+Tabelas médias e grandes (milhares ou milhões) podem se beneficiar muito.
+
+📌 Dica:
+
+sql
+Copy
+Edit
+SELECT relname AS tabela, n_live_tup AS linhas
+FROM pg_stat_user_tables
+ORDER BY n_live_tup DESC;
+📈 3. Verifique a seletividade da coluna
+Quanto mais distintos os valores, melhor o índice funciona.
+
+Índices são mais úteis em colunas como: email, cpf, id, etc.
+
+São menos úteis em colunas como ativo, status, sexo, etc.
+
+📌 Dica para ver a seletividade:
+
+sql
+Copy
+Edit
+SELECT COUNT(DISTINCT status), COUNT(*) FROM pedidos;
+Se tiver 1 milhão de linhas e só 3 valores distintos, não vale a pena indexar status.
+
+🔄 4. A coluna é frequentemente atualizada?
+Colunas que mudam com frequência tornam o índice um peso (custo de manutenção).
+
+Evite indexar colunas com muitos UPDATEs.
+
+🧠 Exemplo ruim:
+
+sql
+Copy
+Edit
+UPDATE pedidos SET status = 'entregue';
+Se status estiver indexado, isso afeta milhares de entradas no índice.
+
+📅 5. A coluna cresce de forma ordenada? (para BRIN)
+Colunas como data_criacao, id_serial, data_evento são ideais para BRIN.
+
+Muito útil em tabelas de log, histórico, auditoria, etc.
+
+🛠 6. Use o plano de execução para avaliar a necessidade real
+Rode a consulta com EXPLAIN ANALYZE e veja se está usando seq scan ou index scan.
+
+📌 Exemplo:
+
+sql
+Copy
+Edit
+EXPLAIN ANALYZE
+SELECT * FROM vendas WHERE cliente_id = 123;
+Se mostrar Seq Scan, talvez precise de índice em cliente_id.
+
+🧹 7. Use índices parciais para evitar excesso de manutenção
+Quando a maioria dos dados não interessa nas consultas, um índice parcial reduz espaço e custo.
+
+🧠 Exemplo:
+
+sql
+Copy
+Edit
+CREATE INDEX idx_pedidos_ativos ON pedidos (status)
+WHERE status = 'ativo';
+
+
+📌 Checklist final para decidir se vale a pena criar um índice
+
+
+| Critério                                         | Está presente? |
+| ------------------------------------------------ | -------------- |
+| A coluna é usada em `WHERE`, `JOIN`, `ORDER BY`? | ✅ ou ❌      |
+| A tabela tem milhares ou milhões de linhas?      | ✅ ou ❌      |
+| A coluna tem muitos valores distintos?           | ✅ ou ❌      |
+| A coluna muda pouco?                             | ✅ ou ❌      |
+| O `EXPLAIN ANALYZE` mostra `Seq Scan`?           | ✅ ou ❌      |
+

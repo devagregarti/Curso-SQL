@@ -1,1 +1,109 @@
-c
+❗ Desvantagens e custos do uso de índices (com exemplos práticos)
+📌 1. Índices ocupam espaço em disco
+Cada índice criado gera uma estrutura extra que precisa ser armazenada.
+
+Em tabelas grandes com muitos índices, isso pode triplicar o uso de disco.
+
+🧠 Exemplo prático:
+
+sql
+Copy
+Edit
+CREATE INDEX idx_nome ON clientes(nome);
+CREATE INDEX idx_email ON clientes(email);
+CREATE INDEX idx_telefone ON clientes(telefone);
+Se a tabela clientes tiver milhões de linhas, cada índice adiciona centenas de MBs — ou até GBs.
+
+🐢 2. Índices desaceleram INSERTs, UPDATEs e DELETEs
+Toda vez que uma linha é modificada, o banco precisa atualizar todos os índices relacionados.
+
+Muitos índices = operações de escrita mais lentas.
+
+🧠 Exemplo prático:
+
+sql
+Copy
+Edit
+UPDATE produtos SET preco = preco * 1.1;
+Se preco estiver indexado, o PostgreSQL precisa atualizar o índice para todas as linhas modificadas.
+
+❌ 3. Índice mal utilizado pode nunca ser usado
+Um índice só é usado se a consulta conseguir se beneficiar dele.
+
+Em tabelas pequenas, o otimizador prefere escanear tudo do que acessar o índice.
+
+🧠 Exemplo prático:
+
+sql
+Copy
+Edit
+SELECT * FROM categorias WHERE nome = 'Bebidas';
+Se a tabela categorias tiver 10 linhas, o índice será ignorado. Só desperdiça espaço.
+
+⚠️ 4. Índices em colunas com muitos valores repetidos são pouco eficazes
+Se quase todas as linhas têm o mesmo valor, o índice não ajuda o otimizador.
+
+🧠 Exemplo prático:
+
+sql
+Copy
+Edit
+SELECT * FROM usuarios WHERE ativo = true;
+Se 95% dos usuários forem ativos, o índice em ativo quase nunca será usado.
+
+🔀 5. Índices em colunas que mudam com frequência são problemáticos
+Exigem reescrita constante no índice → impacto em performance.
+
+🧠 Exemplo prático:
+
+sql
+Copy
+Edit
+UPDATE pedidos SET status = 'Processado' WHERE id = 123;
+Se status for indexado e mudar com frequência, o índice vira um gargalo.
+
+✅ Quando um índice VALE a pena? (passo a passo para decidir)
+🔍 Passo 1: A coluna é usada com frequência em WHERE, JOIN, ORDER BY, GROUP BY?
+Sim → Continue
+
+Não → Provavelmente não precisa de índice
+
+🔍 Passo 2: A tabela tem MUITAS linhas? (milhares ou milhões)
+Sim → Índice ajuda
+
+Não → Pode ser desnecessário
+
+🔍 Passo 3: A coluna tem alta seletividade?
+Ou seja, muitos valores diferentes
+
+Ex: cpf, email, id → Boa seletividade
+
+Ex: ativo, status → Baixa seletividade → índice fraco
+
+🔍 Passo 4: A coluna muda pouco?
+Sim → Boa candidata
+
+Não → Cuidado! Evite indexar colunas que mudam constantemente
+
+🔍 Passo 5: Teste com EXPLAIN ANALYZE
+Antes de criar o índice, rode a consulta com:
+
+sql
+Copy
+Edit
+EXPLAIN ANALYZE SELECT ... WHERE coluna = valor;
+Depois crie o índice e rode de novo. Veja se o plano mudou, se ele usa o índice e se o tempo melhorou.
+
+🧠 Dica bônus: Use índices parciais ou multicoluna com critério
+Índice parcial: só para linhas que interessam
+
+sql
+Copy
+Edit
+CREATE INDEX idx_ativos ON usuarios(ativo) WHERE ativo = true;
+Índice multicoluna: útil quando a consulta usa mais de uma coluna combinada
+
+sql
+Copy
+Edit
+CREATE INDEX idx_nome_data ON vendas(cliente_id, data_compra);
