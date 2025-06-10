@@ -1,1 +1,44 @@
-des
+🔁 Introdução à Desnormalização
+O que é Desnormalização?
+Desnormalização é o processo inverso da normalização: consiste em combinar tabelas ou duplicar dados de propósito para melhorar o desempenho em determinadas situações.
+
+A ideia é otimizar consultas, mesmo que isso signifique abrir mão de parte da estrutura ideal.
+
+Por que desnormalizar?
+Em sistemas com muitas consultas complexas e lentas, a normalização pode exigir muitos JOINs, o que afeta a performance.
+
+A desnormalização reduz o número de JOINs necessários, tornando a leitura de dados mais rápida.
+
+Útil em sistemas de leitura intensa, como relatórios ou dashboards.
+
+Onde a desnormalização ajuda?
+Em sistemas que precisam de respostas rápidas com grandes volumes de dados.
+
+Em data warehouses, onde a prioridade é leitura rápida, não inserções constantes.
+
+Em ambientes com análises complexas, como BI (Business Intelligence).
+
+Exemplo prático
+Em vez de separar cliente e cidade em tabelas diferentes, você pode repetir o nome da cidade direto na tabela de clientes, assim evita um JOIN.
+
+sql
+Copy
+Edit
+-- Em vez de fazer isso:
+SELECT c.nome, ci.nome
+FROM clientes c
+JOIN cidades ci ON c.cidade_id = ci.id;
+
+-- Você já armazena o nome da cidade em 'clientes':
+SELECT nome, cidade_nome FROM clientes;
+Cuidado com a desnormalização
+Pode causar redundância de dados.
+
+Pode aumentar o risco de inconsistência (ex: atualizar um dado em um lugar, mas esquecer de outro).
+
+Deve ser usada com planejamento, analisando a real necessidade.
+
+Conclusão
+A desnormalização não é um erro — é uma decisão técnica, feita com base em desempenho e necessidade.
+
+O ideal é normalizar para garantir integridade, e desnormalizar apenas onde for necessário por questões de performance.

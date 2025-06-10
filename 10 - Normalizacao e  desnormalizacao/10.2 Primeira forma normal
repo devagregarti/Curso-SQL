@@ -1,0 +1,58 @@
+🔢 Primeira Forma Normal (1ª Forma Normal – 1FN)
+✅ O que é a Primeira Forma Normal?
+A 1ª Forma Normal (1FN) estabelece que todos os valores em uma tabela devem ser atômicos.
+
+Ou seja:
+
+Cada coluna deve conter um único valor, sem listas, repetições ou grupos de dados.
+
+Cada linha deve ser única (com um identificador, normalmente uma chave primária).
+
+🎯 Objetivo da 1FN
+Evitar a redundância e melhorar a organização dos dados.
+
+Eliminar colunas multivaloradas (com listas de valores).
+
+Garantir que cada campo represente uma única informação.
+
+❌ Exemplo fora da 1FN (errado)
+plaintext
+Copy
+Edit
+Tabela: Clientes
+
+| id | nome     | telefones         |
+|----|----------|-------------------|
+| 1  | João     | 1234, 5678        |
+| 2  | Maria    | 9999              |
+➡️ Aqui, a coluna telefones tem valores múltiplos em uma única célula, o que viola a 1FN.
+
+✅ Exemplo em 1FN (correto)
+plaintext
+Copy
+Edit
+Tabela: Telefones_Clientes
+
+| id_cliente | telefone |
+|------------|----------|
+| 1          | 1234     |
+| 1          | 5678     |
+| 2          | 9999     |
+➡️ Agora cada linha contém apenas um valor por coluna, e os dados estão organizados de forma atômica.
+
+🛠️ Como implementar a 1FN
+Identifique colunas com múltiplos valores (listas, conjuntos, repetições).
+
+Divida essas informações em linhas separadas ou crie novas tabelas.
+
+Use chaves primárias e estrangeiras para manter os relacionamentos entre os dados.
+
+Garanta que todas as colunas tenham dados indivisíveis e consistentes.
+
+📌 Dicas e observações importantes
+A 1FN é a base da normalização — não seguir a 1FN compromete todo o restante do modelo.
+
+Em muitos sistemas legados, é comum encontrar violação da 1FN por pressa no desenvolvimento ou falta de planejamento.
+
+Se o aluno entender bem a 1FN, ele já vai estar um passo à frente na modelagem de dados relacional.
+

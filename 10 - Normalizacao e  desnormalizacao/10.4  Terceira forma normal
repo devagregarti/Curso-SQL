@@ -1,0 +1,64 @@
+3️⃣ Terceira Forma Normal (3ª Forma Normal – 3FN)
+✅ O que é a Terceira Forma Normal?
+A 3ª Forma Normal (3FN) busca eliminar dependências transitivas.
+
+➡️ Para uma tabela estar na 3FN, ela precisa:
+
+Estar na 2ª Forma Normal.
+
+Ter todos os campos não-chave diretamente dependentes da chave primária, e não de outro campo não-chave.
+
+🧠 Conceito-chave: Dependência Transitiva
+Uma dependência transitiva acontece quando:
+
+Campo A → Campo B → Campo C
+Mas o correto seria: Campo A → Campo C direto
+
+Ou seja, um atributo depende de outro atributo que não é a chave primária, o que cria uma cadeia desnecessária.
+
+❌ Exemplo fora da 3FN
+plaintext
+Copy
+Edit
+Tabela: Funcionarios
+
+| id_func | nome      | id_departamento | nome_departamento |
+|--------|-----------|------------------|--------------------|
+| 1      | Ana       | 10               | Financeiro         |
+| 2      | João      | 20               | RH                 |
+➡️ Aqui, nome_departamento depende de id_departamento, que por sua vez depende da chave primária id_func.
+Ou seja, é uma dependência transitiva:
+id_func → id_departamento → nome_departamento
+
+✅ Exemplo em 3FN (corrigido)
+Dividimos em duas tabelas:
+
+plaintext
+Copy
+Edit
+Tabela: Funcionarios
+| id_func | nome  | id_departamento |
+|---------|-------|------------------|
+| 1       | Ana   | 10               |
+| 2       | João  | 20               |
+
+Tabela: Departamentos
+| id_departamento | nome_departamento |
+|------------------|-------------------|
+| 10               | Financeiro        |
+| 20               | RH                |
+➡️ Agora, cada campo depende diretamente da sua chave primária, sem dependência de outro campo não-chave.
+
+🛠️ Como aplicar a 3FN
+Garanta que a tabela esteja na 2FN.
+
+Verifique se algum campo não-chave depende de outro campo não-chave.
+
+Se houver, mova o campo dependente para uma nova tabela, e use chave estrangeira para manter a relação.
+
+📌 Dicas importantes
+A 3FN refina ainda mais a estrutura, garantindo um banco coeso e consistente.
+
+Ajuda a evitar duplicações de informações indiretas (como nome de departamentos, categorias, etc.).
+
+Muitas vezes, a 3FN é o ponto ideal entre organização e desempenho para sistemas OLTP (transacionais).

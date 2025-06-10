@@ -1,0 +1,63 @@
+✌️ Segunda Forma Normal (2ª Forma Normal – 2FN)
+✅ O que é a Segunda Forma Normal?
+A 2ª Forma Normal (2FN) trata da dependência parcial de atributos em relação à chave primária composta.
+
+Ou seja:
+
+Para estar na 2FN, a tabela deve primeiro estar na 1FN.
+
+Depois, todos os atributos não-chave devem depender da chave primária como um todo, e não só de parte dela.
+
+🧠 Conceito-chave: Dependência Parcial
+Uma dependência parcial ocorre quando um campo depende apenas de parte da chave primária, e não da chave completa (em tabelas com chave composta).
+
+Isso indica que o atributo está no lugar errado e deve ser movido para uma tabela separada.
+
+❌ Exemplo fora da 2FN
+plaintext
+Copy
+Edit
+Tabela: Pedidos_Produtos
+
+| pedido_id | produto_id | nome_cliente | quantidade |
+|-----------|------------|--------------|------------|
+| 1         | 101        | João         | 2          |
+| 1         | 102        | João         | 1          |
+➡️ A chave primária aqui é (pedido_id, produto_id).
+Mas o campo nome_cliente só depende de pedido_id, e não do par completo. Isso viola a 2FN.
+
+✅ Exemplo em 2FN (corrigido)
+Dividimos a tabela em duas:
+
+plaintext
+Copy
+Edit
+Tabela: Pedidos
+| pedido_id | nome_cliente |
+|-----------|--------------|
+| 1         | João         |
+
+Tabela: Pedidos_Produtos
+| pedido_id | produto_id | quantidade |
+|-----------|------------|------------|
+| 1         | 101        | 2          |
+| 1         | 102        | 1          |
+➡️ Agora, nome_cliente está na tabela onde faz sentido, e cada atributo depende da chave correta.
+
+🛠️ Como aplicar a 2FN
+Garanta que a tabela já esteja na 1FN.
+
+Identifique a chave primária — principalmente se for composta.
+
+Verifique se todos os campos dependem da chave como um todo.
+
+Separe os dados que dependem apenas de parte da chave em tabelas específicas.
+
+Use chaves estrangeiras para manter os relacionamentos entre as tabelas.
+
+📌 Dicas importantes
+A 2FN evita redundância e melhora a estrutura de tabelas com chave composta.
+
+Tabelas com chave simples (uma só coluna) normalmente já atendem à 2FN automaticamente.
+
+Se um campo repete dados desnecessariamente em várias linhas, ele pode estar violando a 2FN.

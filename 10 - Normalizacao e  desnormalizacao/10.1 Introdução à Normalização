@@ -1,1 +1,29 @@
 
+📚 Introdução à Normalização
+O que é Normalização?
+É um processo para organizar os dados em um banco de dados de forma eficiente e sem redundâncias desnecessárias.
+
+Ajuda a evitar problemas como dados duplicados, inconsistentes e facilita a manutenção do banco.
+
+Por que normalizar?
+Melhora a qualidade dos dados, evitando repetição e inconsistência.
+
+Facilita a atualização e manutenção do banco, pois cada informação fica em um lugar só.
+
+Garante que os dados estejam bem estruturados, ajudando no desempenho das consultas.
+
+Quais são as formas normais?
+Existem várias formas normais, mas as principais e mais usadas são:
+
+1ª Forma Normal (1NF): garante que cada coluna contenha valores atômicos (simples, indivisíveis).
+
+2ª Forma Normal (2NF): além da 1NF, elimina dependências parciais de chave primária em tabelas compostas.
+
+3ª Forma Normal (3NF): além da 2NF, elimina dependências transitivas, ou seja, quando um campo depende de outro que não a chave primária.
+
+Onde a normalização ajuda?
+Em sistemas que precisam manter a integridade dos dados a longo prazo.
+
+Em bancos que sofrerão muitas atualizações e inserções.
+
+Em evitar inconsistências e facilitar o entendimento do modelo.
