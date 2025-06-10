@@ -18,4 +18,4 @@ Delete (Excluir): Remove registros do banco.
 
 sql
 DELETE FROM usuarios WHERE nome = 'João';
-PostgreSQL tem recursos avançados como transações, constraints e otimizações que tornam essas operações mais seguras e eficientes. Quer que eu explore algum desses aspectos com mais detalhes?
+PostgreSQL tem recursos avançados como transações, constraints e otimizações que tornam essas operações mais seguras e eficientes. Quer que eu explore algum desses aspectos com mais detalhes?  
