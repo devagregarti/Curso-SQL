@@ -1,0 +1,34 @@
+🔒 Integridade de Dados na Modelagem
+O que é integridade de dados?
+É o conjunto de regras e práticas que garantem que os dados armazenados no banco sejam corretos, consistentes e confiáveis ao longo do tempo.
+
+Por que a integridade é importante?
+Evita dados duplicados, incorretos ou inconsistentes.
+
+Garante que as relações entre os dados estejam corretas.
+
+Protege o banco contra erros e falhas que possam comprometer a qualidade das informações.
+
+Tipos principais de integridade
+Integridade de Entidade
+
+Cada registro deve ser único e identificável, normalmente garantido pela chave primária.
+
+Integridade Referencial
+
+Mantém a consistência entre tabelas relacionadas, usando chaves estrangeiras para assegurar que dados referenciados existam.
+
+Integridade de Domínio
+
+Garante que os valores nas colunas estejam dentro de um conjunto válido, respeitando tipos de dados, restrições e constraints.
+
+Integridade de Usuário
+
+Regras de negócio específicas definidas para assegurar que os dados façam sentido dentro do contexto da aplicação.
+
+Como garantir integridade?
+Definindo corretamente chaves primárias e estrangeiras.
+
+Usando constraints como NOT NULL, UNIQUE, CHECK, DEFAULT.
+
+Aplicando regras de validação na aplicação e banco de dados.

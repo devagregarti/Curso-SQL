@@ -1,0 +1,40 @@
+🔗 Tabelas Associativas (Tabelas de Junção)
+O que são?
+São tabelas usadas para representar relacionamentos muitos-para-muitos (N:N) entre duas entidades.
+
+Elas armazenam as ligações entre os registros das duas tabelas principais.
+
+Por que usar tabelas associativas?
+Porque bancos relacionais não permitem relacionamentos N:N diretamente.
+
+Para organizar melhor os dados e garantir integridade.
+
+Como funcionam?
+A tabela associativa tem pelo menos duas colunas que são chaves estrangeiras, cada uma referenciando uma das tabelas relacionadas.
+
+Pode ter colunas extras com informações específicas do relacionamento.
+
+Exemplo prático
+Imagine que temos:
+
+Tabela Alunos
+
+Tabela Disciplinas
+
+Cada aluno pode cursar várias disciplinas, e cada disciplina pode ter vários alunos. A tabela associativa ficaria assim:
+
+sql
+Copy
+Edit
+CREATE TABLE Alunos_Disciplinas (
+  aluno_id INT,
+  disciplina_id INT,
+  data_matricula DATE,
+  PRIMARY KEY (aluno_id, disciplina_id),
+  FOREIGN KEY (aluno_id) REFERENCES Alunos(id),
+  FOREIGN KEY (disciplina_id) REFERENCES Disciplinas(id)
+);
+Benefícios
+Representa relacionamentos complexos com facilidade.
+
+Permite guardar informações extras do relacionamento (como data de matrícula).

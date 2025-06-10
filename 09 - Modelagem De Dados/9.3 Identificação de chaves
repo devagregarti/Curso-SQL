@@ -1,1 +1,38 @@
-ident
+🔑 Identificação de Chaves
+O que são chaves?
+São atributos (ou conjuntos de atributos) que identificam unicamente cada registro em uma tabela.
+
+Tipos principais de chaves:
+Chave Primária (Primary Key)
+
+Identifica unicamente cada linha da tabela.
+
+Não aceita valores nulos e deve ser única.
+
+Exemplo: id de um cliente, número de matrícula.
+
+Chave Alternativa (Alternate Key)
+
+Outras colunas que também podem identificar registros unicamente, mas não são a chave primária.
+
+Exemplo: número de CPF, e-mail (quando únicos).
+
+Chave Estrangeira (Foreign Key)
+
+Coluna que cria relacionamento entre tabelas, referenciando uma chave primária em outra tabela.
+
+Garante integridade referencial.
+
+Chave Candidata (Candidate Key)
+
+Conjunto de colunas que poderiam ser chave primária (únicas e não nulas).
+
+A chave primária é escolhida entre essas candidatas.
+
+Por que identificar chaves?
+Para garantir que cada registro seja único e possa ser referenciado corretamente.
+
+Para criar relacionamentos claros entre tabelas.
+
+Para garantir integridade e evitar duplicidades.
+

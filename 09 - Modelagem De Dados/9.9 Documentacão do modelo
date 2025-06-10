@@ -1,0 +1,36 @@
+📝 Documentação do Modelo de Dados
+Por que documentar o modelo?
+Facilita o entendimento do banco por qualquer pessoa (e por você no futuro).
+
+Ajuda na manutenção, atualizações e auditorias.
+
+Evita erros por falta de conhecimento sobre o que cada tabela e campo representam.
+
+O que documentar?
+Entidades (tabelas): nome, propósito e descrição.
+
+Atributos (colunas): tipo de dado, restrições, e o que representam.
+
+Relacionamentos: como as tabelas se conectam.
+
+Regras e restrições: validações, chaves, índices.
+
+Exceções ou observações especiais.
+
+Técnica simples para documentar: Dicionário de Dados
+É uma tabela (ou arquivo) que lista todos os elementos do banco com suas descrições.
+
+Pode ser feita em Excel, Google Sheets, ou mesmo num arquivo texto.
+
+Exemplo básico de dicionário de dados
+Tabela	Coluna	Tipo	Restrição	Descrição
+Clientes	id	INT	PRIMARY KEY	Identificador único do cliente
+Clientes	nome	VARCHAR	NOT NULL	Nome completo do cliente
+Pedidos	id	INT	PRIMARY KEY	Identificador único do pedido
+Pedidos	cliente_id	INT	FOREIGN KEY	Referência ao cliente que fez o pedido
+Pedidos	data_pedido	DATE	NOT NULL	Data em que o pedido foi realizado
+
+Dica extra
+Inclua no dicionário a versão do modelo e data da última atualização.
+
+Mantenha o documento atualizado junto com as mudanças no banco.

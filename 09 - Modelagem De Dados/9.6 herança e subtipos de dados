@@ -1,0 +1,27 @@
+🌳 Herança e Subtipos de Dados em Modelagem
+O que é herança?
+É um conceito onde uma entidade herda características (atributos e relacionamentos) de outra entidade mais geral.
+
+Assim, criamos subtipos que são especializações de um tipo mais amplo (supertipo).
+
+Por que usar herança e subtipos?
+Para organizar dados de forma mais eficiente e clara, evitando repetição.
+
+Para representar diferenças específicas dentro de uma mesma categoria geral.
+
+Exemplo prático
+Entidade Pessoa (supertipo) com atributos comuns: nome, data de nascimento.
+
+Subtipos:
+
+Cliente (atributos específicos: limite de crédito, data de cadastro)
+
+Funcionário (atributos específicos: cargo, salário)
+
+Como isso ajuda na modelagem?
+Facilita o entendimento e manutenção do banco.
+
+Evita tabelas muito grandes com muitos atributos desnecessários para todos os registros.
+
+Permite consultas específicas para cada subtipo.
+

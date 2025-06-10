@@ -1,1 +1,38 @@
-rel
+🔗 Relacionamentos entre Entidades
+O que são?
+Relacionamentos mostram como as entidades estão conectadas entre si dentro do banco de dados.
+
+Eles indicam a associação ou ligação entre duas ou mais entidades.
+
+Por que os relacionamentos são importantes?
+Representam as interações reais entre dados.
+
+Permitem organizar melhor a estrutura do banco.
+
+Facilitam consultas que envolvem mais de uma entidade.
+
+Garantem integridade e consistência nos dados relacionados.
+
+Tipos comuns de relacionamentos
+Um-para-um (1:1)
+
+Cada registro de uma entidade está ligado a no máximo um registro da outra.
+
+Exemplo: Cada funcionário tem um crachá único.
+
+Um-para-muitos (1:N)
+
+Um registro de uma entidade pode estar ligado a vários registros de outra.
+
+Exemplo: Um cliente pode fazer vários pedidos.
+
+Muitos-para-muitos (N:N)
+
+Vários registros de uma entidade podem estar ligados a vários registros de outra.
+
+Exemplo: Alunos e disciplinas — um aluno pode cursar várias disciplinas e cada disciplina tem vários alunos.
+
+Como representar no banco?
+Com chaves estrangeiras (foreign keys).
+
+Relacionamentos muitos-para-muitos normalmente precisam de uma tabela intermediária (tabela de junção).

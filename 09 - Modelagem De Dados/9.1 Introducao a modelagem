@@ -1,0 +1,24 @@
+
+📐 Modelagem de Dados
+O que é?
+É o processo de organizar e estruturar os dados que serão armazenados em um banco, para que eles façam sentido e sejam eficientes de usar.
+
+Ajuda a transformar informações do mundo real em tabelas, colunas e relacionamentos dentro do banco de dados.
+
+Por que a modelagem de dados é importante?
+Facilita a organização dos dados de forma lógica e eficiente.
+
+Melhora a qualidade e integridade das informações.
+
+Evita redundâncias e inconsistências.
+
+Permite consultas e relatórios mais rápidos e precisos.
+
+Facilita a manutenção e evolução do sistema ao longo do tempo.
+
+Como a modelagem ajuda na prática?
+Ajuda a entender quais informações precisam ser armazenadas.
+
+Define como essas informações se relacionam entre si.
+
+Ajuda a decidir quais tabelas criar, quais colunas elas terão, e como elas se conectam.

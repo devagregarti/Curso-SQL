@@ -1,0 +1,39 @@
+⚠️ Restrições e Regras de Negócio
+O que são?
+Restrições são limitações definidas no banco de dados para garantir que os dados estejam corretos e consistentes.
+
+Regras de negócio são políticas e condições específicas do contexto da empresa ou sistema que definem como os dados devem ser tratados.
+
+Por que são importantes?
+Garantem a integridade e validade dos dados.
+
+Evitam erros e dados inconsistentes.
+
+Alinham o banco de dados com as necessidades reais do negócio.
+
+Exemplos de restrições comuns
+NOT NULL: campo obrigatório.
+
+UNIQUE: valor único, sem duplicatas.
+
+CHECK: validação personalizada (ex: idade > 18).
+
+DEFAULT: valor padrão quando não especificado.
+
+FOREIGN KEY: mantém integridade entre tabelas.
+
+Exemplos de regras de negócio
+Um pedido não pode ser registrado sem um cliente válido.
+
+O estoque não pode ficar negativo.
+
+O desconto máximo para um produto é 20%.
+
+Um funcionário só pode ter um cargo ativo por vez.
+
+Como aplicar no banco?
+Usando constraints para regras que o banco pode impor automaticamente.
+
+Criando triggers e procedures para regras mais complexas.
+
+Validando também na aplicação, para garantir a lógica do negócio.

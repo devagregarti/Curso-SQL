@@ -1,1 +1,20 @@
-ent
+🧩 Entidades e Atributos
+O que são Entidades?
+Entidade é qualquer objeto, pessoa, lugar, evento ou conceito que precisa ser representado no banco de dados.
+
+Exemplo: Cliente, Produto, Pedido, Funcionário.
+
+O que são Atributos?
+Atributos são as características ou propriedades que descrevem uma entidade.
+
+Exemplo: Para a entidade Cliente, os atributos podem ser nome, telefone, endereço, email.
+
+Como eles se relacionam?
+Cada entidade vira uma tabela no banco.
+
+Cada atributo vira uma coluna dessa tabela.
+
+Por que entender isso é importante?
+Ajuda a organizar os dados de forma clara e estruturada.
+
+Facilita a criação de um banco de dados eficiente e que reflita o mundo real.
