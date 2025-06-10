@@ -1,1 +1,145 @@
-reade
+🎯 Objetivo da Aula: SELECT – Lendo Dados com SQL
+📌 O que é o SELECT?
+É o comando usado para consultar e visualizar dados de uma ou mais tabelas no banco de dados.
+
+🧠 Sintaxe Básica
+sql
+Copy
+Edit
+SELECT coluna1, coluna2, ...
+FROM nome_da_tabela;
+Exemplo simples:
+sql
+Copy
+Edit
+SELECT nome, email FROM clientes;
+🔍 Filtros com WHERE
+sql
+Copy
+Edit
+SELECT * FROM produtos
+WHERE preco > 100;
+Operadores comuns:
+= – Igual
+
+!= ou <> – Diferente
+
+> < >= <=
+
+BETWEEN, IN, LIKE, IS NULL
+
+🧱 Ordenação com ORDER BY
+sql
+Copy
+Edit
+SELECT * FROM produtos
+ORDER BY preco DESC;
+ASC = Crescente (padrão)
+
+DESC = Decrescente
+
+🎯 Limitar Resultados
+sql
+Copy
+Edit
+SELECT * FROM clientes
+LIMIT 10;
+Muito usado para páginas iniciais de sistemas ou testes.
+
+🔄 Selecionando Dados Únicos
+sql
+Copy
+Edit
+SELECT DISTINCT cidade FROM clientes;
+Remove valores duplicados da coluna.
+
+🧮 Funções de Agregação
+sql
+Copy
+Edit
+SELECT COUNT(*) FROM pedidos;
+SELECT AVG(preco) FROM produtos;
+SELECT MAX(data_pedido) FROM pedidos;
+COUNT(), SUM(), AVG(), MIN(), MAX()
+
+Importantes para relatórios, dashboards, análises.
+
+🧩 Agrupar com GROUP BY
+sql
+Copy
+Edit
+SELECT categoria, COUNT(*) 
+FROM produtos
+GROUP BY categoria;
+Agrupa dados para usar com funções de agregação.
+
+🔗 Relacionamentos com JOIN
+sql
+Copy
+Edit
+SELECT c.nome, p.data_pedido
+FROM clientes c
+JOIN pedidos p ON c.id = p.cliente_id;
+INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
+
+Conecta dados de várias tabelas.
+
+⚠️ Cuidados ao Usar SELECT
+1. Evite SELECT * em produção
+Carrega todas as colunas (inclusive desnecessárias)
+
+Pode gerar lentidão e tráfego desnecessário
+
+2. Cuidado com grandes volumes
+Sempre que possível, use LIMIT ou WHERE
+
+3. Atenção à segurança
+Evite deixar consultas abertas a injeção de SQL (em apps)
+
+✅ Boas Práticas
+✔️ Especifique apenas as colunas necessárias
+✔️ Nomeie colunas com alias se necessário:
+
+sql
+Copy
+Edit
+SELECT nome AS cliente, email AS contato FROM clientes;
+✔️ Use filtros otimizados (índices ajudam em WHERE)
+✔️ Use EXPLAIN para ver o plano de execução (consultas complexas)
+✔️ Para dados sensíveis, tenha controle de acesso
+
+💡 Extras Interessantes
+📍 Filtros com LIKE e curingas
+sql
+Copy
+Edit
+SELECT nome FROM clientes
+WHERE nome LIKE 'A%';  -- Começa com A
+📍 Ordenação múltipla
+sql
+Copy
+Edit
+SELECT * FROM clientes
+ORDER BY cidade ASC, nome ASC;
+📍 CASE para lógica condicional
+sql
+Copy
+Edit
+SELECT nome,
+       CASE 
+         WHEN status = 'A' THEN 'Ativo'
+         ELSE 'Inativo'
+       END AS situacao
+FROM clientes;
+📝 Exercícios sugeridos
+Liste todos os produtos com preço acima de 100.
+
+Mostre os nomes dos clientes que moram em 'Dublin'.
+
+Mostre a média de preços por categoria.
+
+Liste os pedidos com nome do cliente (JOIN).
+
+Mostre as cidades distintas dos clientes.
+
+Mostre os 5 clientes mais recentes (ORDER BY data_registro DESC LIMIT 5).

@@ -1,1 +1,114 @@
-creat
+📌 O que é o CREATE?
+O comando CREATE é usado para criar objetos no banco de dados. O mais comum e importante no início é o CREATE TABLE, que define a estrutura de uma tabela onde os dados serão armazenados.
+
+🧠 Sintaxe Básica
+sql
+Copy
+Edit
+CREATE TABLE nome_da_tabela (
+    nome_coluna1 tipo_dado1 restrições,
+    nome_coluna2 tipo_dado2 restrições,
+    ...
+);
+✅ Exemplo Prático
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE,
+    telefone VARCHAR(20),
+    data_registro DATE DEFAULT CURRENT_DATE
+);
+Explicação:
+SERIAL: tipo numérico autoincrementável (PostgreSQL).
+
+PRIMARY KEY: garante que cada valor da coluna é único e não nulo.
+
+NOT NULL: o valor é obrigatório.
+
+UNIQUE: o valor não pode se repetir.
+
+DEFAULT: valor padrão, caso nenhum seja informado.
+
+⚠️ Cuidados ao Usar o CREATE TABLE
+1. Pense bem nos tipos de dados
+Usar tipos errados pode gerar problemas de performance ou integridade.
+
+Evite usar VARCHAR(255) pra tudo. Ajuste conforme a realidade.
+
+2. Nomeie colunas de forma clara e sem espaços
+Bons nomes: data_nascimento, preco_unitario
+
+Evite: dtnasc, valorx, nome do cliente
+
+3. Planeje bem as restrições
+Se um campo não pode ser nulo, já defina como NOT NULL.
+
+Use UNIQUE, CHECK, FOREIGN KEY quando fizer sentido.
+
+🧰 Boas Práticas
+✔️ Sempre defina uma chave primária
+Ajuda na organização, relacionamentos e performance.
+
+✔️ Use nomes coerentes e padronizados
+Exemplo: tudo em minúsculo e com underscore: clientes, data_criacao.
+
+✔️ Inclua campos de controle, como:
+sql
+Copy
+Edit
+criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+atualizado_em TIMESTAMP
+✔️ Use IF NOT EXISTS para evitar erros ao recriar
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100)
+);
+✔️ Mantenha o esquema documentado
+O aluno deve entender que "modelar" uma tabela é pensar nas regras de negócio antes de criar qualquer coisa.
+
+💡 Extras Interessantes para Incluir
+📍 Tipos de dados comuns
+Tipo SQL	Usado para
+INT	Números inteiros
+SERIAL	Inteiros auto-incremento (PostgreSQL)
+VARCHAR(n)	Texto de até "n" caracteres
+TEXT	Texto longo
+DATE	Datas
+TIMESTAMP	Data e hora
+BOOLEAN	Verdadeiro/Falso
+
+📍 Restrições (constraints)
+PRIMARY KEY
+
+NOT NULL
+
+UNIQUE
+
+CHECK
+
+FOREIGN KEY
+
+📍 Relacionamentos
+sql
+Copy
+Edit
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT REFERENCES clientes(id),
+    data_pedido DATE
+);
+📝 Exercícios sugeridos
+Crie uma tabela produtos com: id, nome, categoria, preço e data de criação.
+
+Crie uma tabela usuarios com campos obrigatórios e únicos para e-mail.
+
+Crie uma tabela pedidos que se relacione com clientes.
+
+Crie uma tabela que permita rastrear quando o registro foi criado e atualizado.
+

@@ -1,1 +1,124 @@
-updatee
+🎯 Objetivo da Aula: UPDATE no SQL
+📌 O que é o UPDATE?
+O comando UPDATE é utilizado para modificar registros existentes em uma tabela.
+
+🧠 Sintaxe Básica
+sql
+Copy
+Edit
+UPDATE nome_da_tabela
+SET coluna1 = valor1, coluna2 = valor2, ...
+WHERE condição;
+SET: indica quais colunas serão modificadas e com quais valores.
+
+WHERE: define quais registros serão afetados pela alteração.
+
+⚠️ Cuidados ao Usar o UPDATE
+1. NUNCA esquecer o WHERE!
+Sem WHERE, todos os registros da tabela serão atualizados.
+
+sql
+Copy
+Edit
+-- ERRO comum: sem WHERE
+UPDATE clientes
+SET telefone = '123456789';
+
+-- Correto
+UPDATE clientes
+SET telefone = '123456789'
+WHERE id = 42;
+2. Faça um SELECT antes
+Sempre visualize os dados que pretende alterar:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes WHERE id = 42;
+3. Use transações (quando disponível)
+Para evitar alterações acidentais em sistemas críticos:
+
+sql
+Copy
+Edit
+BEGIN;
+
+UPDATE contas
+SET saldo = saldo - 100
+WHERE id = 1;
+
+-- Só confirma se tudo estiver certo
+COMMIT;
+
+-- Se algo deu errado
+ROLLBACK;
+✅ Boas Práticas
+✔️ Use UPDATE com WHERE + AND, IN, BETWEEN, etc.
+sql
+Copy
+Edit
+-- Atualizar clientes de uma cidade específica
+UPDATE clientes
+SET status = 'ativo'
+WHERE cidade = 'Dublin' AND status = 'inativo';
+✔️ Atualize múltiplas colunas de forma clara
+sql
+Copy
+Edit
+UPDATE produtos
+SET preco = preco * 1.10,
+    atualizado_em = NOW()
+WHERE categoria = 'eletrônicos';
+✔️ Mantenha logs ou histórico de alterações
+Uma boa prática é ter uma tabela de histórico ou usar triggers para registrar alterações.
+
+✔️ Teste em ambiente de desenvolvimento ou com uma cópia da tabela
+Exemplo:
+
+sql
+Copy
+Edit
+CREATE TABLE teste AS SELECT * FROM clientes;
+
+-- Teste na tabela "teste" antes de aplicar na original
+UPDATE teste SET nome = 'Teste' WHERE id = 1;
+💡 Extras Interessantes para Incluir
+📍 RETURNING (PostgreSQL)
+Permite ver os dados alterados imediatamente após o UPDATE.
+
+sql
+Copy
+Edit
+UPDATE clientes
+SET email = 'novo@email.com'
+WHERE id = 10
+RETURNING *;
+📍 Atualizar com base em outra tabela
+sql
+Copy
+Edit
+UPDATE funcionarios f
+SET salario = a.novo_salario
+FROM ajustes_salarial a
+WHERE f.id = a.funcionario_id;
+📍 Subconsultas no SET
+sql
+Copy
+Edit
+UPDATE produtos
+SET preco = (
+    SELECT AVG(preco)
+    FROM produtos
+    WHERE categoria = 'tecnologia'
+)
+WHERE categoria = 'tecnologia';
+📝 Exercícios sugeridos
+Atualize o telefone de um cliente específico.
+
+Aumente em 5% o preço de todos os produtos da categoria "comida".
+
+Corrija um campo de e-mail com erro de digitação.
+
+Atualize uma coluna com data e hora atual (NOW()).
+
+Teste o RETURNING para ver quais linhas foram modificadas.

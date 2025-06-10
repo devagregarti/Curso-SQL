@@ -1,1 +1,109 @@
-deletee 
+🎯 Objetivo da Aula: DELETE – Apagando Dados com SQL
+📌 O que é o DELETE?
+O comando DELETE é utilizado para remover linhas (registros) de uma tabela.
+
+🧠 Sintaxe Básica
+sql
+Copy
+Edit
+DELETE FROM nome_da_tabela
+WHERE condição;
+Exemplo:
+sql
+Copy
+Edit
+DELETE FROM clientes
+WHERE id = 5;
+🔍 Remove o cliente com id = 5.
+
+⚠️ CUIDADO: Sem WHERE = Apagar tudo!
+sql
+Copy
+Edit
+DELETE FROM clientes;
+😱 Isso apaga TODOS OS REGISTROS da tabela!
+
+✅ Boas Práticas com DELETE
+✔️ Sempre usar WHERE (com critérios bem definidos)
+De preferência com campos indexados, como id.
+
+✔️ Testar com SELECT antes:
+sql
+Copy
+Edit
+SELECT * FROM clientes WHERE cidade = 'Dublin';
+-- Depois:
+DELETE FROM clientes WHERE cidade = 'Dublin';
+✔️ Fazer backup antes de deletes em massa
+✔️ Em sistemas reais, usar "delete lógico" se necessário:
+sql
+Copy
+Edit
+UPDATE clientes SET ativo = false WHERE id = 7;
+🔄 Em vez de excluir, você marca como excluído.
+
+🧱 Deletando com JOIN
+(Dependente do banco: ex. PostgreSQL usa USING)
+
+sql
+Copy
+Edit
+DELETE FROM pedidos
+USING clientes
+WHERE pedidos.cliente_id = clientes.id
+AND clientes.cidade = 'Dublin';
+🔁 Outras formas de deletar
+🔄 TRUNCATE TABLE (apaga tudo rapidamente)
+sql
+Copy
+Edit
+TRUNCATE TABLE nome_da_tabela;
+Mais rápido que DELETE, mas não pode ser filtrado
+
+Não aciona triggers!
+
+🧩 Deletando registros com subconsultas
+sql
+Copy
+Edit
+DELETE FROM pedidos
+WHERE cliente_id IN (
+  SELECT id FROM clientes WHERE cidade = 'Limerick'
+);
+🚨 Cuidados Essenciais
+⚠️ Nunca rode DELETE sem WHERE sem estar absolutamente certo
+
+🔐 Revise permissões – só usuários confiáveis devem poder deletar
+
+🧪 Prefira testar em ambiente de desenvolvimento antes
+
+🔁 Cuidado com chaves estrangeiras (FK) – pode causar erro ou efeito cascata
+
+💡 Use transações (BEGIN, ROLLBACK, COMMIT) em ambientes que suportam
+
+💡 Extras Interessantes
+📍 Apagar só se não houver relação ativa
+sql
+Copy
+Edit
+DELETE FROM clientes
+WHERE id = 10 AND id NOT IN (
+  SELECT cliente_id FROM pedidos
+);
+📍 Transações (em bancos como PostgreSQL)
+sql
+Copy
+Edit
+BEGIN;
+DELETE FROM pedidos WHERE id = 50;
+ROLLBACK;  -- ou COMMIT;
+📝 Exercícios sugeridos
+Delete o cliente com id = 3
+
+Delete todos os pedidos com valor abaixo de 10
+
+Delete todos os clientes de uma cidade específica
+
+Faça um delete apenas se o cliente não tiver pedidos
+
+Use uma subconsulta para deletar com base em outra tabela
