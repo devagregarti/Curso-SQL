@@ -1,0 +1,63 @@
+✅ O que é a CHECK Constraint?
+A CHECK constraint é usada para definir uma regra personalizada que cada valor da coluna precisa respeitar. Se a condição não for satisfeita, o PostgreSQL recusa a inserção ou atualização da linha.
+
+🧠 Para que serve?
+Ela garante que os dados sigam critérios específicos, além das validações básicas como NOT NULL ou UNIQUE.
+
+🧪 Exemplos práticos:
+1. Idade mínima
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    idade INT CHECK (idade >= 18)
+);
+🔹 Garante que só serão aceitos clientes com 18 anos ou mais.
+
+2. Valor positivo
+sql
+Copy
+Edit
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome TEXT,
+    preco NUMERIC CHECK (preco > 0)
+);
+🔹 Nenhum produto pode ter preço zero ou negativo.
+
+3. Valor dentro de uma lista
+sql
+Copy
+Edit
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    status TEXT CHECK (status IN ('pendente', 'pago', 'cancelado'))
+);
+🔹 Só aceita os valores específicos para o status.
+
+4. Restrições combinadas
+sql
+Copy
+Edit
+CREATE TABLE alunos (
+    id SERIAL PRIMARY KEY,
+    nota NUMERIC CHECK (nota >= 0 AND nota <= 10)
+);
+🔹 Valida que a nota esteja dentro da escala 0 a 10.
+
+📝 Nomeando a constraint (opcional, mas recomendado):
+sql
+Copy
+Edit
+idade INT CONSTRAINT idade_minima CHECK (idade >= 18)
+🔸 Isso ajuda a identificar erros mais facilmente se algo falhar.
+
+🛠️ Boas práticas:
+Use CHECK para regras de validação simples.
+
+Para regras mais complexas, considere usar triggers.
+
+Evite duplicar regras de negócios no banco e na aplicação; centralize a lógica.
+

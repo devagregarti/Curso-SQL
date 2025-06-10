@@ -1,0 +1,81 @@
+⚠️ Erros Comuns ao Usar Constraints em SQL
+Mesmo quem já tem experiência com SQL pode cometer erros ao usar constraints. Aqui estão os mais comuns, com explicações e como evitá-los:
+
+❌ 1. Adicionar uma Constraint em Dados que Já Estão Errados
+sql
+Copy
+Edit
+ALTER TABLE clientes
+ADD CONSTRAINT chk_idade CHECK (idade >= 18);
+💥 Erro: se houver registros com idade menor que 18, o comando falha.
+
+✅ Solução:
+
+Verifique os dados antes de adicionar:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes WHERE idade < 18;
+❌ 2. Não Dar Nome à Constraint (e depois não conseguir removê-la)
+sql
+Copy
+Edit
+ALTER TABLE clientes
+ADD CHECK (idade >= 18);  -- sem nome!
+Depois fica difícil remover porque o nome da constraint foi gerado automaticamente (ex: clientes_idade_check).
+
+✅ Solução:
+
+Sempre dê nomes explícitos:
+
+sql
+Copy
+Edit
+ADD CONSTRAINT chk_idade_minima CHECK (idade >= 18);
+❌ 3. Criar Muitos Índices por causa de Constraints UNIQUE
+Cada UNIQUE cria automaticamente um índice. Se exagerar, o banco fica lento para INSERT e UPDATE.
+
+✅ Solução:
+
+Use UNIQUE apenas onde for necessário de verdade (como email, cpf, etc.).
+
+❌ 4. Esquecer o NOT NULL com DEFAULT
+sql
+Copy
+Edit
+status TEXT DEFAULT 'ativo'
+💥 Aqui o banco permite valores nulos se você não usar NOT NULL.
+
+✅ Correto:
+
+sql
+Copy
+Edit
+status TEXT NOT NULL DEFAULT 'ativo';
+❌ 5. Definir uma FOREIGN KEY sem garantir que os dados já existem na tabela referenciada
+sql
+Copy
+Edit
+ALTER TABLE pedidos
+ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id)
+REFERENCES clientes(id);
+💥 Se cliente_id tiver valores que não existem na tabela clientes, o banco vai recusar a criação.
+
+✅ Solução:
+
+Verifique antes:
+
+sql
+Copy
+Edit
+SELECT cliente_id FROM pedidos
+WHERE cliente_id NOT IN (SELECT id FROM clientes);
+🧠 Dica Final:
+Sempre que for usar ou alterar constraints:
+
+Verifique os dados com SELECT antes.
+
+Dê nomes claros.
+
+Faça testes em ambiente separado (dev/staging) se estiver em produção.

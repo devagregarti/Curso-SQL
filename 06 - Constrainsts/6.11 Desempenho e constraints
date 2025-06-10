@@ -1,0 +1,67 @@
+🚀 Desempenho das Constraints em SQL
+As constraints existem para garantir a integridade dos dados, mas elas também têm impacto no desempenho das operações do banco, principalmente em inserções, atualizações e deleções.
+
+🔹 Como Cada Tipo de Constraint Impacta a Performance
+✅ NOT NULL
+Muito leve.
+
+Apenas garante que o campo não aceite valores nulos.
+
+Impacto no desempenho: quase zero.
+
+✅ CHECK
+Avalia condições sempre que um dado é inserido ou alterado.
+
+Impacto leve, mas pode crescer se a lógica for complexa (ex: CHECK (preco > desconto + taxa)).
+
+✅ DEFAULT
+Apenas preenche o valor se nenhum for informado.
+
+Sem impacto negativo no desempenho.
+
+✅ UNIQUE e PRIMARY KEY
+Criam índices automaticamente, o que acelera buscas, mas:
+
+Tornam INSERT e UPDATE mais lentos, pois o banco precisa verificar duplicidade toda vez.
+
+Em tabelas com milhões de registros, isso pode ser perceptível.
+
+✅ FOREIGN KEY
+Garante que os valores referenciados existam.
+
+Impacta:
+
+INSERT: precisa verificar a tabela referenciada.
+
+DELETE e UPDATE: verifica se há dependências.
+
+Se as tabelas envolvidas forem grandes e sem índices, o impacto pode ser alto.
+
+🧠 Boas Práticas para Otimizar o Desempenho com Constraints
+Sempre crie índices nas colunas envolvidas em FOREIGN KEY.
+
+sql
+Copy
+Edit
+CREATE INDEX idx_cliente_id ON pedidos(cliente_id);
+Evite CHECK com lógica pesada ou subqueries.
+
+Não use muitas UNIQUE desnecessárias. Se não for obrigatório garantir unicidade, evite.
+
+Em cargas grandes de dados, considere:
+
+Desativar temporariamente constraints.
+
+Inserir os dados.
+
+Reativar as constraints (com verificação).
+⚠️ Só recomendado se souber o que está fazendo.
+
+📊 Resumo Rápido
+Constraint	Impacto na performance	Observações
+NOT NULL	Nenhum ou muito leve	Muito comum e seguro
+DEFAULT	Nenhum	Útil para automatizar campos
+CHECK	Leve a moderado	Evitar lógicas complexas
+UNIQUE	Médio	Cria índice; cuidado com excesso
+PRIMARY KEY	Médio	Índice obrigatório; sempre necessário
+FOREIGN KEY	Médio a alto	Indexe as colunas relacionadas

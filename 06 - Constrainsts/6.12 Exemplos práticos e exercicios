@@ -1,0 +1,70 @@
+Exercícios Práticos sobre Constraints em SQL
+Exercício 1 — Criando uma Tabela com Constraints Básicas
+Crie uma tabela chamada clientes com as seguintes regras:
+
+id: chave primária (auto incrementada).
+
+nome: texto obrigatório (NOT NULL).
+
+email: texto obrigatório e único.
+
+idade: número inteiro, obrigatório, com idade mínima de 18 anos.
+
+data_cadastro: data com valor padrão sendo a data atual.
+
+Dica: use CHECK para a idade e DEFAULT para data.
+
+Exercício 2 — Adicionando e Removendo Constraints
+Na tabela clientes criada no exercício 1, adicione uma constraint chamada chk_nome_valido que garante que o nome tenha pelo menos 3 caracteres.
+
+Depois remova essa constraint.
+
+Exercício 3 — Inserção e Valores Default
+Insira um cliente sem informar a data de cadastro e verifique se o valor padrão foi aplicado.
+
+Tente inserir um cliente com idade 16 e veja o que acontece.
+
+Insira um cliente com nome nulo e explique o erro recebido.
+
+Exercício 4 — Combinação de Constraints e Manutenção
+Crie uma tabela produtos com:
+
+id como chave primária.
+
+nome texto obrigatório e único.
+
+preco numérico com valor mínimo 0.
+
+estoque inteiro, valor padrão 0 e não pode ser nulo.
+
+Modifique a tabela para permitir que o estoque seja nulo.
+
+Depois volte a deixar o estoque como não nulo.
+
+Exercício 5 — Erros Comuns com Constraints
+Tente adicionar uma constraint CHECK na tabela produtos que exige preco > 10, sabendo que já existem produtos com preço menor. Veja e explique o erro.
+
+Adicione a constraint com nome explícito e depois remova-a pelo nome.
+
+Exercício 6 — Constraints com Foreign Keys
+Crie uma tabela pedidos com:
+
+id como chave primária.
+
+cliente_id que referencia id da tabela clientes (FOREIGN KEY).
+
+data_pedido com valor padrão a data atual.
+
+Verifique se existe algum cliente_id em pedidos que não existe em clientes antes de adicionar a foreign key.
+
+Insira um pedido para um cliente que não existe e explique o erro.
+
+Exercício 7 — Análise de Desempenho (Bônus Avançado)
+Crie uma tabela logs com uma coluna acao e outra usuario_id.
+
+Insira 100.000 registros sem índice ou constraints.
+
+Crie um índice para a coluna usuario_id.
+
+Use EXPLAIN ANALYZE para comparar a performance de uma consulta que busca todos os logs de um usuário específico antes e depois do índice.
+

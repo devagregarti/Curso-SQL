@@ -1,1 +1,83 @@
-tip
+✅ Tipos de Constraints no PostgreSQL
+1. NOT NULL
+Impede que a coluna receba valores nulos. Muito usada para campos obrigatórios.
+
+sql
+Copy
+Edit
+nome TEXT NOT NULL
+🔸 Exemplo: Um cliente sempre deve ter um nome.
+
+2. UNIQUE
+Garante que os valores de uma coluna (ou combinação de colunas) não se repitam.
+
+sql
+Copy
+Edit
+email TEXT UNIQUE
+🔸 Exemplo: Dois clientes não podem ter o mesmo e-mail.
+
+3. PRIMARY KEY
+Combina NOT NULL e UNIQUE. Cada tabela deve ter uma única chave primária, que identifica de forma única cada linha.
+
+sql
+Copy
+Edit
+id SERIAL PRIMARY KEY
+🔸 Exemplo: Identificar cada cliente de forma única com o campo id.
+
+4. FOREIGN KEY
+Garante que o valor de uma coluna exista como chave primária em outra tabela. Serve para relacionar tabelas.
+
+sql
+Copy
+Edit
+cliente_id INT REFERENCES clientes(id)
+🔸 Exemplo: Um pedido precisa estar ligado a um cliente que já exista.
+
+5. CHECK
+Permite definir regras personalizadas com expressões lógicas.
+
+sql
+Copy
+Edit
+idade INT CHECK (idade >= 18)
+🔸 Exemplo: Garantir que apenas clientes maiores de idade sejam cadastrados.
+
+6. DEFAULT
+Define um valor padrão se nada for informado na inserção.
+
+sql
+Copy
+Edit
+ativo BOOLEAN DEFAULT true
+🔸 Exemplo: Todo cliente é cadastrado como ativo, a menos que se diga o contrário.
+
+7. EXCLUDE (menos comum, mas poderoso)
+Garante exclusividade de composição de colunas, útil com tipos como ranges e arrays.
+
+sql
+Copy
+Edit
+EXCLUDE USING gist (period WITH &&)
+🔸 Exemplo: Evitar sobreposição de horários ou períodos.
+
+🧪 Exemplo completo:
+sql
+Copy
+Edit
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT REFERENCES clientes(id),
+    valor NUMERIC NOT NULL CHECK (valor > 0),
+    data_pedido DATE DEFAULT CURRENT_DATE,
+    status TEXT DEFAULT 'pendente',
+    UNIQUE (cliente_id, data_pedido)
+);
+🧠 Dica de ouro:
+Você pode dar nomes às constraints, o que ajuda na manutenção:
+
+sql
+Copy
+Edit
+email TEXT CONSTRAINT email_unico UNIQUE

@@ -1,0 +1,60 @@
+🔸 1. Adicionando uma Constraint Depois que a Tabela Já Existe
+sql
+Copy
+Edit
+ALTER TABLE clientes
+ADD CONSTRAINT chk_idade CHECK (idade >= 18);
+Você pode adicionar qualquer constraint: CHECK, UNIQUE, FOREIGN KEY, etc.
+
+🔸 2. Removendo uma Constraint
+Para remover, você precisa saber o nome da constraint:
+
+sql
+Copy
+Edit
+ALTER TABLE clientes
+DROP CONSTRAINT chk_idade;
+Se você não souber o nome, pode buscar com:
+
+sql
+Copy
+Edit
+-- PostgreSQL
+SELECT conname, contype
+FROM pg_constraint
+WHERE conrelid = 'clientes'::regclass;
+🔸 3. Renomeando uma Constraint
+sql
+Copy
+Edit
+ALTER TABLE clientes
+RENAME CONSTRAINT chk_idade TO chk_maioridade;
+🔸 4. Modificando uma Coluna com Constraints
+Se quiser mudar o tipo de uma coluna ou remover um NOT NULL, por exemplo:
+
+sql
+Copy
+Edit
+ALTER TABLE clientes
+ALTER COLUMN email DROP NOT NULL;
+Ou para adicionar novamente:
+
+sql
+Copy
+Edit
+ALTER TABLE clientes
+ALTER COLUMN email SET NOT NULL;
+⚠️ Atenção:
+Remover constraints pode abrir brechas para dados inválidos.
+
+Sempre verifique se os dados atuais estão em conformidade com a nova regra antes de aplicá-la.
+
+Backups são essenciais antes de alterar estruturas de tabelas em produção.
+
+📘 Resumo
+Ação	Comando Básico
+Adicionar constraint	ALTER TABLE ... ADD CONSTRAINT ...
+Remover constraint	ALTER TABLE ... DROP CONSTRAINT ...
+Renomear constraint	ALTER TABLE ... RENAME CONSTRAINT ... TO ...
+Modificar NOT NULL	ALTER TABLE ... ALTER COLUMN ... SET/DROP NOT NULL
+

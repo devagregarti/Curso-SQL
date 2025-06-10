@@ -1,0 +1,63 @@
+🔗 FOREIGN KEY e Integridade Referencial em SQL
+O que é uma FOREIGN KEY?
+É uma constraint (restrição) que conecta duas tabelas no banco de dados.
+
+Uma FOREIGN KEY em uma tabela aponta para uma PRIMARY KEY (ou UNIQUE) em outra tabela.
+
+Serve para garantir que o valor na tabela filha existe na tabela pai.
+
+O que é Integridade Referencial?
+É a propriedade que mantém a consistência entre as tabelas relacionadas.
+
+Garante que não existam referências inválidas — ou seja, um valor em uma tabela filha sempre deve existir na tabela pai.
+
+Evita dados “órfãos” que não fazem sentido para a aplicação.
+
+Exemplo Prático
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL
+);
+
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    data_pedido DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+Aqui:
+
+pedidos.cliente_id é uma FOREIGN KEY que referencia clientes.id.
+
+Você não pode inserir um pedido com cliente_id que não exista na tabela clientes.
+
+Se tentar, o banco rejeita a operação, garantindo integridade.
+
+Comportamentos Comuns das FOREIGN KEYS
+Você pode definir ações para quando a tabela pai sofre mudanças:
+
+Ação no Pai	Opção SQL	O que acontece na filha?
+Deletar registro	ON DELETE CASCADE	Deleta os registros filhos automaticamente.
+Deletar registro	ON DELETE SET NULL	Seta o valor da FK para NULL na tabela filha.
+Deletar registro	ON DELETE RESTRICT	Impede a exclusão se existirem filhos.
+Atualizar valor PK	ON UPDATE CASCADE	Atualiza os valores da FK na tabela filha.
+
+Por que usar FOREIGN KEYS?
+Segurança: O banco impede inserções inválidas.
+
+Consistência: Mantém a lógica do modelo relacional.
+
+Automação: Ações em cascata evitam inconsistências manuais.
+
+Facilidade na manutenção: Ajuda a entender relações entre dados.
+
+Boas práticas
+Sempre crie índices nas colunas de FOREIGN KEY para melhorar desempenho.
+
+Defina nomes claros para as constraints, como fk_pedidos_clientes.
+
+Use ações em cascata com cuidado, entendendo o impacto no banco.
+

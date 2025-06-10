@@ -1,0 +1,54 @@
+🔹 Combinação de Constraints em SQL
+Em SQL, você pode aplicar várias constraints ao mesmo tempo em uma coluna ou tabela. Isso permite que você defina regras mais rígidas e seguras para os dados que serão armazenados.
+
+🧱 Exemplo Real
+Imagine uma tabela de usuários:
+
+sql
+Copy
+Edit
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    idade INT CHECK (idade >= 18),
+    data_cadastro DATE DEFAULT CURRENT_DATE
+);
+O que está acontecendo aqui?
+PRIMARY KEY: o id é único e obrigatório.
+
+NOT NULL: nome e email não podem ficar vazios.
+
+UNIQUE: o email não pode se repetir.
+
+CHECK: a idade precisa ser 18 ou mais.
+
+DEFAULT: se não informarmos data_cadastro, ele preenche com a data atual.
+
+➡️ Todas essas constraints estão combinadas para garantir a integridade dos dados.
+
+🧪 Outra Forma – Definindo no final da tabela
+Você também pode combinar constraints declarando no fim da tabela:
+
+sql
+Copy
+Edit
+CREATE TABLE produtos (
+    id SERIAL,
+    nome TEXT,
+    preco NUMERIC,
+    CONSTRAINT pk_produto_id PRIMARY KEY (id),
+    CONSTRAINT nome_unico UNIQUE (nome),
+    CONSTRAINT preco_min CHECK (preco >= 0)
+);
+✅ Dicas de Boas Práticas
+Combinar NOT NULL com DEFAULT é muito comum, por exemplo:
+
+sql
+Copy
+Edit
+status TEXT NOT NULL DEFAULT 'ativo'
+Evite repetir lógica da aplicação no banco, mas use constraints para proteger contra erros e dados inválidos.
+
+Nomes claros para constraints ajudam na manutenção (ex: chk_idade_minima, uq_email_usuario etc).
+

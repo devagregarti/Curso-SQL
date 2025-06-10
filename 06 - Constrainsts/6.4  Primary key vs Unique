@@ -1,0 +1,59 @@
+🔑 Primary Key vs Unique Key no PostgreSQL
+Tanto a PRIMARY KEY quanto a UNIQUE são usadas para garantir unicidade dos dados, mas elas têm funções e restrições diferentes.
+
+🥇 PRIMARY KEY
+A PRIMARY KEY é a identificação principal da tabela.
+Ela garante que cada linha possa ser identificada de forma única.
+
+✅ Regras:
+Só pode haver uma por tabela.
+
+É automaticamente NOT NULL + UNIQUE.
+
+Costuma ser usada com campos como id, cpf, etc.
+
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT
+);
+🆔 UNIQUE
+A UNIQUE permite que uma ou mais colunas tenham valores exclusivos, mas não é obrigatória para identificar a linha.
+
+✅ Regras:
+Pode haver várias UNIQUE constraints em uma tabela.
+
+Permite valores NULL (desde que não repitam).
+
+Pode ser aplicada em uma ou mais colunas combinadas.
+
+sql
+Copy
+Edit
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    email TEXT UNIQUE,
+    cpf TEXT UNIQUE
+);
+📊 Tabela Comparativa
+Característica	PRIMARY KEY	UNIQUE
+Garante unicidade	✅	✅
+Aceita valores NULL	❌	✅ (com cuidado)
+Apenas uma por tabela	✅	❌ (pode ter várias)
+Ideal para	Identificador	Campos com valor único (ex: e-mail, CPF)
+
+🧪 Exemplo prático com ambos:
+sql
+Copy
+Edit
+CREATE TABLE funcionarios (
+    matricula SERIAL PRIMARY KEY,
+    email TEXT UNIQUE,
+    cpf TEXT UNIQUE,
+    nome TEXT
+);
+Nesse exemplo:
+
+matricula identifica unicamente cada funcionário.
+
+email e cpf também são únicos, mas não são a chave principal.

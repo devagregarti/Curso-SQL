@@ -1,0 +1,48 @@
+✅ Exemplo 1: Constraint com padrão de texto (como um e-mail simples)
+sql
+Copy
+Edit
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL,
+    CONSTRAINT email_valido CHECK (
+        email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+    )
+);
+🔹 Essa constraint impede que e-mails inválidos sejam inseridos.
+🔹 O ~* é o operador de regex que ignora maiúsculas/minúsculas.
+
+✅ Exemplo 2: CPF com exatamente 11 dígitos
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    cpf TEXT NOT NULL,
+    CONSTRAINT cpf_valido CHECK (
+        cpf ~ '^[0-9]{11}$'
+    )
+);
+🔹 Garante que o CPF tenha exatamente 11 números, sem pontos ou traços.
+
+✅ Exemplo 3: Nome com apenas letras e espaços (sem números ou símbolos)
+sql
+Copy
+Edit
+CREATE TABLE pessoas (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    CONSTRAINT nome_valido CHECK (
+        nome ~* '^[A-Za-zÀ-ÿ\s]+$'
+    )
+);
+🔹 Aceita letras com acento e espaços (ideal para nomes reais).
+🔹 Rejeita entradas como João123 ou Maria!.
+
+🛠️ Dicas:
+A função ~ ou ~* é usada para aplicar expressões regulares.
+
+A constraint pode ser nomeada para facilitar manutenção e debug.
+
+É importante que os dados venham sem formatação desnecessária, ou você precisará tratá-los com funções como replace() dentro da constraint (não muito recomendado por performance).
+

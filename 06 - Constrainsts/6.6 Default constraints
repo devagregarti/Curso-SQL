@@ -1,1 +1,48 @@
-f
+🔹 O que é uma DEFAULT CONSTRAINT?
+A DEFAULT CONSTRAINT é usada para definir um valor padrão para uma coluna quando nenhum valor for informado durante a inserção de dados.
+
+Ela ajuda a:
+
+Evitar valores nulos, quando não forem desejados.
+
+Simplificar inserções, preenchendo automaticamente certos campos.
+
+📌 Exemplo Prático
+Suponha que você tem uma tabela de clientes com a data de cadastro. Em vez de sempre informar a data atual, você pode definir um valor padrão:
+
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    data_cadastro DATE DEFAULT CURRENT_DATE
+);
+Agora, se você fizer:
+
+sql
+Copy
+Edit
+INSERT INTO clientes (nome) VALUES ('Maria');
+O valor da coluna data_cadastro será preenchido automaticamente com a data do dia.
+
+✅ Outros exemplos de uso de DEFAULT:
+sql
+Copy
+Edit
+-- Valor padrão numérico
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome TEXT,
+    estoque INT DEFAULT 0
+);
+
+-- Valor padrão de texto
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    status TEXT DEFAULT 'Pendente'
+);
+⚠️ Dicas Importantes:
+A DEFAULT não impede que o usuário informe outro valor, apenas preenche quando o valor não é especificado.
+
+Pode ser combinada com outras constraints, como NOT NULL e CHECK.
