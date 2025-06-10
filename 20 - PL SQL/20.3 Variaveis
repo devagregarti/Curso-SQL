@@ -1,9 +1,69 @@
-CREATE OR REPLACE FUNCTION somar(val1 INT, val2 INT)
-RETURNS INT AS $$
+🎯 Tópico: Variáveis em PL/SQL
+1. O que são variáveis em PL/SQL?
+Variáveis são “caixinhas” na memória onde você pode armazenar valores temporariamente durante a execução do código.
+
+Usadas para guardar números, textos, datas, resultados de cálculos, entre outros.
+
+2. Por que usar variáveis?
+Para guardar dados que serão usados ou manipulados no código.
+
+Facilita cálculos, controle de fluxo e reutilização de valores.
+
+Evita repetição de expressões complexas.
+
+3. Como declarar variáveis?
+plsql
+Copy
+Edit
 DECLARE
-    resultado INT;
+  nome_variavel tipo_dado;
 BEGIN
-    resultado := val1 + val2;
-    RETURN resultado;
+  -- uso da variável
 END;
-$$ LANGUAGE plpgsql;
+Exemplo básico:
+
+plsql
+Copy
+Edit
+DECLARE
+  v_preco NUMBER;
+BEGIN
+  v_preco := 100;  -- atribui valor 100 à variável
+  DBMS_OUTPUT.PUT_LINE('Preço é: ' || v_preco);
+END;
+4. Tipos comuns de variáveis no dia a dia:
+Tipo	Uso comum
+NUMBER	Valores numéricos (preço, idade)
+VARCHAR2	Textos (nome, descrição)
+DATE	Datas
+BOOLEAN	Verdadeiro ou falso
+
+5. Exemplo prático do dia a dia:
+Calcular o preço com desconto e mostrar o resultado:
+
+plsql
+Copy
+Edit
+DECLARE
+  v_preco_original NUMBER := 200;
+  v_desconto NUMBER := 0.1; -- 10%
+  v_preco_final NUMBER;
+BEGIN
+  v_preco_final := v_preco_original * (1 - v_desconto);
+  DBMS_OUTPUT.PUT_LINE('Preço com desconto: ' || ROUND(v_preco_final, 2));
+END;
+6. Dicas rápidas:
+Sempre inicialize as variáveis para evitar erros.
+
+Use nomes claros e padronizados (ex: v_ para variável).
+
+Variáveis existem apenas dentro do bloco onde foram declaradas.
+
+Resumo para vídeo:
+Explique o conceito de variáveis em PL/SQL.
+
+Mostre como declarar e atribuir valores.
+
+Apresente um exemplo prático simples e cotidiano.
+
+Dê dicas para evitar erros comuns e boas práticas.

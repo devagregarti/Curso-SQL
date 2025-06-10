@@ -1,12 +1,72 @@
-CREATE OR REPLACE FUNCTION verificar_idade(idade INT)
-RETURNS TEXT AS $$
+🎯 Tópico: Controle de Fluxo em PL/SQL
+1. O que é controle de fluxo?
+São comandos que definem como o código será executado dependendo de condições ou repetições.
+
+Muito usado para decisões, loops e tratamento de exceções.
+
+2. Principais comandos de controle de fluxo em PL/SQL:
+Comando	Para que serve
+IF ... THEN	Executar código se uma condição for verdadeira
+IF ... ELSE	Escolher entre dois caminhos
+ELSIF	Várias condições sequenciais
+CASE	Substitui vários IF para comparar valores
+LOOP	Repetir código indefinidamente
+WHILE	Repetir enquanto condição for verdadeira
+FOR	Repetir número definido de vezes
+
+3. Exemplo prático: decisão com IF
+plsql
+Copy
+Edit
+DECLARE
+  v_idade NUMBER := 20;
 BEGIN
-    IF idade < 18 THEN
-        RETURN 'Menor de idade';
-    ELSIF idade >= 18 AND idade < 60 THEN
-        RETURN 'Adulto';
-    ELSE
-        RETURN 'Idoso';
-    END IF;
+  IF v_idade >= 18 THEN
+    DBMS_OUTPUT.PUT_LINE('Maior de idade');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Menor de idade');
+  END IF;
 END;
-$$ LANGUAGE plpgsql;
+4. Exemplo prático: uso de CASE para categorias
+plsql
+Copy
+Edit
+DECLARE
+  v_nota NUMBER := 75;
+  v_conceito VARCHAR2(10);
+BEGIN
+  CASE 
+    WHEN v_nota >= 90 THEN v_conceito := 'Excelente';
+    WHEN v_nota >= 70 THEN v_conceito := 'Bom';
+    WHEN v_nota >= 50 THEN v_conceito := 'Regular';
+    ELSE v_conceito := 'Insuficiente';
+  END CASE;
+  DBMS_OUTPUT.PUT_LINE('Conceito: ' || v_conceito);
+END;
+5. Exemplo prático: loop FOR para contar de 1 a 5
+plsql
+Copy
+Edit
+BEGIN
+  FOR i IN 1..5 LOOP
+    DBMS_OUTPUT.PUT_LINE('Número: ' || i);
+  END LOOP;
+END;
+6. Dicas rápidas:
+Use IF para decisões simples.
+
+CASE deixa o código mais limpo para várias condições.
+
+LOOP e FOR ajudam a repetir tarefas sem copiar código.
+
+Controle de fluxo é essencial para automatizar processos.
+
+Resumo para vídeo:
+Defina controle de fluxo e sua importância.
+
+Mostre IF/ELSE e CASE com exemplos simples.
+
+Explique brevemente loops FOR.
+
+Dê um exemplo prático para fixar o conceito.
+

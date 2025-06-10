@@ -1,7 +1,53 @@
-Sempre nomear funções e variáveis com clareza.
+🎯 Tópico: Boas Práticas em PL/SQL
+1. Por que seguir boas práticas?
+Código mais fácil de entender, manter e evoluir.
 
-Utilizar RAISE NOTICE para depuração.
+Evita erros e problemas de performance.
 
-Tratar exceções comuns.
+Facilita o trabalho em equipe.
 
-Evitar lógica excessiva dentro do banco — usar quando necessário.
+2. Boas práticas essenciais
+Prática	Explicação rápida	Exemplo simples
+Nomeclatura clara	Use nomes que expliquem a função da variável ou objeto	v_total_vendas, cur_produtos
+Indentação e organização	Deixe o código legível com recuos e espaçamentos	BEGIN\n IF ... THEN\n ...\n END IF;\nEND;
+Evitar código duplicado	Reutilize funções e procedimentos	Criar função para cálculo repetido
+Comentários úteis	Explique trechos complexos, não óbvios	-- calcula total com imposto
+Tratamento de erros	Sempre trate exceções com bloco EXCEPTION	EXCEPTION WHEN OTHERS THEN ...
+Limitar uso de cursores	Use cursores somente quando necessário	Prefira SQL direto quando possível
+Declarar variáveis perto do uso	Facilita a leitura e evita confusão	Declare variáveis no início do bloco
+Usar constantes e tipos	Facilita manutenção e evita erros	c_taxa_imposto CONSTANT NUMBER := 0.15;
+
+3. Exemplos práticos
+plsql
+Copy
+Edit
+DECLARE
+  c_taxa_imposto CONSTANT NUMBER := 0.15; -- constante para imposto
+  v_preco NUMBER;
+  v_preco_com_imposto NUMBER;
+BEGIN
+  v_preco := 100;
+  v_preco_com_imposto := v_preco * (1 + c_taxa_imposto);
+  DBMS_OUTPUT.PUT_LINE('Preço com imposto: ' || v_preco_com_imposto);
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Erro inesperado: ' || SQLERRM);
+END;
+4. Dicas rápidas para o dia a dia
+Sempre teste seu código em ambiente de desenvolvimento antes de produção.
+
+Faça commits frequentes (se usar controle de versão).
+
+Documente funções e procedimentos.
+
+Prefira simplicidade: código simples é mais seguro e rápido de entender.
+
+Reutilize código usando funções e procedimentos.
+
+Resumo para vídeo
+Explique a importância das boas práticas para evitar problemas futuros.
+
+Liste as práticas principais, com exemplos pequenos e simples.
+
+Enfatize que seguir boas práticas ajuda a manter o código limpo e eficiente.
+

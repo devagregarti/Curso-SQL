@@ -1,6 +1,74 @@
+🎯 Tópico: Introdução ao PL/SQL
+1. O que é PL/SQL?
+PL/SQL é uma extensão procedural da linguagem SQL, usada principalmente no Oracle, que permite escrever blocos de código com lógica, controle de fluxo, variáveis, e tratamento de erros.
 
-O que é PL/pgSQL?
+É usado para criar scripts, procedimentos, funções e triggers, tornando o SQL mais poderoso e flexível.
 
-Diferença entre SQL e PL/pgSQL
+2. Por que usar PL/SQL no dia a dia?
+Para automatizar tarefas repetitivas.
 
-Quando usar? (automatizar lógica, funções reutilizáveis, etc.)
+Fazer processos complexos que o SQL puro não consegue, como loops e condições.
+
+Melhorar performance agrupando várias operações em um único bloco.
+
+3. Estrutura básica de um bloco PL/SQL
+plsql
+Copy
+Edit
+DECLARE
+  -- declara variáveis (opcional)
+  v_nome VARCHAR2(50);
+BEGIN
+  -- código SQL e comandos PL/SQL aqui
+  SELECT nome INTO v_nome FROM clientes WHERE id = 1;
+  DBMS_OUTPUT.PUT_LINE('Nome do cliente: ' || v_nome);
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Cliente não encontrado.');
+END;
+DECLARE: onde declara variáveis e constantes.
+
+BEGIN: onde o código executável fica.
+
+EXCEPTION: tratamento de erros.
+
+END: fim do bloco.
+
+4. Exemplos práticos para o dia a dia
+a) Exibir mensagem simples:
+
+plsql
+Copy
+Edit
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Olá, PL/SQL!');
+END;
+b) Buscar um dado e mostrar com tratamento de erro:
+
+plsql
+Copy
+Edit
+DECLARE
+  v_email VARCHAR2(100);
+BEGIN
+  SELECT email INTO v_email FROM clientes WHERE id = 5;
+  DBMS_OUTPUT.PUT_LINE('Email: ' || v_email);
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Cliente não encontrado.');
+END;
+5. Dicas rápidas:
+Use DBMS_OUTPUT.PUT_LINE para imprimir mensagens no console (útil para debug).
+
+Sempre trate exceções para evitar erros que parem a execução.
+
+Comece com blocos simples para entender a lógica antes de criar procedimentos complexos.
+
+Resumo para vídeo:
+Explique o que é PL/SQL e sua utilidade no dia a dia.
+
+Mostre a estrutura básica do bloco PL/SQL.
+
+Demonstre exemplos simples que façam sentido para qualquer pessoa (exibir mensagem, buscar dado com tratamento de erro).
+
+Enfatize que PL/SQL traz poder e controle para além do SQL puro.

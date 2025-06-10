@@ -1,14 +1,68 @@
- Criando sua primeira função
-sql
+🎯 Tópico: Criando a Primeira Função em PL/SQL
+1. O que é uma função em PL/SQL?
+Função é um bloco de código que recebe parâmetros, executa uma lógica e retorna um valor.
+
+Muito útil para reutilizar códigos e organizar cálculos ou operações comuns.
+
+2. Por que criar funções?
+Evita repetição de código.
+
+Facilita manutenção.
+
+Pode ser usada em consultas SQL para cálculos ou transformações.
+
+3. Estrutura básica da função
+plsql
 Copy
 Edit
-CREATE OR REPLACE FUNCTION saudacao()
-RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION nome_da_funcao(parametro_tipo)
+RETURN tipo_retorno IS
 BEGIN
-    RETURN 'Olá, mundo!';
+  -- lógica da função
+  RETURN valor;
 END;
-$$ LANGUAGE plpgsql;
+4. Exemplo prático simples do dia a dia
+Função que calcula o preço com imposto de 15%:
+
+plsql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION preco_com_imposto(p_preco NUMBER)
+RETURN NUMBER IS
+  v_preco_com_imposto NUMBER;
+BEGIN
+  v_preco_com_imposto := p_preco * 1.15;
+  RETURN ROUND(v_preco_com_imposto, 2);
+END;
+Explicação:
+
+Recebe um preço (p_preco) como entrada.
+
+Calcula o preço com imposto de 15%.
+
+Retorna o valor arredondado com 2 casas decimais.
+
+5. Como usar essa função em uma consulta?
 sql
 Copy
 Edit
-SELECT saudacao();
+SELECT produto, preco, preco_com_imposto(preco) AS preco_final
+FROM produtos;
+Assim, você aplica o cálculo direto na consulta, facilitando relatórios e análises.
+
+6. Dicas rápidas
+Sempre nomeie funções e parâmetros com nomes claros.
+
+Declare o tipo de retorno que faça sentido (NUMBER, VARCHAR2, DATE, etc).
+
+Teste a função isoladamente antes de usar em consultas.
+
+Resumo para vídeo:
+Explique o conceito de função e quando usar.
+
+Mostre a estrutura simples para criar uma função em PL/SQL.
+
+Demonstre um exemplo prático (preço com imposto) fácil de entender.
+
+Mostre como usar a função dentro de uma consulta SQL.
+

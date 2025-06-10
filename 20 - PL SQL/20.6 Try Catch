@@ -1,13 +1,66 @@
-CREATE OR REPLACE FUNCTION dividir(a NUMERIC, b NUMERIC)
-RETURNS NUMERIC AS $$
-DECLARE
-    resultado NUMERIC;
+🎯 Tópico: Tratamento de Erros em PL/SQL – EXCEPTION (Try Catch)
+1. O que é tratamento de erros?
+Permite que o código lide com problemas que podem acontecer durante a execução, sem travar o programa.
+
+Em PL/SQL, usamos o bloco EXCEPTION para capturar e tratar esses erros.
+
+2. Estrutura básica
+plsql
+Copy
+Edit
 BEGIN
-    resultado := a / b;
-    RETURN resultado;
+  -- código que pode gerar erro
 EXCEPTION
-    WHEN division_by_zero THEN
-        RAISE NOTICE 'Divisão por zero não permitida.';
-        RETURN NULL;
+  WHEN nome_do_erro THEN
+    -- código para tratar o erro
 END;
-$$ LANGUAGE plpgsql;
+3. Exemplo simples: tratamento de divisão por zero
+plsql
+Copy
+Edit
+DECLARE
+  resultado NUMBER;
+BEGIN
+  resultado := 10 / 0;  -- vai gerar erro de divisão por zero
+EXCEPTION
+  WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('Erro: Divisão por zero não é permitida.');
+END;
+4. Exemplo prático: tratamento genérico de erros
+plsql
+Copy
+Edit
+DECLARE
+  v_num1 NUMBER := 10;
+  v_num2 NUMBER := 0;
+  resultado NUMBER;
+BEGIN
+  resultado := v_num1 / v_num2;
+  DBMS_OUTPUT.PUT_LINE('Resultado: ' || resultado);
+EXCEPTION
+  WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('Erro: Tentativa de divisão por zero.');
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Erro inesperado: ' || SQLERRM);
+END;
+WHEN OTHERS captura qualquer erro que não foi tratado explicitamente.
+
+SQLERRM mostra a mensagem do erro.
+
+5. Dicas rápidas
+Sempre trate erros que podem acontecer para evitar travar sua aplicação.
+
+Use mensagens claras para facilitar o diagnóstico.
+
+Evite deixar erros sem tratamento.
+
+Exceções podem ser usadas para garantir que o sistema continue funcionando mesmo quando algo dá errado.
+
+Resumo para vídeo:
+Explique que PL/SQL usa EXCEPTION para capturar erros, equivalente ao try-catch.
+
+Mostre exemplos simples de erros comuns (divisão por zero).
+
+Explique a importância do tratamento para garantir estabilidade do código.
+
+Mostre o uso de WHEN OTHERS para pegar erros gerais.
