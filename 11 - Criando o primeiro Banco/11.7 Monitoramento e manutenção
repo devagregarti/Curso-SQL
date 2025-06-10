@@ -1,0 +1,48 @@
+🧭 Monitoramento e Manutenção de um Banco de Dados
+🎯 Por que monitorar e manter?
+Assim como um carro precisa de revisões para continuar funcionando bem, um banco de dados também precisa de atenção contínua para:
+
+Garantir desempenho
+
+Evitar problemas de segurança
+
+Prevenir falhas antes que causem prejuízos
+
+🔍 1. Monitoramento: o que observar
+👇 Principais pontos a acompanhar:
+Item	O que verificar	Quando
+Espaço em disco	Crescimento do tamanho das tabelas	Diariamente ou semanalmente
+Desempenho das consultas	Consultas lentas, uso de índices	Semanal ou conforme necessidade
+Conexões ativas	Quantidade e origem das conexões	Em tempo real ou diariamente
+Erros no log	Tentativas de acesso negadas, falhas	Diariamente
+Uso de CPU e memória	Banco sobrecarregado	Em tempo real ou via alerta
+Bloqueios e deadlocks	Processos travados	Em tempo real, com alertas
+Jobs automáticos	Se os backups, atualizações e scripts estão sendo executados corretamente	Diariamente
+
+Ferramentas úteis:
+🔧 pgAdmin, Zabbix, Prometheus + Grafana, pg_stat_activity, pgBadger (PostgreSQL)
+
+🧹 2. Manutenção: o que fazer e quando
+🛠️ Tarefas mais comuns:
+Tarefa	Descrição	Frequência recomendada
+Backup	Cópia de segurança	Diariamente / conforme criticidade
+Reindexação	Refaz índices para melhorar performance	Mensal ou quando notar lentidão
+Vacuum (limpeza de dados mortos)	Remove dados que foram apagados internamente no PostgreSQL	Automático, mas pode rodar manualmente
+Atualização de estatísticas	Otimiza o plano de execução das consultas	Após grandes inserções/atualizações
+Rotação de logs	Garante que os arquivos de log não fiquem gigantes	Semanal ou automático
+Verificação de integridade	Conferir se os dados estão íntegros e sem corrupção	Mensal
+Atualização do banco e patches de segurança	Evita vulnerabilidades	Conforme liberação de updates
+
+🧠 Dica prática para o aluno:
+📋 Mantenha um checklist de tarefas de manutenção com prazos definidos.
+🔔 Configure alertas para avisar quando algo sair do normal.
+
+✅ Conclusão rápida:
+Um banco de dados bem monitorado e mantido:
+
+Evita surpresas desagradáveis;
+
+Rende mais (desempenho);
+
+E é mais confiável e seguro.
+

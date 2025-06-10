@@ -1,0 +1,54 @@
+💾 Backup e Recuperação em Banco de Dados
+🎯 Objetivo:
+Garantir que os dados possam ser restaurados em caso de falhas, erros humanos, ataques ou problemas técnicos.
+
+📦 O que é Backup?
+Backup é uma cópia de segurança dos dados de um banco.
+
+Pode incluir:
+
+Estrutura das tabelas (schemas)
+
+Dados armazenados
+
+Usuários e permissões
+
+🔁 Tipos de Backup
+Tipo	Descrição	Exemplo Prático
+Completo	Cópia total do banco de dados	pg_dump banco > backup.sql
+Incremental	Copia só o que mudou desde o último backup	Exige ferramentas extras
+Em tempo real	Backup contínuo de todas as transações	Com WAL (Write-Ahead Logging) no PostgreSQL
+
+🧱 Exemplo Simples de Backup (PostgreSQL):
+bash
+Copy
+Edit
+pg_dump -U usuario -d nome_do_banco -f backup.sql
+Esse comando cria um arquivo .sql com todas as instruções para recriar o banco.
+
+🔄 O que é Recuperação?
+É o processo de restaurar o banco a partir de um backup.
+
+Exemplo de recuperação:
+bash
+Copy
+Edit
+psql -U usuario -d novo_banco < backup.sql
+💡 Boas práticas:
+📆 Faça backups regulares (diário, semanal, etc.)
+
+🧪 Teste os backups (verifique se conseguem ser restaurados)
+
+☁️ Armazene em locais diferentes (ex: nuvem e local)
+
+🔐 Proteja os arquivos de backup (dados sensíveis!)
+
+🚨 Automatize o processo com scripts e agendadores
+
+✅ Conclusão para o aluno:
+Backup é como um salva-vidas para os dados.
+
+Sem ele, uma falha pode significar perda total de informações.
+
+Saber como fazer e restaurar um backup é parte essencial do trabalho com bancos.
+

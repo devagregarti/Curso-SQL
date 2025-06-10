@@ -1,0 +1,44 @@
+⚙️ Desempenho e Escalabilidade em Bancos de Dados (Explicação Breve)
+🚀 1. Desempenho
+Desempenho é a capacidade do banco de responder rapidamente às operações (consultas, inserções, atualizações).
+
+🧩 Fatores que afetam o desempenho:
+Índices: ajudam o banco a encontrar dados mais rápido.
+
+Consultas mal escritas: joins desnecessários, filtros errados, uso de SELECT *, etc.
+
+Quantidade de dados: quanto mais registros, maior o tempo de resposta se não houver otimização.
+
+Hardware e rede: memória, CPU, disco e conexão com o banco.
+
+🔍 Exemplo:
+
+sql
+Copy
+Edit
+CREATE INDEX idx_nome_cliente ON clientes(nome);
+Esse índice acelera buscas pelo nome do cliente.
+
+📈 2. Escalabilidade
+Escalabilidade é a capacidade do banco crescer (mais dados, mais usuários) sem perder desempenho.
+
+🧭 Dois tipos principais:
+Escalabilidade vertical: melhorar o hardware (mais RAM, CPU, etc.).
+
+Escalabilidade horizontal: distribuir os dados entre vários servidores (sharding, réplicas).
+
+🔄 Técnicas comuns de otimização e escalabilidade:
+Técnica	Benefício
+Índices	Aceleram buscas
+Normalização	Evita dados duplicados, melhora leitura
+Desnormalização	Melhora performance de leitura em sistemas analíticos
+Tabelas particionadas	Divide tabelas grandes para melhorar tempo de acesso
+Cache (ex: Redis)	Armazena dados mais acessados na memória
+Replicação	Cria cópias para leitura em paralelo
+
+✅ Conclusão rápida para o aluno:
+Desempenho = banco responde rápido
+
+Escalabilidade = banco continua respondendo rápido mesmo crescendo
+
+Projetar bem desde o início evita dor de cabeça depois

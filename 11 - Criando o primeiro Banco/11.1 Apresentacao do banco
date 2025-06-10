@@ -1,1 +1,94 @@
 
+🎯 Cenário do Banco: Sistema de Vendas em uma Loja
+Entidades:
+    Clientes
+    Produtos
+    Pedidos
+
+Itens do Pedido (tabela associativa)
+
+Departamentos (subentendido pelos produtos)
+
+🛠️ Scripts e Explicações
+
+-- Tabela de Clientes
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    data_cadastro DATE DEFAULT CURRENT_DATE,
+    ativo BOOLEAN DEFAULT TRUE
+);
+📝 Explicação:
+SERIAL: cria um número automático para o ID.
+
+NOT NULL: exige que o campo seja preenchido.
+
+UNIQUE: impede duplicação de e-mails.
+
+DEFAULT: define valor padrão.
+
+BOOLEAN: mostra uso prático (cliente ativo ou não).
+
+-- Tabela de Departamentos
+CREATE TABLE departamentos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL UNIQUE
+);
+📝 Explicação:
+Cria categorias para produtos (ex: Eletrônicos, Roupas).
+
+Campo nome é único para evitar repetição.
+
+-- Tabela de Produtos
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco NUMERIC(10, 2) CHECK (preco >= 0),
+    estoque INT DEFAULT 0 CHECK (estoque >= 0),
+    id_departamento INT REFERENCES departamentos(id)
+);
+📝 Explicação:
+CHECK: impede valores negativos.
+
+REFERENCES: chave estrangeira ligando ao departamento.
+
+Exemplo de uso de tipo numérico e integridade referencial.
+
+-- Tabela de Pedidos
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL REFERENCES clientes(id),
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'pago', 'cancelado'))
+);
+📝 Explicação:
+Usa tipo TIMESTAMP e CHECK para controle de status.
+
+REFERENCES garante que só se cria pedido para cliente existente.
+
+-- Tabela de Itens do Pedido (associativa)
+CREATE TABLE itens_pedido (
+    id SERIAL PRIMARY KEY,
+    id_pedido INT NOT NULL REFERENCES pedidos(id) ON DELETE CASCADE,
+    id_produto INT NOT NULL REFERENCES produtos(id),
+    quantidade INT NOT NULL CHECK (quantidade > 0),
+    preco_unitario NUMERIC(10,2) NOT NULL CHECK (preco_unitario >= 0)
+);
+📝 Explicação:
+Tabela que liga produtos aos pedidos.
+
+ON DELETE CASCADE: se o pedido for apagado, os itens também.
+
+Garante integridade e rastreabilidade da venda no momento do pedido.
+
+📌 Conceitos Utilizados:
+Conceito	Aplicação
+Chave primária	id em todas as tabelas
+Chave estrangeira	id_cliente, id_departamento, id_pedido, id_produto
+Tipos de dados	VARCHAR, BOOLEAN, NUMERIC, DATE, TIMESTAMP, INT
+Constraints	NOT NULL, UNIQUE, DEFAULT, CHECK, REFERENCES, ON DELETE CASCADE
+Normalização até 3FN	Nenhum campo depende indiretamente da chave e tudo está separado corretamente
+Relacionamentos	1:N (clientes → pedidos, pedidos → itens_pedido) e N:M via tabela associativa
+Documentação mínima	Nome das tabelas e colunas explicativos

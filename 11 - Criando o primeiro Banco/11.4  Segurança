@@ -1,0 +1,69 @@
+🔐 Segurança de um Banco de Dados (Resumo Didático)
+A segurança em bancos de dados tem como objetivo proteger os dados contra acessos indevidos, perdas ou alterações não autorizadas. Mesmo bancos pequenos precisam de cuidados.
+
+🛡️ 1. Controle de Acesso (Permissões)
+Apenas usuários autorizados podem visualizar, inserir, alterar ou apagar dados.
+
+É possível definir diferentes níveis de acesso:
+
+🔸 Leitura (somente SELECT)
+
+🔸 Escrita (INSERT/UPDATE)
+
+🔸 Administração (DROP/CREATE)
+
+Exemplo:
+
+sql
+Copy
+Edit
+GRANT SELECT, INSERT ON clientes TO usuario_vendedor;
+🧑‍🤝‍🧑 2. Autenticação de Usuários
+O banco exige login e senha para acesso.
+
+Em ambientes corporativos, é comum integrar com sistemas como LDAP ou Active Directory.
+
+🧱 3. Criptografia
+Pode ser aplicada:
+
+🔐 Em repouso (dados armazenados no disco)
+
+🔐 Em trânsito (dados que trafegam entre o banco e o cliente)
+
+Protege dados sensíveis como senhas, cartões, etc.
+
+💾 4. Backups Regulares
+Ter cópias de segurança dos dados é parte da segurança.
+
+Previne perda de informações por falhas, ataques ou erros humanos.
+
+📜 5. Auditoria e Logs
+Bancos podem registrar quem acessou o quê e quando.
+
+Útil para detectar acessos suspeitos ou erros.
+
+🧨 6. Proteção contra SQL Injection
+Ataques onde comandos maliciosos são inseridos via inputs do usuário.
+
+Use sempre queries parametrizadas nas aplicações.
+
+🔐 Exemplo simples de segurança no PostgreSQL:
+sql
+Copy
+Edit
+-- Criar usuário
+CREATE USER app_readonly WITH PASSWORD 'senha123';
+
+-- Dar acesso somente de leitura
+GRANT CONNECT ON DATABASE vendas TO app_readonly;
+GRANT USAGE ON SCHEMA public TO app_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_readonly;
+✅ Conclusão rápida para o aluno:
+A segurança não é só proteger contra hackers. É garantir que:
+
+Quem não deve ver, não veja;
+
+Quem não deve alterar, não altere;
+
+E que, se algo der errado, os dados possam ser recuperados.
+
