@@ -1,4 +1,33 @@
-🔹 9. Limitações de Subqueries
-LIMIT e OFFSET em subqueries às vezes precisam de alias ou CTEs.
+🎯 Tópico: LIMIT e OFFSET – controlar quantos resultados e de onde começar a mostrar
+✅ Objetivo:
+Mostrar como limitar a quantidade de linhas retornadas em uma consulta e como pular linhas iniciais para “paginção” ou visualização parcial.
 
-Subqueries não são ideais para todos os cenários de performance.
+🧩 1. O que são?
+LIMIT: define o máximo de registros que a consulta deve retornar.
+
+OFFSET: pula um número específico de registros antes de começar a mostrar os resultados.
+
+🔍 2. Exemplo prático:
+Imagine uma lista de clientes, mas queremos mostrar só os 5 primeiros da lista.
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+ORDER BY nome
+LIMIT 5;
+Agora, para mostrar os próximos 5 clientes, pulando os primeiros 5:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+ORDER BY nome
+LIMIT 5 OFFSET 5;
+🔍 3. Como funciona no dia a dia:
+Útil para páginas que mostram resultados em partes, tipo: “mostrar 10 produtos por página”.
+
+Combinado com ORDER BY, garante que os resultados sejam previsíveis e organizados.
+
+📝 4. Dica para slide/roteiro:
+“LIMIT controla a quantidade de linhas que queremos ver, e OFFSET controla de onde começamos a ver — juntos, são a base da paginação de resultados no SQL.”

@@ -1,5 +1,31 @@
-SELECT categoria, AVG(preco) AS media
+🎯 Tópico 5: Subconsulta em tabela temporária – usando subconsulta como fonte de dados
+✅ Objetivo:
+Mostrar como usar uma subconsulta dentro do FROM para criar uma tabela temporária que pode ser usada para consultas mais organizadas e fáceis de entender.
+
+🧩 1. O que é?
+📌 Uma subconsulta no FROM age como uma tabela temporária (também chamada de derived table ou tabela derivada), que pode ser usada como se fosse uma tabela normal dentro da consulta principal.
+
+🔍 2. Exemplo prático:
+Queremos saber o total de pedidos por cliente e mostrar apenas clientes que fizeram mais de 3 pedidos.
+
+sql
+Copy
+Edit
+SELECT 
+  t.cliente_id,
+  t.total_pedidos
 FROM (
-    SELECT * FROM produtos WHERE preco > 0
-) AS produtos_filtrados
-GROUP BY categoria;
+  SELECT cliente_id, COUNT(*) AS total_pedidos
+  FROM pedidos
+  GROUP BY cliente_id
+) t
+WHERE t.total_pedidos > 3;
+Aqui, a subconsulta dentro do FROM calcula o total de pedidos por cliente (tabela temporária t). Depois, a consulta principal filtra quem tem mais de 3 pedidos.
+
+🔍 3. Como funciona:
+A subconsulta gera uma tabela temporária com colunas e dados que você definiu
+
+Você pode aplicar filtros, joins e outras operações na consulta externa usando essa tabela
+
+📝 4. Dica para slide/roteiro:
+“Subconsultas em tabela temporária ajudam a simplificar consultas complexas, quebrando o problema em partes menores e fáceis de entender, além de melhorar a organização do código SQL.”

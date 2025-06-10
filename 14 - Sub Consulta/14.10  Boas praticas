@@ -1,15 +1,41 @@
-🔹 10. Melhores Práticas
-Prefira CTEs (com WITH) para subqueries longas.
+🎯 Tópico: Boas práticas ao usar subconsultas
+✅ Objetivo:
+Ensinar como usar subconsultas de forma eficiente, clara e segura no dia a dia das consultas SQL.
 
-Use subqueries correlacionadas com cautela.
+🧩 1. Use subconsultas para simplificar, não complicar
+Subconsultas ajudam a quebrar problemas complexos em partes menores.
 
-Teste a performance com EXPLAIN.
+Mas evite aninhar várias subconsultas desnecessariamente, pois isso pode deixar a consulta lenta e difícil de entender.
 
-✳️ BÔNUS: Comparar com CTEs (Common Table Expressions)
+🧩 2. Sempre nomeie subconsultas (alias)
+Use AS nome para dar nome à subconsulta, melhorando a leitura e facilitando o debug.
+
+Exemplo:
+
 sql
-Copiar
-Editar
-WITH pedidos_ricos AS (
-    SELECT cliente_id FROM pedidos WHERE total > 100
-)
-SELECT * FROM clientes WHERE id IN (SELECT cliente_id FROM pedidos_ricos);
+Copy
+Edit
+SELECT nome, total_vendas
+FROM (
+    SELECT cliente_id, SUM(valor) AS total_vendas
+    FROM vendas
+    GROUP BY cliente_id
+) AS vendas_cliente
+WHERE total_vendas > 1000;
+🧩 3. Prefira usar JOIN quando possível
+Às vezes, a mesma lógica pode ser feita com JOIN, que pode ser mais eficiente e legível.
+
+Use subconsultas para casos específicos (filtrar, agrupar, agregar), mas não como regra única.
+
+🧩 4. Teste o desempenho
+Consultas com subconsultas podem ser pesadas em bases grandes.
+
+Teste sempre a velocidade, e se estiver lento, tente reescrever ou usar índices.
+
+🧩 5. Subconsultas em cláusulas WHERE e FROM são mais comuns
+Subconsulta em WHERE filtra resultados com base em outra consulta.
+
+Subconsulta em FROM cria uma “tabela temporária” para consulta externa.
+
+📝 Dica para o slide/roteiro:
+“Subconsultas são poderosas para resolver problemas complexos, mas use com clareza: nomeie, evite excesso, teste desempenho e escolha a melhor opção entre subconsulta ou JOIN.”

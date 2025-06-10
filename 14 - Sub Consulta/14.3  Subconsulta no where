@@ -1,20 +1,40 @@
- 3. Subconsulta no WHERE (Subquery de Filtro)
-▪️ Comparação com um valor escalar
+🎯 Tópico 3: Subconsulta dentro do WHERE – Filtrando com consulta dentro da condição
+✅ Objetivo:
+Mostrar como usar subconsultas dentro da cláusula WHERE para filtrar resultados com base em dados de outras tabelas ou consultas.
+
+🧩 1. O que é?
+📌 Uma subconsulta no WHERE retorna um valor ou conjunto de valores usados para filtrar as linhas da consulta principal.
+
+🔍 2. Exemplo prático 1: Subconsulta retornando valor único
+Listar clientes que têm pedidos com valor maior que a média de todos os pedidos.
+
 sql
-Copiar
-Editar
-SELECT * FROM produtos
-WHERE preco > (SELECT AVG(preco) FROM produtos);
-▪️ Subquery com IN
+Copy
+Edit
+SELECT nome
+FROM clientes
+WHERE id IN (
+  SELECT cliente_id
+  FROM pedidos
+  WHERE valor > (
+    SELECT AVG(valor) FROM pedidos
+  )
+);
+Aqui, a subconsulta mais interna calcula a média dos valores de pedidos. A subconsulta do meio busca os clientes com pedidos acima dessa média, e a consulta principal mostra o nome desses clientes.
+
+🔍 3. Exemplo prático 2: Subconsulta com operador EXISTS
+Listar clientes que têm pelo menos um pedido.
+
 sql
-Copiar
-Editar
-SELECT * FROM clientes
-WHERE id IN (SELECT cliente_id FROM pedidos WHERE total > 100);
-▪️ Subquery com NOT IN
-sql
-Copiar
-Editar
-SELECT * FROM clientes
-WHERE id NOT IN (SELECT cliente_id FROM pedidos);
-⚠️ Nota didática: Explique o problema de NULL com NOT IN — ele pode causar a exclusão de todos os resultados.
+Copy
+Edit
+SELECT nome
+FROM clientes c
+WHERE EXISTS (
+  SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
+);
+O EXISTS verifica se existe pelo menos uma linha em pedidos relacionada ao cliente.
+
+📝 4. Dica para slide/roteiro:
+“Subconsultas no WHERE são poderosas para filtros dinâmicos, usando dados de outras tabelas ou agregações, tornando as consultas mais inteligentes e flexíveis.”
+

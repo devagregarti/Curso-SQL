@@ -1,12 +1,30 @@
- 6. Subquery Correlacionada
-Depende de valores da query externa.
+🎯 Tópico: Subconsulta Correlacionada – consulta que depende da linha da consulta principal
+✅ Objetivo:
+Mostrar o conceito de subconsulta que depende de cada linha da consulta externa, trazendo resultados dinâmicos para cada registro.
+
+🧩 1. O que é?
+📌 Uma subconsulta correlacionada é uma subconsulta que referencia colunas da consulta principal. Isso significa que para cada linha da consulta externa, a subconsulta é executada usando valores dessa linha.
+
+🔍 2. Exemplo prático:
+Listar clientes com o valor do maior pedido feito por cada um.
 
 sql
-Copiar
-Editar
-SELECT nome
-FROM clientes c
-WHERE EXISTS (
-    SELECT 1
+Copy
+Edit
+SELECT 
+  c.nome,
+  (
+    SELECT MAX(p.valor)
     FROM pedidos p
-    WHERE p.cliente_id = c.id AND p.total > 200
+    WHERE p.cliente_id = c.id
+  ) AS maior_pedido
+FROM clientes c;
+Para cada cliente (linha da consulta externa), a subconsulta busca o maior valor de pedido daquele cliente específico.
+
+🔍 3. Por que usar?
+Quando queremos obter dados relacionados linha a linha, sem juntar tabelas com JOIN
+
+Útil para consultas rápidas e específicas de cada registro
+
+📝 4. Dica para slide/roteiro:
+“Subconsultas correlacionadas são como perguntas feitas uma a uma para cada registro — trazem informações detalhadas e personalizadas para cada linha do resultado.”

@@ -1,3 +1,28 @@
-SELECT nome,
-       (SELECT COUNT(*) FROM pedidos WHERE cliente_id = c.id) AS total_pedidos
+🎯 Tópico 2: Subconsulta dentro do SELECT – Consultas dentro das colunas
+✅ Objetivo:
+Mostrar como usar uma subconsulta para calcular ou buscar um valor específico para cada linha retornada, direto no SELECT.
+
+🧩 1. O que é?
+📌 Uma subconsulta dentro do SELECT retorna um valor único para cada linha, funcionando como uma coluna calculada ou dinâmica.
+
+🔍 2. Exemplo prático:
+Imagine que você tem duas tabelas: clientes e pedidos. Quer mostrar o nome do cliente e a quantidade total de pedidos que ele fez.
+
+sql
+Copy
+Edit
+SELECT 
+  c.nome,
+  (SELECT COUNT(*) FROM pedidos p WHERE p.cliente_id = c.id) AS total_pedidos
 FROM clientes c;
+Para cada cliente, a subconsulta conta quantos pedidos ele fez e mostra como uma coluna na consulta principal.
+
+🔍 3. Como funciona:
+A subconsulta é executada para cada linha da tabela clientes
+
+Ela retorna um valor único (COUNT de pedidos)
+
+Esse valor aparece como uma coluna chamada total_pedidos
+
+📝 4. Dica para slide/roteiro:
+“Subconsulta no SELECT é ótima para adicionar informações específicas e calculadas por linha sem precisar de joins complexos — muito útil para relatórios rápidos e consultas diárias.”

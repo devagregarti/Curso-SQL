@@ -1,7 +1,37 @@
-SELECT nome,
-       CASE
-           WHEN id IN (SELECT cliente_id FROM pedidos WHERE total > 100)
-           THEN 'Cliente Ativo'
-           ELSE 'Cliente Inativo'
-       END AS status
-FROM clientes;
+🎯 Tópico: Subconsulta com CASE – usar lógica condicional dentro de consultas aninhadas
+✅ Objetivo:
+Mostrar como combinar subconsultas com a estrutura CASE para criar resultados dinâmicos e categorizados conforme condições específicas.
+
+🧩 1. O que é?
+📌 O CASE funciona como um “if-then-else” dentro do SQL, permitindo criar colunas que mudam conforme valores ou condições.
+📌 Quando usado junto com subconsulta, você pode aplicar essa lógica a valores derivados de outra consulta.
+
+🔍 2. Exemplo prático:
+Queremos listar clientes e classificar o valor do maior pedido deles em categorias:
+
+Alto (maior que 1000),
+
+Médio (entre 500 e 1000),
+
+Baixo (menos que 500).
+
+sql
+Copy
+Edit
+SELECT 
+  c.nome,
+  CASE
+    WHEN (SELECT MAX(p.valor) FROM pedidos p WHERE p.cliente_id = c.id) > 1000 THEN 'Alto'
+    WHEN (SELECT MAX(p.valor) FROM pedidos p WHERE p.cliente_id = c.id) BETWEEN 500 AND 1000 THEN 'Médio'
+    ELSE 'Baixo'
+  END AS categoria_pedido
+FROM clientes c;
+🔍 3. Como funciona:
+Para cada cliente, a subconsulta pega o maior pedido.
+
+O CASE avalia esse valor e classifica numa categoria.
+
+Resultado prático para análise rápida dos clientes.
+
+📝 4. Dica para slide/roteiro:
+“Combinar subconsulta e CASE permite criar relatórios dinâmicos e categorizados, facilitando a interpretação de dados complexos de forma simples e rápida.”

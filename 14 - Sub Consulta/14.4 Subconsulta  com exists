@@ -1,11 +1,35 @@
--- Clientes que já fizeram pedidos
-SELECT * FROM clientes c
-WHERE EXISTS (
-    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
-);
+🎯 Tópico 4: Subconsulta com EXISTS – Verificando existência de registros
+✅ Objetivo:
+Mostrar como usar o operador EXISTS para verificar se existem registros que atendem a uma condição, facilitando consultas de presença ou ausência de dados relacionados.
 
--- Clientes que nunca fizeram pedidos
-SELECT * FROM clientes c
-WHERE NOT EXISTS (
-    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
+🧩 1. O que é?
+📌 EXISTS é um operador lógico que retorna TRUE se a subconsulta interna retorna pelo menos uma linha; caso contrário, FALSE.
+
+🔍 2. Exemplo prático 1: Listar clientes que possuem pelo menos um pedido
+sql
+Copy
+Edit
+SELECT nome
+FROM clientes c
+WHERE EXISTS (
+  SELECT 1
+  FROM pedidos p
+  WHERE p.cliente_id = c.id
 );
+Aqui, para cada cliente, a subconsulta verifica se existe pelo menos um pedido com cliente_id igual ao id do cliente. Se existir, o cliente é listado.
+
+🔍 3. Exemplo prático 2: Listar clientes que NÃO possuem pedidos
+sql
+Copy
+Edit
+SELECT nome
+FROM clientes c
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM pedidos p
+  WHERE p.cliente_id = c.id
+);
+Inverte a lógica: lista clientes que não têm nenhum pedido relacionado.
+
+📝 4. Dica para slide/roteiro:
+“O EXISTS é perfeito para checar a existência de registros relacionados, trazendo muita agilidade e clareza para consultas de presença ou ausência, sem precisar trazer dados extras.”

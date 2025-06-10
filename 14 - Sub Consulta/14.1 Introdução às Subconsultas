@@ -1,5 +1,41 @@
+🎯 Tópico 1: Introdução a Subconsultas (Subqueries) – Consultas dentro de consultas
+✅ Objetivo:
+Mostrar o que são subconsultas e como elas permitem usar uma consulta dentro de outra para obter resultados mais precisos e dinâmicos.
 
-🔹 1. O que é uma Subconsulta?
-Definição: Uma consulta dentro de outra.
+🧩 1. O que é subconsulta?
+📌 É uma consulta SQL que fica dentro de outra consulta, entre parênteses, usada para buscar dados que ajudam a filtrar, comparar ou calcular na consulta principal.
 
-Usos comuns: filtros, cálculos, agrupamentos, joins alternativos.
+🔍 2. Onde usar?
+Na cláusula WHERE
+
+Na cláusula FROM
+
+Na cláusula SELECT
+
+🔍 3. Exemplo prático 1: Subconsulta no WHERE
+sql
+Copy
+Edit
+SELECT nome, idade
+FROM clientes
+WHERE idade > (
+  SELECT AVG(idade)
+  FROM clientes
+);
+Lista os clientes com idade maior que a média da idade de todos os clientes.
+
+🔍 4. Exemplo prático 2: Subconsulta no FROM
+sql
+Copy
+Edit
+SELECT cidade, total_clientes
+FROM (
+  SELECT cidade, COUNT(*) AS total_clientes
+  FROM clientes
+  GROUP BY cidade
+) AS contagem
+WHERE total_clientes > 5;
+Cria uma tabela temporária com o número de clientes por cidade e filtra só as cidades com mais de 5 clientes.
+
+📝 5. Dica para slide/roteiro:
+“Subconsultas são consultas dentro de consultas — uma forma poderosa de montar consultas mais complexas e obter informações específicas sem precisar fazer várias consultas separadas.”

@@ -1,7 +1,37 @@
-SELECT nome FROM clientes
-WHERE id IN (
-    SELECT cliente_id FROM pedidos
-    WHERE id IN (
-        SELECT pedido_id FROM pagamentos WHERE metodo = 'PIX'
-    )
+🎯 Tópico: Subconsulta Aninhada – consulta dentro de outra consulta, que está dentro de outra
+✅ Objetivo:
+Mostrar o uso de subconsultas aninhadas (sub-subconsultas) para resolver perguntas complexas, dividindo o problema em etapas dentro da consulta SQL.
+
+🧩 1. O que é?
+📌 Subconsulta aninhada é quando uma subconsulta contém outra subconsulta dentro dela, criando múltiplos níveis de consultas internas.
+📌 Cada subconsulta é executada para entregar um resultado para a próxima.
+
+🔍 2. Exemplo prático:
+Queremos encontrar o cliente que fez o pedido com o maior valor total.
+
+Passo 1: descobrir o maior valor de pedido.
+
+Passo 2: descobrir o cliente que fez esse pedido.
+
+sql
+Copy
+Edit
+SELECT nome
+FROM clientes
+WHERE id = (
+  SELECT cliente_id
+  FROM pedidos
+  WHERE valor = (
+    SELECT MAX(valor)
+    FROM pedidos
+  )
 );
+🔍 3. Como funciona:
+A subconsulta mais interna (SELECT MAX(valor) FROM pedidos) encontra o maior valor de pedido.
+
+A subconsulta do meio busca o cliente_id do pedido com esse maior valor.
+
+A consulta externa busca o nome do cliente com aquele id.
+
+📝 4. Dica para slide/roteiro:
+“Subconsultas aninhadas são como caixas dentro de caixas: cada etapa resolve uma parte do problema, até chegar na resposta final.”
