@@ -1,4 +1,38 @@
-WITH pedidos_2023 AS (
-    SELECT * FROM pedidos WHERE EXTRACT(YEAR FROM data_pedido) = 2023
+🎯 Tópico 12: CTE (Common Table Expression) – Consultas temporárias para organizar seu SQL
+✅ Objetivo:
+Apresentar o conceito de CTE para criar consultas temporárias e melhorar a organização e legibilidade dos seus SELECTs.
+
+🧩 1. O que é CTE?
+📌 Uma consulta temporária nomeada, que você define antes do SELECT principal e pode reutilizar dentro daquela consulta.
+
+🔍 2. Sintaxe básica:
+sql
+Copy
+Edit
+WITH clientes_adultos AS (
+  SELECT * FROM clientes WHERE idade >= 18
 )
-SELECT cliente_id, COUNT(*) FROM pedidos_2023 GROUP BY cliente_id;
+SELECT nome, idade FROM clientes_adultos WHERE cidade = 'Dublin';
+Aqui criamos a CTE clientes_adultos e depois usamos ela na consulta principal.
+
+🔍 3. Exemplo prático 1: Listar clientes adultos de uma cidade específica
+sql
+Copy
+Edit
+WITH clientes_adultos AS (
+  SELECT * FROM clientes WHERE idade >= 18
+)
+SELECT nome, cidade FROM clientes_adultos WHERE cidade = 'Lisboa';
+🔍 4. Exemplo prático 2: CTE com agregação para calcular média de idade por cidade
+sql
+Copy
+Edit
+WITH media_idade AS (
+  SELECT cidade, AVG(idade) AS idade_media
+  FROM clientes
+  GROUP BY cidade
+)
+SELECT * FROM media_idade WHERE idade_media > 30;
+📝 5. Dica para slide/roteiro:
+“CTE ajuda a quebrar consultas em partes fáceis de entender, fazendo seu SQL mais limpo e fácil de manter — muito útil para consultas do dia a dia e projetos maiores.”
+

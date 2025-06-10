@@ -1,0 +1,72 @@
+🎯 Tópico 4: GROUP BY e HAVING – Quando os dados precisam ser agrupados
+✅ Objetivo:
+Ensinar como agrupar registros por categoria com GROUP BY e filtrar grupos com HAVING, com exemplos cotidianos como "quantos clientes por cidade" ou "qual cidade mais comprou".
+
+🧩 1. O que é GROUP BY?
+📌 Definição curta:
+
+Agrupa os dados por uma ou mais colunas para aplicar funções de agregação em cada grupo.
+
+📊 2. Exemplo direto do dia a dia:
+Exemplo 1: Contar clientes por cidade
+sql
+Copy
+Edit
+SELECT cidade, COUNT(*) AS total_clientes
+FROM clientes
+GROUP BY cidade;
+🗣️ O que faz?
+
+Agrupa os clientes por cidade e mostra quantos clientes existem em cada cidade.
+
+Exemplo 2: Total vendido por forma de pagamento
+sql
+Copy
+Edit
+SELECT forma_pagamento, SUM(valor_compra) AS total_vendas
+FROM pedidos
+GROUP BY forma_pagamento;
+🗣️ O que faz?
+
+Mostra quanto foi vendido em cada forma de pagamento (cartão, Pix, dinheiro...).
+
+🧱 3. O que é HAVING?
+📌 Definição curta:
+
+Serve para filtrar os grupos, depois do GROUP BY.
+
+🔍 Comparação:
+
+WHERE → filtra linhas antes do agrupamento.
+
+HAVING → filtra grupos depois do GROUP BY.
+
+Exemplo prático com HAVING:
+Mostrar somente as cidades com mais de 3 clientes:
+
+sql
+Copy
+Edit
+SELECT cidade, COUNT(*) AS total_clientes
+FROM clientes
+GROUP BY cidade
+HAVING COUNT(*) > 3;
+Outro exemplo com SUM:
+Mostrar formas de pagamento com vendas acima de R$ 1.000:
+
+sql
+Copy
+Edit
+SELECT forma_pagamento, SUM(valor_compra) AS total
+FROM pedidos
+GROUP BY forma_pagamento
+HAVING SUM(valor_compra) > 1000;
+🧠 Dicas rápidas:
+Sempre use GROUP BY com uma função de agregação (COUNT, SUM, AVG, etc.).
+
+Use HAVING apenas quando quiser filtrar os resultados agrupados.
+
+Não confundir com WHERE, que filtra antes do agrupamento.
+
+📝 Conclusão para o Slide/Roteiro:
+“Com GROUP BY, você organiza os dados em categorias, como por cidade, produto ou forma de pagamento. E com HAVING, você consegue filtrar esses grupos com base nos totais, médias e contagens. É assim que o SQL começa a parecer mágica!”

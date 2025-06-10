@@ -1,8 +1,0 @@
--- Agrupamento por categoria
-SELECT categoria, COUNT(*) FROM produtos GROUP BY categoria;
-
--- Agrupamento com condição (HAVING)
-SELECT categoria, AVG(preco)
-FROM produtos
-GROUP BY categoria
-HAVING AVG(preco) > 100;

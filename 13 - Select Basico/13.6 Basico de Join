@@ -1,19 +1,60 @@
--- INNER JOIN
-SELECT c.nome, p.total
-FROM clientes c
-INNER JOIN pedidos p ON c.id = p.cliente_id;
+🎯 Tópico 5: Básico de JOIN – Unindo informações para respostas completas
+✅ Objetivo:
+Explicar de forma simples o que é JOIN, por que usamos, e mostrar o JOIN mais comum — o INNER JOIN — com exemplos claros.
 
--- LEFT JOIN
-SELECT c.nome, p.total
-FROM clientes c
-LEFT JOIN pedidos p ON c.id = p.cliente_id;
+🧩 1. O que é JOIN?
+📌 Definição rápida:
 
--- RIGHT JOIN
-SELECT c.nome, p.total
-FROM clientes c
-RIGHT JOIN pedidos p ON c.id = p.cliente_id;
+Comando para juntar dados de duas ou mais tabelas, usando uma coluna em comum.
 
--- FULL OUTER JOIN
-SELECT c.nome, p.total
-FROM clientes c
-FULL JOIN pedidos p ON c.id = p.cliente_id;
+💡 Exemplo cotidiano:
+
+Imagine uma tabela clientes (nome, email) e outra pedidos (id_pedido, id_cliente, valor).
+
+Queremos saber o nome do cliente junto com o valor do pedido.
+
+🔗 2. INNER JOIN – O mais usado
+Sintaxe básica:
+sql
+Copy
+Edit
+SELECT clientes.nome, pedidos.valor
+FROM clientes
+INNER JOIN pedidos ON clientes.id = pedidos.id_cliente;
+🧑‍💼 Exemplo prático:
+Tabelas:
+
+clientes	pedidos
+id	nome
+----	-----------------
+1	Ana
+2	Bruno
+3	Carla
+
+Consulta:
+
+sql
+Copy
+Edit
+SELECT clientes.nome, pedidos.valor
+FROM clientes
+INNER JOIN pedidos ON clientes.id = pedidos.id_cliente;
+Resultado:
+
+nome	valor
+Ana	150
+Bruno	200
+Ana	50
+
+🧠 3. Explicação simples:
+O JOIN “liga” as tabelas pela coluna que tem em comum (clientes.id = pedidos.id_cliente).
+
+Mostra só os registros que têm correspondência nas duas tabelas.
+
+🔍 4. Dica: quando usar JOIN?
+Sempre que precisar combinar dados relacionados que estão em tabelas diferentes.
+
+Exemplo: nome do cliente + dados do pedido, produto + estoque, funcionário + departamento.
+
+📝 5. Resumo rápido para o slide/roteiro:
+“JOIN é o recurso que permite ao SQL trabalhar com várias tabelas ao mesmo tempo, juntando dados relacionados. O INNER JOIN mostra só os dados que existem em ambas as tabelas, perfeito para cruzar informações do dia a dia.”

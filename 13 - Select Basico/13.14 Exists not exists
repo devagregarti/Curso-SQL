@@ -1,5 +1,38 @@
--- Clientes com pedidos
-SELECT * FROM clientes c
+🎯 Tópico 13: EXISTS e NOT EXISTS – Verificando existência de dados
+✅ Objetivo:
+Entender como testar se uma consulta retorna resultados (existe) ou não, e usar isso para filtros inteligentes.
+
+🧩 1. O que faz o EXISTS?
+📌 Retorna TRUE se a subconsulta interna retornar pelo menos uma linha.
+
+🧩 2. O que faz o NOT EXISTS?
+📌 Retorna TRUE se a subconsulta não retornar nenhuma linha.
+
+🔍 3. Exemplo prático 1: Listar clientes que têm pedidos
+sql
+Copy
+Edit
+SELECT nome
+FROM clientes c
 WHERE EXISTS (
-    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.id
+  SELECT 1
+  FROM pedidos p
+  WHERE p.cliente_id = c.id
 );
+Aqui trazemos só os clientes que possuem pelo menos um pedido.
+
+🔍 4. Exemplo prático 2: Listar clientes que não fizeram pedidos
+sql
+Copy
+Edit
+SELECT nome
+FROM clientes c
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM pedidos p
+  WHERE p.cliente_id = c.id
+);
+Aqui trazemos os clientes que ainda não fizeram pedidos.
+
+📝 5. Dica para slide/roteiro:
+“EXISTS e NOT EXISTS ajudam a verificar se um dado está presente, tornando suas consultas mais inteligentes e precisas.”

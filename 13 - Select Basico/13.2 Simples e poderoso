@@ -1,23 +1,74 @@
--- Selecionar todas as colunas de uma tabela
-SELECT * FROM clientes;
+🎯 Tópico 1: Simples e Poderoso – A Magia do SELECT
+Objetivo:
+Mostrar que com um único comando — SELECT — é possível extrair informações valiosas de qualquer banco de dados, mesmo sem ser um expert.
 
--- Selecionar colunas específicas
+🧩 1. O que é o SELECT?
+Definição curta: Comando que usamos para "consultar" o banco de dados.
+
+Comparação simples: Como perguntar ao banco de dados: "Me mostra isso aqui".
+
+Sintaxe básica:
+
+sql
+Copy
+Edit
+SELECT coluna1, coluna2 FROM tabela;
+💡 2. Exemplo real do dia a dia (simples e identificável)
+Imagine uma tabela chamada clientes com os seguintes campos:
+
+nome
+
+email
+
+cidade
+
+data_cadastro
+
+📌 Consulta: Mostrar nome e email de todos os clientes
+
+sql
+Copy
+Edit
 SELECT nome, email FROM clientes;
+🛠️ 3. SELECT com tudo (o famoso asterisco *)
+Quando você quer ver todas as colunas:
 
--- Renomear colunas na saída
-SELECT nome AS "Nome do Cliente", email AS "E-mail" FROM clientes;
+sql
+Copy
+Edit
+SELECT * FROM clientes;
+Quando usar?
 
--- Seleção com cláusula WHERE
-SELECT * FROM clientes WHERE cidade = 'Dublin';
+Para explorar a tabela rapidamente.
 
--- Comparações
-SELECT * FROM produtos WHERE preco > 50;
+Evitar em grandes sistemas por performance.
 
--- BETWEEN
-SELECT * FROM pedidos WHERE data_pedido BETWEEN '2023-01-01' AND '2023-12-31';
+🎯 4. Apelidos para colunas (AS)
+Torna os resultados mais amigáveis:
 
--- LIKE (com curingas)
-SELECT * FROM clientes WHERE nome LIKE 'Jo%';
+sql
+Copy
+Edit
+SELECT nome AS "Nome do Cliente", email AS "Contato" FROM clientes;
+🔎 5. SELECT + WHERE (filtrar resultados)
+Consulta simples com condição:
 
--- IS NULL / IS NOT NULL
-SELECT * FROM produtos WHERE desconto IS NULL;
+sql
+Copy
+Edit
+SELECT nome, cidade FROM clientes WHERE cidade = 'Dublin';
+🗓️ 6. BONUS: SELECT com datas
+Exemplo para buscar quem se cadastrou este ano:
+
+sql
+Copy
+Edit
+SELECT nome FROM clientes
+WHERE data_cadastro >= '2025-01-01';
+🧠 Dica Final
+SELECT é como sua “lanterna” no banco de dados. Com ele, você não muda nada no banco — só olha.
+
+Pode parecer simples, mas é com ele que você tira relatórios, monitora clientes, gera dashboards...
+
+📝 Conclusão para o Slide/Roteiro
+“Com uma linha de SQL, você já consegue extrair informação útil do banco. O SELECT é simples, mas é o primeiro passo para se tornar poderoso com dados.”

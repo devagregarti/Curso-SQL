@@ -1,8 +1,64 @@
--- Data atual
-SELECT NOW();
+🎯 Tópico 7: Operações com Data e Hora – Consultas dinâmicas e úteis
+✅ Objetivo:
+Mostrar os principais comandos e funções para lidar com datas e horas, comuns no dia a dia — como filtrar por datas, calcular intervalos e extrair partes da data.
 
--- Extraindo partes da data
-SELECT EXTRACT(YEAR FROM data_pedido) FROM pedidos;
+🧩 1. Por que trabalhar com data e hora?
+Saber consultar informações por períodos (ex.: pedidos do mês, aniversariantes da semana).
 
--- Diferença entre datas
-SELECT data_entrega - data_pedido AS dias_para_entrega FROM pedidos;
+Calcular tempo entre eventos (ex.: idade, tempo de serviço).
+
+Extrair partes da data para agrupamentos (ex.: vendas por mês).
+
+📅 2. Filtrar por datas (exemplo simples)
+sql
+Copy
+Edit
+SELECT * FROM pedidos
+WHERE data_pedido = '2025-06-10';
+Filtra pedidos do dia 10 de junho de 2025.
+
+⏳ 3. Filtrar intervalo de datas (exemplo comum)
+sql
+Copy
+Edit
+SELECT * FROM pedidos
+WHERE data_pedido BETWEEN '2025-06-01' AND '2025-06-10';
+Retorna pedidos feitos entre 1º e 10 de junho.
+
+🕒 4. Funções comuns para extrair partes da data
+YEAR(data) – Ano
+
+MONTH(data) – Mês
+
+DAY(data) – Dia
+
+Exemplo:
+Mostrar total de pedidos por mês:
+
+sql
+Copy
+Edit
+SELECT MONTH(data_pedido) AS mes, COUNT(*) AS total_pedidos
+FROM pedidos
+GROUP BY MONTH(data_pedido);
+➕ 5. Operações com intervalos (exemplo em PostgreSQL)
+Somar ou subtrair dias:
+
+sql
+Copy
+Edit
+SELECT data_pedido + INTERVAL '7 days' AS data_mais_7
+FROM pedidos;
+Adiciona 7 dias à data do pedido.
+
+🧮 6. Calcular diferença entre datas (exemplo em dias)
+sql
+Copy
+Edit
+SELECT nome_cliente, 
+       CURRENT_DATE - data_nascimento AS idade_em_dias
+FROM clientes;
+Calcula a idade do cliente em dias.
+
+📝 7. Dicas rápidas para o slide/roteiro:
+“Data e hora são essenciais para entender quando algo aconteceu. Com filtros por data, extração de partes da data e operações de intervalo, você faz consultas inteligentes e dinâmicas para o dia a dia.”

@@ -1,122 +1,39 @@
-📌 1. Concatenar Strings
+🎯 Tópico 9: Manipulação de Strings – Trabalhando com textos no SQL
+✅ Objetivo:
+Mostrar as funções básicas para manipular textos em consultas, como concatenar, buscar partes da string e alterar texto.
+
+🧩 1. Principais funções para manipular strings:
+Função	O que faz	Exemplo
+CONCAT()	Junta duas ou mais strings	CONCAT(nome, ' ', sobrenome)
+LENGTH()	Retorna o tamanho da string	LENGTH(nome)
+UPPER()	Deixa tudo maiúsculo	UPPER(nome)
+LOWER()	Deixa tudo minúsculo	LOWER(nome)
+SUBSTRING()	Pega parte da string	SUBSTRING(nome, 1, 3)
+TRIM()	Remove espaços em branco no começo/fim	TRIM(nome)
+
+🔍 2. Exemplo prático 1: Juntar nome e sobrenome
 sql
-Copiar
-Editar
-SELECT nome || ' ' || sobrenome AS nome_completo FROM clientes;
--- OU usando CONCAT:
-SELECT CONCAT(nome, ' ', sobrenome) AS nome_completo FROM clientes;
-
-📌 2. Comprimento da String
-sql
-Copiar
-Editar
-SELECT nome, LENGTH(nome) AS tamanho FROM clientes;
-
-📌 3. Maiúsculas / Minúsculas
-sql
-Copiar
-Editar
-SELECT UPPER(nome) AS nome_maiusculo, LOWER(nome) AS nome_minusculo FROM clientes;
-
-📌 4. Remover espaços extras
-sql
-Copiar
-Editar
-SELECT TRIM('   teste   ') AS texto_limpo; -- "teste"
-SELECT LTRIM('   teste') AS texto_sem_esquerda;
-SELECT RTRIM('teste   ') AS texto_sem_direita;
-
-📌 5. Substituir texto (REPLACE)
-sql
-Copiar
-Editar
-SELECT REPLACE('olá mundo', 'mundo', 'PostgreSQL') AS frase;
--- Resultado: "olá PostgreSQL"
-
-📌 6. Obter partes da string (SUBSTRING)
-sql
-Copiar
-Editar
-SELECT SUBSTRING('abcdef' FROM 2 FOR 3); -- Resultado: "bcd"
-SELECT SUBSTRING(nome FROM 1 FOR 5) FROM clientes;
-
-📌 7. Localizar posição de substring
-sql
-Copiar
-Editar
-SELECT POSITION('mundo' IN 'olá mundo'); -- Resultado: 5
-
-📌 8. Remover ou substituir com REGEXP_REPLACE
-sql
-Copiar
-Editar
--- Remover todos os números de uma string
-SELECT REGEXP_REPLACE('abc123def456', '\d', '', 'g'); -- "abcdef"
-
-📌 9. Comparação de Strings
-sql
-Copiar
-Editar
-SELECT * FROM clientes WHERE nome = 'João';
-SELECT * FROM clientes WHERE nome ILIKE 'joão'; -- case insensitive
-SELECT * FROM clientes WHERE nome ILIKE '%jo%'; -- contém "jo"
-
-📌 10. DIVIDIR Strings (STRING_TO_ARRAY)
-sql
-Copiar
-Editar
-SELECT STRING_TO_ARRAY('banana,maçã,laranja', ',');
--- Resultado: {"banana","maçã","laranja"}
-
-📌 11. Juntar array de strings em uma só (ARRAY_TO_STRING)
-sql
-Copiar
-Editar
-SELECT ARRAY_TO_STRING(ARRAY['banana','maçã','laranja'], ', ') AS frutas;
--- Resultado: "banana, maçã, laranja"
-
-📌 12. Formatação com LPAD / RPAD
-sql
-Copiar
-Editar
--- Adiciona zeros à esquerda para completar 8 dígitos
-SELECT LPAD('123', 8, '0'); -- Resultado: "00000123"
-
--- Adiciona espaços à direita
-SELECT RPAD('OK', 5, '.'); -- Resultado: "OK..."
-
-📌 13. Remover acentos (requere extensão unaccent)
-sql
-Copiar
-Editar
--- 1. Ativar extensão (uma vez):
-CREATE EXTENSION IF NOT EXISTS unaccent;
-
--- 2. Usar:
-SELECT unaccent('ação é útil'); -- Resultado: "acao e util"
-
-📌 14. Casos com CASE em Strings
-sql
-Copiar
-Editar
-SELECT nome,
-       CASE
-           WHEN nome ILIKE 'jo%' THEN 'Começa com Jo'
-           ELSE 'Outro nome'
-       END AS categoria
+Copy
+Edit
+SELECT CONCAT(nome, ' ', sobrenome) AS nome_completo
 FROM clientes;
-
-📌 15. Exemplo prático realista
-Imagine que o aluno precise formatar nomes para um relatório:
-
+🔍 3. Exemplo prático 2: Pegar as 3 primeiras letras do nome
 sql
-Copiar
-Editar
-SELECT 
-    INITCAP(TRIM(nome)) AS nome_formatado,
-    LENGTH(nome) AS caracteres,
-    CASE
-        WHEN POSITION('a' IN LOWER(nome)) > 0 THEN 'Contém A'
-        ELSE 'Sem A'
-    END AS observacao
+Copy
+Edit
+SELECT SUBSTRING(nome, 1, 3) AS inicio_nome
 FROM clientes;
+🔍 4. Exemplo prático 3: Deixar o nome todo em maiúsculo
+sql
+Copy
+Edit
+SELECT UPPER(nome) AS nome_maiusculo
+FROM clientes;
+🔍 5. Exemplo prático 4: Remover espaços extras no começo e no fim
+sql
+Copy
+Edit
+SELECT TRIM(nome) AS nome_sem_espacos
+FROM clientes;
+📝 6. Dica para slide/roteiro:
+“Manipular strings permite trabalhar melhor com textos: juntar, cortar, formatar nomes e outras informações para deixar seu banco mais organizado e suas consultas mais inteligentes.”

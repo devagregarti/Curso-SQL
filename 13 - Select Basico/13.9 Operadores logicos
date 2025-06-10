@@ -1,0 +1,42 @@
+🎯 Tópico 8: Operadores Lógicos – Filtrando dados com inteligência
+✅ Objetivo:
+Apresentar os operadores lógicos básicos (AND, OR, NOT) para combinar condições em consultas, com exemplos práticos do dia a dia.
+
+🧩 1. O que são operadores lógicos?
+📌 São usados para combinar várias condições em um WHERE e tornar a busca mais precisa.
+
+🛠️ 2. Principais operadores:
+Operador	Significado	Exemplo
+AND	E (todas as condições precisam ser verdadeiras)	idade > 18 AND cidade = 'Lisboa'
+OR	Ou (qualquer condição verdadeira)	cidade = 'Lisboa' OR cidade = 'Porto'
+NOT	Negação (inverter condição)	NOT cidade = 'Lisboa'
+
+🔍 3. Exemplo prático 1: Filtrar clientes maiores de 18 anos que moram em Dublin
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE idade >= 18 AND cidade = 'Dublin';
+🔍 4. Exemplo prático 2: Clientes que moram em Dublin ou Cork
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE cidade = 'Dublin' OR cidade = 'Cork';
+🔍 5. Exemplo prático 3: Clientes que não moram em Dublin
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE NOT cidade = 'Dublin';
+🧠 6. Combinações com parênteses para controlar a ordem
+Exemplo: clientes que moram em Dublin e são maiores de 18 ou moram em Cork:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE (cidade = 'Dublin' AND idade >= 18) OR cidade = 'Cork';
+📝 7. Resumo para slide/roteiro:
+“Com operadores lógicos você pode montar consultas com várias regras ao mesmo tempo. Use AND para juntar condições que precisam ser verdadeiras juntas, OR para escolher entre condições e NOT para negar o que não quer.”
+

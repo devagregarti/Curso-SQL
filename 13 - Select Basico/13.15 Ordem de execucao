@@ -8,3 +8,59 @@
 7- ORDER BY
 8- LIMIT
 
+
+🎯 Tópico 14: Ordem de Execução dos Comandos SQL no SELECT
+✅ Objetivo:
+Mostrar como o SQL processa uma consulta, passo a passo, para entender a lógica e evitar erros.
+
+🧩 1. A ordem natural de leitura do SELECT (como escrevemos):
+sql
+Copy
+Edit
+SELECT coluna1, coluna2
+FROM tabela
+WHERE condição
+GROUP BY coluna1
+HAVING condição_agregação
+ORDER BY coluna2
+LIMIT 10;
+🧩 2. A ordem real de execução (como o banco executa):
+FROM — Escolhe a tabela e faz os joins
+
+WHERE — Filtra linhas antes da agregação
+
+GROUP BY — Agrupa os dados
+
+HAVING — Filtra grupos (após agregação)
+
+SELECT — Escolhe colunas e calcula expressões
+
+ORDER BY — Ordena o resultado final
+
+LIMIT — Limita o número de linhas retornadas
+
+🔍 3. Exemplo prático:
+sql
+Copy
+Edit
+SELECT cidade, COUNT(*) AS total_clientes
+FROM clientes
+WHERE ativo = true
+GROUP BY cidade
+HAVING COUNT(*) > 5
+ORDER BY total_clientes DESC
+LIMIT 3;
+Primeiro: pega só clientes ativos (WHERE)
+
+Depois: agrupa por cidade (GROUP BY)
+
+Em seguida: filtra cidades com mais de 5 clientes (HAVING)
+
+Depois: escolhe as colunas e conta (SELECT)
+
+Ordena pela contagem (ORDER BY)
+
+Por fim: limita a 3 cidades (LIMIT)
+
+📝 4. Dica para slide/roteiro:
+“Saber a ordem real ajuda a montar consultas corretas e entender erros. O SQL não executa na ordem que escrevemos, e sim seguindo esse fluxo lógico.”

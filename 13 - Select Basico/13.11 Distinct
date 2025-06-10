@@ -1,1 +1,28 @@
-SELECT DISTINCT cidade FROM clientes;
+🎯 Tópico 10: DISTINCT – Como obter valores únicos nas consultas
+✅ Objetivo:
+Mostrar como usar DISTINCT para evitar repetições e trazer apenas valores diferentes em resultados.
+
+🧩 1. O que faz o DISTINCT?
+📌 Remove linhas duplicadas da consulta, retornando apenas valores únicos em uma ou mais colunas.
+
+🔍 2. Exemplo prático: Listar cidades distintas dos clientes
+sql
+Copy
+Edit
+SELECT DISTINCT cidade
+FROM clientes;
+Retorna todas as cidades diferentes onde os clientes moram, sem repetir.
+
+🔍 3. Exemplo prático: Listar combinações únicas de cidade e estado
+sql
+Copy
+Edit
+SELECT DISTINCT cidade, estado
+FROM clientes;
+Retorna combinações únicas de cidade e estado.
+
+🧠 4. Usar com outras colunas
+Importante: DISTINCT avalia a combinação das colunas selecionadas. Se tiver duas colunas, ele vai garantir que a combinação delas seja única.
+
+📝 5. Dica para o slide/roteiro:
+“O DISTINCT é útil para listar só os valores diferentes, limpando seu resultado de repetições e facilitando a análise dos dados.”

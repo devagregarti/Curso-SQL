@@ -1,0 +1,48 @@
+🎯 Tópico 6: Subqueries – Consultas dentro de consultas
+✅ Objetivo:
+Mostrar como usar uma consulta dentro da outra para obter dados específicos, usando exemplos simples e do cotidiano.
+
+🧩 1. O que é uma subquery?
+📌 Definição rápida:
+
+É uma consulta SQL dentro de outra consulta. Serve para buscar um valor ou um conjunto de valores para usar na consulta externa.
+
+💡 Exemplo no dia a dia:
+
+"Quero listar os clientes que fizeram a compra mais cara."
+
+🔍 2. Exemplo simples: Buscar o pedido com maior valor
+Passo 1: Consulta para achar o maior valor de pedido
+sql
+Copy
+Edit
+SELECT MAX(valor_compra) FROM pedidos;
+Passo 2: Usar esse resultado dentro da consulta principal
+sql
+Copy
+Edit
+SELECT nome_cliente, valor_compra
+FROM pedidos
+WHERE valor_compra = (SELECT MAX(valor_compra) FROM pedidos);
+🗣️ Explicação curta:
+
+A subquery dentro do WHERE retorna o maior valor, e a consulta principal busca o cliente que fez esse pedido.
+
+🔗 3. Outro exemplo: clientes que fizeram pedidos acima da média
+sql
+Copy
+Edit
+SELECT nome_cliente
+FROM pedidos
+WHERE valor_compra > (SELECT AVG(valor_compra) FROM pedidos);
+Lista clientes que gastaram mais do que a média das compras.
+
+🧠 4. Tipos comuns de subqueries
+No WHERE (mais usado): para filtrar resultados.
+
+No SELECT: para trazer dados derivados.
+
+No FROM: para criar uma tabela temporária (mais avançado, não obrigatório aqui).
+
+📝 5. Dica para o slide/roteiro:
+“Subqueries ajudam a dividir o problema em partes menores, buscando um dado dentro do outro. Assim, você consegue respostas precisas sem complicar sua consulta.”

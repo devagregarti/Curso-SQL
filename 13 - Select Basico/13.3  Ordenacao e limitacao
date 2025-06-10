@@ -1,7 +1,79 @@
--- ORDER BY (ascendente e descendente)
-SELECT * FROM produtos ORDER BY preco ASC;
-SELECT * FROM produtos ORDER BY preco DESC;
+🎯 Tópico 2: Ordenação e Limitação – Mostre só o que importa, na ordem certa
+✅ Objetivo:
+Ensinar como organizar os resultados com ORDER BY e limitar a quantidade de dados exibidos com LIMIT. Ideal para quem quer respostas rápidas e relevantes.
 
--- LIMIT e OFFSET
-SELECT * FROM clientes LIMIT 10;
-SELECT * FROM clientes LIMIT 10 OFFSET 10;
+🧩 1. Por que ordenar e limitar?
+Imagine um caixa de supermercado procurando os 10 últimos clientes cadastrados.
+
+Ou um dono de loja que quer ver os 5 produtos mais caros.
+
+🔠 2. Ordenação com ORDER BY
+📌 Sintaxe:
+sql
+Copy
+Edit
+SELECT coluna1, coluna2
+FROM tabela
+ORDER BY coluna1 [ASC|DESC];
+🎯 Exemplo do dia a dia:
+sql
+Copy
+Edit
+SELECT nome, data_cadastro
+FROM clientes
+ORDER BY data_cadastro DESC;
+ASC = Crescente (padrão)
+
+DESC = Decrescente
+
+🗣️ Explicação curta:
+
+Ordena os clientes do mais novo para o mais antigo.
+
+✂️ 3. Limitação com LIMIT
+📌 Sintaxe:
+sql
+Copy
+Edit
+SELECT * FROM tabela
+LIMIT quantidade;
+🎯 Exemplo prático:
+sql
+Copy
+Edit
+SELECT nome, cidade
+FROM clientes
+LIMIT 5;
+Mostra apenas os 5 primeiros clientes da tabela.
+
+🗣️ Explicação curta:
+
+Útil para ver apenas uma amostra ou os primeiros resultados de uma busca.
+
+🧠 4. Combinando ORDER BY + LIMIT
+Exemplo completo:
+sql
+Copy
+Edit
+SELECT nome, data_cadastro
+FROM clientes
+ORDER BY data_cadastro DESC
+LIMIT 3;
+💬 O que faz?
+
+Mostra os 3 últimos clientes cadastrados.
+
+🚀 5. Bonus: ORDER BY com múltiplas colunas
+sql
+Copy
+Edit
+SELECT nome, cidade, data_cadastro
+FROM clientes
+ORDER BY cidade ASC, data_cadastro DESC;
+Ordena primeiro por cidade (A-Z)
+
+Dentro da mesma cidade, ordena pelo mais novo
+
+📝 Conclusão para o Slide/Roteiro:
+“Nem sempre você quer ver tudo. Com ORDER BY e LIMIT, você vê o que realmente importa, do jeito mais organizado possível. Uma combinação poderosa e muito usada no dia a dia.”
+

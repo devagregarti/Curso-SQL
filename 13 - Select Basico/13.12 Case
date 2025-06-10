@@ -1,7 +1,37 @@
-SELECT nome,
-       CASE
-           WHEN idade < 18 THEN 'Menor de idade'
-           WHEN idade BETWEEN 18 AND 59 THEN 'Adulto'
-           ELSE 'Idoso'
-       END AS faixa_etaria
+🎯 Tópico 11: CASE – Condições dentro do SELECT para personalizar resultados
+✅ Objetivo:
+Mostrar como usar o CASE para criar colunas condicionais, classificações e substituições de valores de forma simples.
+
+🧩 1. O que é o CASE?
+📌 Um “if” dentro do SQL para retornar valores diferentes conforme condições.
+
+🔍 2. Sintaxe básica
+sql
+Copy
+Edit
+SELECT 
+  nome,
+  CASE
+    WHEN idade < 18 THEN 'Menor de idade'
+    WHEN idade >= 18 AND idade < 60 THEN 'Adulto'
+    ELSE 'Idoso'
+  END AS faixa_etaria
 FROM clientes;
+🔍 3. Exemplo prático 1: Classificar clientes por faixa etária
+Categoriza cada cliente como menor, adulto ou idoso, dentro da consulta.
+
+🔍 4. Exemplo prático 2: Traduzir status de pagamento
+sql
+Copy
+Edit
+SELECT 
+  nome, 
+  CASE status_pagamento
+    WHEN 'P' THEN 'Pago'
+    WHEN 'A' THEN 'Aguardando'
+    WHEN 'C' THEN 'Cancelado'
+    ELSE 'Desconhecido'
+  END AS status
+FROM pedidos;
+📝 5. Dica para slide/roteiro:
+“O CASE é uma forma fácil de criar condições dentro da consulta, deixando os dados mais claros e fáceis de entender, sem precisar alterar a base.”

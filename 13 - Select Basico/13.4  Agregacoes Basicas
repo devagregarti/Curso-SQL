@@ -1,6 +1,76 @@
--- COUNT, AVG, SUM, MIN, MAX
+🎯 Tópico 3: Agregações Básicas – Resumindo a informação
+✅ Objetivo:
+Ensinar como usar as funções de agregação mais comuns (COUNT, SUM, AVG, MAX, MIN) para gerar resumos úteis de dados, como totais, médias e contagens.
+
+🧩 1. O que são funções de agregação?
+📌 Definição rápida:
+
+São funções que resumem várias linhas em um único valor.
+
+💬 Comparação simples:
+
+Como fazer uma “conta rápida” sobre os dados: "Quantos tem?", "Qual o total?", "Qual a média?", etc.
+
+🔢 2. COUNT() – Contar quantos registros existem
+Exemplo prático:
+sql
+Copy
+Edit
 SELECT COUNT(*) FROM clientes;
-SELECT AVG(preco) FROM produtos;
-SELECT SUM(total) FROM pedidos;
-SELECT MIN(data_pedido) FROM pedidos;
-SELECT MAX(preco) FROM produtos;
+🗣️ O que faz?
+
+Conta quantas pessoas existem na tabela clientes.
+
+💰 3. SUM() – Somar valores
+Exemplo prático:
+sql
+Copy
+Edit
+SELECT SUM(valor_compra) FROM pedidos;
+🗣️ O que faz?
+
+Mostra o total vendido somando todos os valores das compras.
+
+📊 4. AVG() – Calcular média
+Exemplo prático:
+sql
+Copy
+Edit
+SELECT AVG(valor_compra) FROM pedidos;
+🗣️ O que faz?
+
+Mostra a média de valor gasto por compra.
+
+🔼🔽 5. MAX() e MIN() – Maior e menor valor
+Exemplo prático:
+sql
+Copy
+Edit
+SELECT MAX(valor_compra), MIN(valor_compra) FROM pedidos;
+🗣️ O que faz?
+
+Retorna o maior e menor valor de compra feito.
+
+🧠 6. Combinação com WHERE
+Exemplo:
+sql
+Copy
+Edit
+SELECT COUNT(*) FROM clientes WHERE cidade = 'Dublin';
+🗣️ O que faz?
+
+Conta quantos clientes são de Dublin.
+
+📎 7. Dica bônus: Nomeando os resultados com AS
+Exemplo:
+sql
+Copy
+Edit
+SELECT AVG(valor_compra) AS media_compras FROM pedidos;
+🗣️ O que faz?
+
+Dá um nome mais amigável ao resultado.
+
+📝 Conclusão para o Slide/Roteiro:
+“Com as funções de agregação, você transforma centenas de linhas em respostas rápidas e objetivas. Ideal para relatórios, métricas e tomadas de decisão.”
+
