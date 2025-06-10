@@ -1,10 +1,48 @@
-1. ✅ INNER JOIN
-Retorna apenas as linhas com correspondência nas duas tabelas.
+🎯 Tópico: INNER JOIN
+✅ Objetivo:
+Explicar o INNER JOIN, o tipo mais comum de join, para combinar dados de duas tabelas com base em uma condição.
+
+1. O que é INNER JOIN?
+Retorna apenas as linhas que têm correspondência nas duas tabelas.
+
+Ou seja, só traz os registros que “batem” na condição de junção.
+
+2. Por que usar INNER JOIN?
+Para relacionar informações complementares, como clientes e pedidos, funcionários e departamentos, produtos e categorias.
+
+3. Sintaxe básica:
+sql
+Copy
+Edit
+SELECT t1.coluna1, t2.coluna2
+FROM tabela1 t1
+INNER JOIN tabela2 t2
+ON t1.coluna_chave = t2.coluna_chave;
+4. Exemplo prático:
+Imagine duas tabelas:
+
+clientes (cliente_id, nome)
+
+pedidos (pedido_id, cliente_id, valor)
+
+Queremos listar os nomes dos clientes e seus pedidos:
 
 sql
-Copy code
-SELECT clientes.nome, pedidos.produto
-FROM clientes
-INNER JOIN pedidos ON clientes.id = pedidos.cliente_id;
-🟢 Explicação:
-Mostra apenas os clientes que têm pedidos.
+Copy
+Edit
+SELECT c.nome, p.pedido_id, p.valor
+FROM clientes c
+INNER JOIN pedidos p
+ON c.cliente_id = p.cliente_id;
+O que acontece?
+Só aparecem os clientes que têm pedidos. Clientes sem pedido não aparecem.
+
+5. Dica rápida:
+Se quiser incluir clientes sem pedidos, teria que usar outro tipo de join (LEFT JOIN). Mas para dados estritamente relacionados, INNER JOIN é ideal.
+
+Resumo rápido para vídeo:
+INNER JOIN combina dados de duas tabelas, retornando só os registros que têm correspondência.
+
+É a forma mais comum para cruzar informações no dia a dia.
+
+Use sempre a condição ON para definir a relação entre as tabelas.

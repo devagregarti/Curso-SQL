@@ -1,7 +1,73 @@
-📌 Dica extra: Usando alias (apelidos)
+🎯 Tópico: Boas Práticas e Dicas Extras para Joins
+1. Use o tipo certo de JOIN para seu objetivo
+Escolha INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN ou CROSS JOIN conforme a necessidade.
+
+Evite usar CROSS JOIN sem necessidade — gera muitos dados!
+
+2. Sempre escreva condições claras no ON
+Use colunas chave que relacionem as tabelas (ex: IDs).
+
+Evite fazer JOIN sem ON, exceto CROSS JOIN.
+
+3. Prefira JOIN a subconsultas para relacionar tabelas
+JOINs geralmente são mais eficientes e mais fáceis de entender.
+
+Subconsultas podem ser usadas, mas cuidado com performance.
+
+4. Use aliases para deixar consultas mais legíveis
 sql
-Copy code
+Copy
+Edit
 SELECT c.nome, p.produto
 FROM clientes c
 JOIN pedidos p ON c.id = p.cliente_id;
-🧠 Fica mais legível e usado em consultas mais longas.
+5. Filtre o resultado com WHERE para evitar grandes retornos
+Filtrar antes de juntar pode melhorar performance.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT c.nome, p.data_pedido
+FROM clientes c
+JOIN pedidos p ON c.id = p.cliente_id
+WHERE p.data_pedido >= '2025-01-01';
+6. Cuidado com NULLs em LEFT e RIGHT JOIN
+Em LEFT JOIN, colunas da tabela da direita podem ser NULL se não houver correspondência.
+
+Trate isso em aplicações ou com funções SQL (ex: COALESCE).
+
+7. Teste as consultas com poucos dados antes de usar em produção
+Evita consultas pesadas e inesperadas.
+
+Use LIMIT para amostragem.
+
+8. Dica Extra: use EXPLAIN para entender o plano de execução
+Ajuda a otimizar consultas e identificar gargalos.
+
+sql
+Copy
+Edit
+EXPLAIN SELECT ...
+Exemplo simples para o dia a dia:
+Listar clientes que fizeram pedidos em 2025, mostrando nome e produto:
+
+sql
+Copy
+Edit
+SELECT c.nome, p.produto
+FROM clientes c
+JOIN pedidos p ON c.id = p.cliente_id
+WHERE p.data_pedido >= '2025-01-01';
+Resumo para o vídeo:
+Escolha JOIN correto e use ON sempre.
+
+Use aliases para facilitar leitura.
+
+Filtre resultados para performance.
+
+Atenção a NULLs em LEFT/RIGHT JOIN.
+
+Teste e otimize usando EXPLAIN.
+

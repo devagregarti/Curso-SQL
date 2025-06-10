@@ -1,10 +1,70 @@
-5. ❌ CROSS JOIN
-Faz o produto cartesiano: junta todas as linhas da tabela A com todas da tabela B.
+🎯 Tópico: CROSS JOIN
+✅ Objetivo:
+Entender o CROSS JOIN, que gera o produto cartesiano entre duas tabelas — ou seja, combina todas as linhas de uma tabela com todas as linhas da outra.
+
+1. O que é CROSS JOIN?
+Junta cada linha da tabela A com todas as linhas da tabela B.
+
+Resultado: número de linhas = linhas da tabela A × linhas da tabela B.
+
+Não precisa de condição ON.
+
+2. Para que serve?
+Quando você quer combinar todas as possibilidades entre duas tabelas.
+
+Exemplo do dia a dia:
+Imagine que uma pizzaria quer listar todas as combinações possíveis entre sabores e tamanhos para mostrar no cardápio.
+
+3. Sintaxe básica:
+sql
+Copy
+Edit
+SELECT *
+FROM tabela1
+CROSS JOIN tabela2;
+4. Exemplo prático:
+Tabelas:
+
+sabores (sabor)
+
+sabor
+Calabresa
+Mussarela
+
+tamanhos (tamanho)
+
+tamanho
+Pequena
+Média
+Grande
+
+Consulta para listar todas as combinações sabor × tamanho:
 
 sql
-Copy code
-SELECT clientes.nome, pedidos.produto
-FROM clientes
-CROSS JOIN pedidos;
-🟢 Explicação:
-Gera todas as combinações possíveis entre clientes e pedidos. Cuidado, pode gerar muitos resultados.
+Copy
+Edit
+SELECT sabor, tamanho
+FROM sabores
+CROSS JOIN tamanhos;
+Resultado:
+
+sabor	tamanho
+Calabresa	Pequena
+Calabresa	Média
+Calabresa	Grande
+Mussarela	Pequena
+Mussarela	Média
+Mussarela	Grande
+
+5. Quando usar?
+Quando quiser gerar todas as combinações possíveis entre dois conjuntos de dados.
+
+Pode ser útil para planejamento, análises, ou gerar combinações para menus, testes, etc.
+
+Resumo para o vídeo:
+CROSS JOIN faz o produto cartesiano: combina tudo com tudo.
+
+Não precisa de condição ON.
+
+Cuidado: pode gerar muitas linhas!
+
