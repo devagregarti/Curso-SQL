@@ -1,31 +1,72 @@
- COALESCE(): Substitui NULL por outro valor
+🎯 Tópico: Funções Condicionais em SQL
+1. O que são funções condicionais?
+São funções que ajudam a tomar decisões dentro das consultas, trazendo diferentes resultados dependendo da condição avaliada.
+
+Muito usadas para classificar dados, criar categorias, ou alterar valores conforme regras.
+
+2. A função condicional mais usada: CASE
+Sintaxe básica:
+
 sql
-Copy code
-SELECT cliente, COALESCE(valor, 0) AS valor_corrigido
+Copy
+Edit
+CASE
+  WHEN condição1 THEN resultado1
+  WHEN condição2 THEN resultado2
+  ...
+  ELSE resultado_default
+END
+3. Exemplos práticos para o dia a dia:
+a) Classificar clientes pelo valor da compra:
+
+sql
+Copy
+Edit
+SELECT cliente, valor_compra,
+  CASE
+    WHEN valor_compra >= 1000 THEN 'VIP'
+    WHEN valor_compra >= 500 THEN 'Regular'
+    ELSE 'Novo'
+  END AS categoria
 FROM vendas;
-🟨 CASE: if...else no SQL
-sql
-Copy code
-SELECT cliente,
-       CASE 
-         WHEN valor > 200 THEN 'Alto'
-         ELSE 'Normal'
-       END AS categoria
-FROM vendas;
+Aqui, classificamos os clientes em VIP, Regular ou Novo conforme o valor da compra.
 
-📌 Extras úteis
-DISTINCT: elimina duplicatas
+b) Indicar se um produto está em promoção ou não:
 
 sql
-Copy code
-SELECT DISTINCT cliente FROM vendas;
-LIMIT: limita o número de linhas
+Copy
+Edit
+SELECT produto, preco,
+  CASE
+    WHEN preco < 50 THEN 'Promoção'
+    ELSE 'Preço Normal'
+  END AS status_preco
+FROM produtos;
+c) Usar CASE dentro de um cálculo para aplicar desconto condicional:
 
 sql
-Copy code
-SELECT * FROM vendas LIMIT 2;
-ORDER BY: ordena os dados
+Copy
+Edit
+SELECT produto, preco,
+  preco * 
+  CASE 
+    WHEN preco > 100 THEN 0.9  -- 10% desconto para preços > 100
+    ELSE 1                    -- sem desconto
+  END AS preco_final
+FROM produtos;
+4. Dicas rápidas:
+CASE pode ser usado em SELECT, WHERE, ORDER BY, e até dentro de funções agregadas.
 
-sql
-Copy code
-SELECT * FROM vendas ORDER BY valor DESC;
+Sempre inclua o ELSE para evitar resultados nulos inesperados.
+
+Use para substituir várias cláusulas IF ou múltiplas consultas, deixando seu SQL mais limpo.
+
+Resumo para vídeo:
+Explique o conceito da função condicional.
+
+Mostre o uso básico do CASE.
+
+Apresente exemplos simples e práticos do dia a dia (classificação, status, descontos).
+
+Enfatize a versatilidade do CASE e como ele facilita consultas dinâmicas.
+

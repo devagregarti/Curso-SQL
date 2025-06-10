@@ -1,19 +1,56 @@
-🔹 7. Funções de Janela (Window Functions)
-Executam cálculos sobre linhas relacionadas, sem agrupar os dados.
+🎯 Tópico: Funções de Janela (Window Functions) em SQL
+1. O que são funções de janela?
+Funções que calculam valores agregados, rankings ou totais sem agrupar linhas, permitindo manter todas as linhas da consulta.
 
-Função	Descrição
-ROW_NUMBER()	Numeração das linhas
-RANK()	Classificação com empates
-DENSE_RANK()	Classificação sem "buracos"
-LAG() / LEAD()	Valor da linha anterior / próxima
-SUM() OVER()	Soma cumulativa
+Importantes para análises detalhadas, como rankings, médias móveis, somas cumulativas.
 
+2. Principais funções de janela do dia a dia:
+Função	O que faz	Exemplo prático simples
+ROW_NUMBER()	Dá uma numeração para cada linha dentro de um grupo	Listar pedidos com numeração sequencial por cliente
+RANK()	Dá uma classificação, empatando posições iguais	Ranking de vendedores por vendas
+SUM() OVER()	Soma acumulada ou total dentro de uma janela definida	Soma total de vendas por mês, mantendo detalhes
+AVG() OVER()	Média dentro da janela	Média móvel de notas por aluno
 
-Exemplo:
+3. Exemplo prático simples — Numerar pedidos por cliente:
 sql
-Copy code
-SELECT 
-  nome, 
-  categoria,
-  RANK() OVER (PARTITION BY categoria ORDER BY preco DESC) AS posicao
-FROM produtos;
+Copy
+Edit
+SELECT cliente_id,
+       pedido_id,
+       data_pedido,
+       ROW_NUMBER() OVER (PARTITION BY cliente_id ORDER BY data_pedido) AS num_pedido_cliente
+FROM pedidos;
+Explicação: Cada pedido do cliente recebe um número sequencial começando em 1, ordenado pela data do pedido.
+
+4. Exemplo — Soma acumulada das vendas por data:
+sql
+Copy
+Edit
+SELECT data_venda,
+       valor_venda,
+       SUM(valor_venda) OVER (ORDER BY data_venda) AS soma_acumulada
+FROM vendas;
+Explicação: Para cada data, mostra o total acumulado das vendas até aquele dia.
+
+5. Por que usar funções de janela no dia a dia?
+Permitem análises detalhadas e dinâmicas em relatórios sem perder a granularidade dos dados.
+
+Úteis para ranking, percentis, comparações entre registros.
+
+Melhoram muito a qualidade das consultas analíticas.
+
+6. Dicas rápidas:
+Sempre defina o OVER() com PARTITION BY para dividir grupos (ex: por cliente, por região).
+
+Use ORDER BY dentro do OVER() para ordenar dentro da janela (ex: por data, por valor).
+
+Combine com filtros para relatórios precisos e completos.
+
+Resumo para vídeo:
+Explique o conceito de funções de janela vs agregações tradicionais.
+
+Mostre os exemplos básicos de ROW_NUMBER() e SUM() OVER().
+
+Dê exemplos práticos fáceis, tipo numerar pedidos e calcular soma acumulada.
+
+Finalize ressaltando a importância para análise detalhada.

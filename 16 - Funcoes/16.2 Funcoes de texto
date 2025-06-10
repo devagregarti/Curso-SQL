@@ -1,15 +1,64 @@
-Manipulam valores do tipo texto (string).
+🎯 Tópico: Funções de Texto em SQL
+1. O que são funções de texto?
+Funções usadas para manipular e consultar dados do tipo texto (strings).
 
-Função	Descrição
-UPPER(texto)	Converte para maiúsculas
-LOWER(texto)	Converte para minúsculas
-LENGTH(texto)	Comprimento da string
-TRIM(texto)	Remove espaços antes/depois
-SUBSTRING()	Extrai parte da string
-REPLACE()	Substitui parte do texto
-CONCAT()	Concatena strings
+Muito úteis para ajustar, extrair ou formatar informações em colunas de texto.
 
-Exemplo:
+2. Funções de texto mais comuns e úteis no dia a dia:
+Função	O que faz	Exemplo simples
+UPPER()	Converte texto para maiúsculas	Deixa tudo em CAIXA ALTA
+LOWER()	Converte texto para minúsculas	Deixa tudo em caixa baixa
+LENGTH()	Conta o número de caracteres	Quantos caracteres tem um nome?
+SUBSTRING()	Extrai parte do texto (substring)	Pega os 3 primeiros caracteres
+TRIM()	Remove espaços extras no início/fim	Limpa espaços antes ou depois do texto
+CONCAT()	Junta duas ou mais strings	Junta nome + sobrenome
+REPLACE()	Substitui parte do texto	Troca "Brasil" por "Brazil"
+
+3. Exemplos práticos com tabela clientes (colunas: nome, email):
+Deixar nome todo em maiúsculas:
+
 sql
-Copy code
-SELECT UPPER(nome), LENGTH(nome) FROM clientes;
+Copy
+Edit
+SELECT UPPER(nome) AS nome_maiusculo FROM clientes;
+Pegar os 5 primeiros caracteres do email:
+
+sql
+Copy
+Edit
+SELECT SUBSTRING(email, 1, 5) AS inicio_email FROM clientes;
+Contar quantos caracteres tem o nome:
+
+sql
+Copy
+Edit
+SELECT nome, LENGTH(nome) AS tamanho_nome FROM clientes;
+Juntar nome e email numa única string:
+
+sql
+Copy
+Edit
+SELECT CONCAT(nome, ' - ', email) AS nome_email FROM clientes;
+Remover espaços extras do nome:
+
+sql
+Copy
+Edit
+SELECT TRIM(nome) AS nome_limpo FROM clientes;
+Substituir “gmail.com” por “outlook.com” no email:
+
+sql
+Copy
+Edit
+SELECT REPLACE(email, 'gmail.com', 'outlook.com') AS novo_email FROM clientes;
+4. Dica rápida:
+Funções de texto ajudam a padronizar dados sujos ou inconsistentes.
+
+Combine funções para limpar, transformar e extrair informações úteis.
+
+Resumo para o vídeo:
+Funções para manipular texto: UPPER, LOWER, LENGTH, SUBSTRING, TRIM, CONCAT, REPLACE.
+
+Exemplos simples com nomes e emails para mostrar na prática.
+
+Aplicação prática para limpar e formatar dados do dia a dia.

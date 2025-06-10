@@ -1,15 +1,67 @@
-🔹 4. Funções de Data e Hora
-Manipulam valores de data e hora.
+🎯 Tópico: Funções de Data e Hora em SQL
+1. O que são funções de data e hora?
+São funções usadas para manipular e extrair informações de campos do tipo data, hora ou timestamp.
 
-Função	Descrição
-CURRENT_DATE	Data atual
-CURRENT_TIMESTAMP	Data e hora atual
-NOW()	Data e hora atual (como CURRENT_TIMESTAMP)
-AGE(data)	Diferença entre datas
-DATE_PART()	Extrai parte da data (ano, mês, etc.)
-TO_CHAR()	Formata data/hora para texto
+Muito úteis para filtrar, calcular intervalos, formatar datas e fazer relatórios temporais.
 
-Exemplo:
+2. Funções comuns para o dia a dia:
+Função	O que faz	Exemplo prático
+CURRENT_DATE	Data atual (ano-mês-dia)	Mostrar data do dia de hoje
+CURRENT_TIMESTAMP	Data e hora atual	Registrar data e hora do evento
+DATE()	Extrai só a parte da data	Pegar só a data de um timestamp
+EXTRACT()	Extrai parte específica da data	Ano, mês, dia, hora, minuto, segundo
+DATE_ADD() ou DATE + INTERVAL	Adiciona dias, meses, etc.	Adicionar 7 dias a uma data
+DATEDIFF()	Diferença entre datas em dias	Calcular dias entre duas datas
+NOW()	Data e hora atual (timestamp)	Similar ao CURRENT_TIMESTAMP
+
+3. Exemplos práticos com tabela pedidos (coluna: data_pedido):
+Mostrar a data de hoje:
+
 sql
-Copy code
-SELECT NOW(), DATE_PART('year', AGE(birthdate)) AS idade FROM clientes;
+Copy
+Edit
+SELECT CURRENT_DATE AS hoje;
+Mostrar data e hora atual:
+
+sql
+Copy
+Edit
+SELECT CURRENT_TIMESTAMP AS agora;
+Extrair só o ano do pedido:
+
+sql
+Copy
+Edit
+SELECT EXTRACT(YEAR FROM data_pedido) AS ano_pedido FROM pedidos;
+Calcular quantos dias se passaram desde o pedido:
+
+sql
+Copy
+Edit
+SELECT DATEDIFF(CURRENT_DATE, data_pedido) AS dias_desde_pedido FROM pedidos;
+Adicionar 30 dias para calcular a data de entrega prevista:
+
+sql
+Copy
+Edit
+SELECT data_pedido, data_pedido + INTERVAL '30 day' AS data_entrega_prevista FROM pedidos;
+Extrair mês e dia do pedido:
+
+sql
+Copy
+Edit
+SELECT EXTRACT(MONTH FROM data_pedido) AS mes, EXTRACT(DAY FROM data_pedido) AS dia FROM pedidos;
+4. Dicas rápidas:
+Use funções de data para criar filtros dinâmicos (ex: pedidos da última semana, do mês atual).
+
+Combine funções para cálculos simples, evitando processar dados fora do banco.
+
+Lembre-se de que a sintaxe pode variar entre bancos (PostgreSQL, MySQL, SQL Server), mas o conceito é o mesmo.
+
+Resumo para o vídeo:
+Funções para obter data/hora atual, extrair partes da data, calcular diferença entre datas e adicionar períodos.
+
+Exemplos práticos fáceis, aplicáveis a controle de pedidos, relatórios e análises diárias.
+
+Enfatizar uso prático no dia a dia para controle de prazos, aniversários, e tempo entre eventos.
+

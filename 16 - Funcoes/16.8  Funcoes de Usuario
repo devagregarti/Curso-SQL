@@ -1,11 +1,70 @@
+🎯 Tópico: Funções de Usuário em SQL
+1. O que são funções de usuário?
+São funções criadas pelo próprio usuário para realizar operações específicas que não existem nas funções padrão do SQL.
 
-🔹 8. Funções Definidas pelo Usuário (UDFs)
-Você pode criar suas próprias funções usando CREATE FUNCTION.
+Podem facilitar tarefas repetitivas, simplificar consultas complexas e organizar lógica de negócio.
+
+2. Por que usar funções de usuário?
+Reutilizar código em várias consultas.
+
+Encapsular lógica complexa.
+
+Tornar consultas mais legíveis e organizadas.
+
+3. Tipos comuns de funções de usuário:
+Tipo	O que fazem	Exemplo prático
+Função Escalar	Retorna um único valor	Converter uma data em formato diferente
+Função de Tabela	Retorna uma tabela (conjunto de linhas)	Filtrar registros complexos e retornar vários resultados
+
+4. Exemplo simples — Criar uma função para formatar telefone:
+Imagine que você quer padronizar o formato de telefone (ex: só números, ou com parênteses):
 
 sql
-Copy code
-CREATE FUNCTION dobro(numero INT) RETURNS INT AS $$
+Copy
+Edit
+CREATE FUNCTION formatar_telefone(telefone TEXT)
+RETURNS TEXT AS $$
 BEGIN
-  RETURN numero * 2;
+  -- Remove tudo que não for número
+  RETURN regexp_replace(telefone, '[^0-9]', '', 'g');
 END;
 $$ LANGUAGE plpgsql;
+Uso na consulta:
+
+sql
+Copy
+Edit
+SELECT nome, formatar_telefone(telefone) AS telefone_formatado
+FROM clientes;
+5. Exemplo prático — Função para calcular desconto:
+sql
+Copy
+Edit
+CREATE FUNCTION calcula_desconto(preco NUMERIC, desconto_pct NUMERIC)
+RETURNS NUMERIC AS $$
+BEGIN
+  RETURN preco - (preco * desconto_pct / 100);
+END;
+$$ LANGUAGE plpgsql;
+Uso:
+
+sql
+Copy
+Edit
+SELECT produto, preco, calcula_desconto(preco, 10) AS preco_com_desconto
+FROM produtos;
+6. Boas práticas para funções de usuário:
+Mantenha a função simples e focada em uma tarefa.
+
+Documente o que ela faz e os parâmetros que recebe.
+
+Teste com diferentes entradas para garantir que funciona bem.
+
+Use funções para evitar repetição de código e facilitar manutenção.
+
+Resumo para vídeo:
+Explique o conceito e utilidade das funções de usuário.
+
+Mostre exemplos práticos simples, como formatar telefone e calcular desconto.
+
+Enfatize como elas ajudam a organizar e simplificar consultas do dia a dia.

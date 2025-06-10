@@ -1,18 +1,62 @@
-🔹 6. Funções de Controle de Fluxo (Lógicas)
-Executam lógica condicional.
+🎯 Tópico: Funções de Controle de Fluxo em SQL
+1. O que são funções de controle de fluxo?
+São estruturas que ajudam a tomar decisões dentro da consulta SQL, mudando o valor de uma coluna ou o resultado baseado em condições.
 
-Função	Descrição
-CASE WHEN THEN	Estrutura condicional
-COALESCE()	Retorna o primeiro valor não nulo
-NULLIF(x, y)	Retorna NULL se x = y, senão retorna x
+Muito úteis para criar colunas calculadas, classificações e relatórios personalizados.
 
-Exemplo:
+2. As principais funções de controle de fluxo em SQL:
+Função	O que faz	Exemplo prático simples
+CASE	Avalia condições e retorna resultados diferentes conforme a condição	Definir status de pedido baseado no valor total
+COALESCE	Retorna o primeiro valor não-nulo entre vários valores	Exibir valor padrão quando um campo está vazio
+IF (MySQL)	Estrutura condicional simples (apenas no MySQL)	Verificar se um valor é maior que outro
+
+3. Exemplos práticos do dia a dia:
+a) CASE – Exemplo: Classificar clientes por gasto
 sql
-Copy code
-SELECT 
-  nome,
-  CASE 
-    WHEN idade >= 18 THEN 'Adulto'
-    ELSE 'Menor'
-  END AS categoria
+Copy
+Edit
+SELECT nome,
+       total_compras,
+       CASE
+           WHEN total_compras > 1000 THEN 'VIP'
+           WHEN total_compras BETWEEN 500 AND 1000 THEN 'Regular'
+           ELSE 'Novo Cliente'
+       END AS categoria_cliente
+FROM clientes;
+Explicação: Se o total de compras for maior que 1000, cliente é VIP; entre 500 e 1000, Regular; caso contrário, Novo Cliente.
+
+b) COALESCE – Exemplo: Mostrar telefone ou mensagem padrão
+sql
+Copy
+Edit
+SELECT nome,
+       COALESCE(telefone, 'Telefone não informado') AS telefone
+FROM clientes;
+Explicação: Se o telefone estiver vazio (NULL), mostra "Telefone não informado".
+
+c) IF (apenas MySQL) – Exemplo: Verificar idade para maioridade
+sql
+Copy
+Edit
+SELECT nome,
+       IF(idade >= 18, 'Maior de idade', 'Menor de idade') AS status_idade
 FROM pessoas;
+Explicação: Mostra "Maior de idade" se idade >=18, senão "Menor de idade".
+
+4. Dicas rápidas:
+Use CASE para múltiplas condições complexas, é o mais universal entre bancos.
+
+COALESCE é ótimo para evitar valores nulos que atrapalham relatórios.
+
+No MySQL, IF é um atalho prático para decisões simples.
+
+Funções de controle de fluxo deixam suas consultas dinâmicas e fáceis de entender.
+
+Resumo para vídeo:
+Definir o que são funções de controle de fluxo.
+
+Mostrar sintaxes e usos básicos do CASE, COALESCE e IF.
+
+Dar exemplos práticos voltados para negócios e dia a dia (clientes, telefones, idade).
+
+Enfatizar que essas funções ajudam a personalizar dados direto na consulta.

@@ -1,13 +1,61 @@
-Usadas para resumir dados — geralmente junto com GROUP BY.
+🎯 Tópico: Funções de Agregação em SQL
+1. O que são funções de agregação?
+São funções que resumem vários valores em um único resultado.
 
-Função	Descrição
-COUNT()	Conta linhas (ou valores distintos)
-SUM()	Soma valores numéricos
-AVG()	Média aritmética
-MAX()	Valor máximo
-MIN()	Valor mínimo
+Usadas para calcular totais, médias, contagens, mínimos e máximos.
 
-Exemplo:
+2. Principais funções de agregação:
+Função	O que faz	Exemplo simples
+COUNT()	Conta o número de linhas	Quantos pedidos foram feitos?
+SUM()	Soma valores numéricos	Soma total das vendas
+AVG()	Calcula a média de valores numéricos	Média do valor dos pedidos
+MIN()	Retorna o menor valor	Menor preço vendido
+MAX()	Retorna o maior valor	Maior preço vendido
+
+3. Exemplos práticos do dia a dia:
+Suponha que temos uma tabela vendas com colunas: id, cliente, valor, data.
+
+Contar quantos pedidos foram feitos:
+
 sql
-Copy code
-SELECT categoria, COUNT(*) FROM produtos GROUP BY categoria;
+Copy
+Edit
+SELECT COUNT(*) AS total_pedidos FROM vendas;
+Somar o valor total vendido:
+
+sql
+Copy
+Edit
+SELECT SUM(valor) AS total_vendido FROM vendas;
+Calcular o valor médio dos pedidos:
+
+sql
+Copy
+Edit
+SELECT AVG(valor) AS valor_medio FROM vendas;
+Encontrar o menor e maior valor de pedido:
+
+sql
+Copy
+Edit
+SELECT MIN(valor) AS menor_valor, MAX(valor) AS maior_valor FROM vendas;
+4. Usando GROUP BY para agregar por categorias
+Quer saber o total vendido por cliente?
+
+sql
+Copy
+Edit
+SELECT cliente, SUM(valor) AS total_vendido
+FROM vendas
+GROUP BY cliente;
+5. Dica rápida:
+Funções de agregação ignoram valores NULL automaticamente.
+
+Sempre combine com GROUP BY quando precisar de agregação por grupos.
+
+Resumo para o vídeo:
+Funções que resumem dados: COUNT, SUM, AVG, MIN, MAX.
+
+Exemplos práticos para contar, somar e tirar médias.
+
+Agrupamento de dados com GROUP BY para analisar categorias.

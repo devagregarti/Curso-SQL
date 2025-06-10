@@ -1,11 +1,65 @@
-🔹 3. Funções Numéricas
-Usadas em valores numéricos.
+🎯 Tópico: Funções Numéricas em SQL
+1. O que são funções numéricas?
+Funções que ajudam a manipular e analisar dados numéricos em consultas.
 
-Função	Descrição
-ROUND(x, n)	Arredonda para n casas decimais
-CEIL(x)	Arredonda para cima (teto)
-FLOOR(x)	Arredonda para baixo (piso)
-ABS(x)	Valor absoluto
-POWER(x,y)	Potência (x elevado a y)
-MOD(x,y)	Resto da divisão de x por y
-RANDOM()	Gera número aleatório entre 0 e 1
+Usadas para cálculos, arredondamentos e extração de valores específicos.
+
+2. Funções numéricas comuns e úteis no dia a dia:
+Função	O que faz	Exemplo prático
+ROUND()	Arredonda um número	Arredonda preço para 2 casas decimais
+CEIL() / CEILING()	Arredonda para cima	Eleva valor para o próximo inteiro
+FLOOR()	Arredonda para baixo	Reduz valor para o inteiro anterior
+ABS()	Valor absoluto (sem sinal)	Converte números negativos em positivos
+MOD()	Resto da divisão	Saber se um número é par (MOD(n, 2))
+POWER()	Potência	Elevar número ao quadrado, cubo, etc.
+SQRT()	Raiz quadrada	Calcular raiz quadrada
+
+3. Exemplos práticos com tabela vendas (colunas: valor, quantidade):
+Arredondar valor para 2 casas decimais:
+
+sql
+Copy
+Edit
+SELECT ROUND(valor, 2) AS valor_arredondado FROM vendas;
+Elevar valor ao quadrado:
+
+sql
+Copy
+Edit
+SELECT POWER(valor, 2) AS valor_ao_quadrado FROM vendas;
+Calcular raiz quadrada do valor:
+
+sql
+Copy
+Edit
+SELECT SQRT(valor) AS raiz_valor FROM vendas;
+Pegar valor absoluto (exemplo: diferença entre orçado e real):
+
+sql
+Copy
+Edit
+SELECT ABS(valor - 100) AS diferenca FROM vendas;
+Saber se a quantidade é par (resto da divisão por 2):
+
+sql
+Copy
+Edit
+SELECT quantidade, MOD(quantidade, 2) AS resto FROM vendas;
+-- resto = 0 significa quantidade par
+Arredondar para cima (ex: quantidade mínima de caixas):
+
+sql
+Copy
+Edit
+SELECT CEIL(quantidade / 10.0) AS caixas_necessarias FROM vendas;
+4. Dica rápida:
+Use funções numéricas para deixar os dados prontos para relatórios e análises.
+
+Combine funções para resolver cálculos simples no banco sem precisar exportar.
+
+Resumo para o vídeo:
+Funções para manipular números: ROUND, CEIL, FLOOR, ABS, MOD, POWER, SQRT.
+
+Exemplos simples focados em valores e quantidades do dia a dia.
+
+Aplicação prática para arredondar, calcular potências, extrair raiz e validar valores.
