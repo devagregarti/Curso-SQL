@@ -1,2 +1,40 @@
-Breve introdução (1FN, 2FN, 3FN).
-	•	Como a normalização evita dados duplicados e melhora o relacionamento entre tabelas.
+📐 Normalização de Banco de Dados
+O que é Normalização?
+É um processo para organizar os dados em um banco de dados relacional.
+
+Tem como objetivo reduzir a redundância (dados repetidos) e evitar inconsistências.
+
+Facilita a manutenção e aumenta a eficiência das consultas.
+
+Para que serve?
+Evitar dados duplicados que causam erros e aumentam o tamanho do banco.
+
+Garantir que cada dado tenha um lugar correto e único.
+
+Facilitar atualizações, exclusões e inserções sem problemas.
+
+Formas Normais (NF) principais
+1ª Forma Normal (1NF):
+
+Os dados devem estar em formato tabular, sem grupos repetidos ou colunas multivaloradas.
+
+Cada campo deve conter um valor atômico (único).
+
+2ª Forma Normal (2NF):
+
+Atende a 1NF.
+
+Todos os campos que não são chave devem depender totalmente da chave primária (não depende só de parte da chave, no caso de chave composta).
+
+3ª Forma Normal (3NF):
+
+Atende a 2NF.
+
+Não deve haver dependência transitiva, ou seja, campos não-chave não podem depender de outros campos não-chave.
+
+Ideia geral
+Cada forma normal vai “refinando” a organização dos dados para evitar problemas.
+
+Na prática, aplicar até a 3NF já é suficiente para a maioria dos bancos.
+
+Ajuda a ter um banco limpo, eficiente e fácil de entender.

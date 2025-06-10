@@ -1,9 +1,23 @@
-	•	1 para 1 (One-to-One):
-	•	Quando usar.
-	•	Exemplo prático.
-	•	1 para Muitos (One-to-Many):
-	•	O mais comum.
-	•	Exemplo com clientes e pedidos, por exemplo.
-	•	Muitos para Muitos (Many-to-Many):
-	•	Uso de tabela intermediária (junction table).
-	•	Exemplo com alunos e cursos.
+📊 Tipos de Relacionamento entre Tabelas
+No banco de dados relacional, os dados são armazenados em tabelas, e o relacionamento entre essas tabelas pode ser classificado em três tipos principais:
+
+1. Relacionamento Um-para-Um (1:1)
+Cada registro em uma tabela está relacionado a exatamente um registro em outra tabela, e vice-versa.
+
+Raramente usado, mas útil para dividir dados que são opcionais ou sensíveis.
+
+Exemplo: Uma pessoa tem um único passaporte.
+
+2. Relacionamento Um-para-Muitos (1:N)
+Um registro em uma tabela pode estar relacionado a muitos registros em outra tabela.
+
+É o tipo mais comum de relacionamento.
+
+Exemplo: Um cliente pode fazer vários pedidos, mas cada pedido pertence a um único cliente.
+
+3. Relacionamento Muitos-para-Muitos (N:N)
+Muitos registros em uma tabela podem estar relacionados a muitos registros em outra tabela.
+
+É implementado via uma tabela intermediária (ou tabela de junção).
+
+Exemplo: Um aluno pode estar matriculado em várias turmas, e uma turma tem vários alunos.

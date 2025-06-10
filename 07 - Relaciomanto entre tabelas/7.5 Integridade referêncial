@@ -1,3 +1,43 @@
-	•	O que é e por que é importante.
-	•	ON DELETE CASCADE, ON UPDATE SET NULL, etc.
-	•	Como o banco se comporta com alterações e deleções.
+🛡️ Integridade Referencial
+O que é?
+É uma propriedade que garante a consistência e validade dos dados relacionados entre tabelas.
+
+Garante que os valores de uma chave estrangeira na tabela filha correspondam a valores existentes na tabela pai.
+
+Evita que registros “órfãos” sejam criados — ou seja, registros que fazem referência a dados inexistentes.
+
+Por que é importante?
+Mantém os dados corretos e confiáveis.
+
+Evita erros de referência, que podem causar falhas ou dados incorretos no sistema.
+
+Garante que as relações entre dados estejam sempre válidas e coerentes.
+
+Como funciona na prática?
+Quando você cria uma chave estrangeira, o banco de dados automaticamente impede inserções ou atualizações que quebrem essa regra.
+
+Por exemplo, você não pode inserir um pedido com um cliente_id que não existe na tabela de clientes.
+
+Também pode configurar ações para deletar ou atualizar dados relacionados, como ON DELETE CASCADE.
+
+Exemplo
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL
+);
+
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE
+);
+Se um cliente for deletado, todos os pedidos relacionados a ele também serão deletados, mantendo a integridade dos dados.
+
+Resumo
+Conceito	Função
+Integridade Referencial	Garante que dados relacionados entre tabelas sejam consistentes e válidos
+Chave Estrangeira	Instrumento para implementar essa integridade
+Ações de Cascata	Permitem manutenção automática dos dados relacionados

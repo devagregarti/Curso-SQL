@@ -1,4 +1,45 @@
-	•	Definição e função.
-	•	Como criar foreign keys.
-	•	Importância na integridade referencial.
-	•	Exemplo de foreign key entre tabelas.
+🔗 Chave Estrangeira (Foreign Key)
+O que é?
+A chave estrangeira é uma constraint que cria uma relação entre duas tabelas.
+
+Ela garante que o valor numa coluna (ou conjunto de colunas) em uma tabela exista na tabela que ela referencia.
+
+Em outras palavras, ela conecta dados de uma tabela filha a dados válidos da tabela pai.
+
+Por que usar?
+Para garantir a integridade referencial do banco de dados.
+
+Para evitar dados órfãos — ou seja, registros que fazem referência a dados inexistentes.
+
+Para estruturar dados relacionados de forma organizada e consistente.
+
+Como funciona na prática?
+A chave estrangeira na tabela filha aponta para a chave primária na tabela pai.
+
+O banco bloqueia inserções ou atualizações inválidas que quebrem essa regra.
+
+Exemplo simples
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL
+);
+
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    data_pedido DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+pedidos.cliente_id é a chave estrangeira que referencia clientes.id.
+
+Só é possível inserir um pedido com cliente_id que exista em clientes.
+
+Ações comuns com FOREIGN KEY
+Ação na tabela pai	Exemplo SQL	Efeito na tabela filha
+Deletar registro pai	ON DELETE CASCADE	Deleta automaticamente os registros filhos
+Deletar registro pai	ON DELETE SET NULL	Seta os valores da FK para NULL na filha
+Deletar registro pai	ON DELETE RESTRICT	Impede a exclusão se filhos existirem
+Atualizar chave pai	ON UPDATE CASCADE	Atualiza os valores da FK na tabela filha

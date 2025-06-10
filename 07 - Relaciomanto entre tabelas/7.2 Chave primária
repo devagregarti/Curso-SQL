@@ -1,3 +1,50 @@
-	Definição e propósito.
-	•	Criação e boas práticas.
-	•	Restrições de unicidade e não nulo.
+🔑 Chave Primária (Primary Key)
+O que é?
+A Chave Primária é uma constraint que identifica única e obrigatoriamente cada registro de uma tabela.
+
+Ela garante que não haja dois registros iguais na tabela.
+
+Normalmente é usada para criar uma referência clara e confiável a cada linha.
+
+Características principais
+Deve ser única: nenhum valor repetido.
+
+Deve ser não nula (NOT NULL).
+
+Pode ser composta por uma ou mais colunas (chave primária composta).
+
+Serve como base para relacionamentos entre tabelas (via FOREIGN KEY).
+
+Por que usar chave primária?
+Facilita a busca e manipulação de registros específicos.
+
+Mantém a integridade dos dados.
+
+Garante que cada registro tenha uma identidade exclusiva.
+
+Exemplo simples
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY, -- id é a chave primária
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE
+);
+Aqui, id é a chave primária, gerando um identificador único para cada cliente.
+
+O tipo SERIAL gera automaticamente números sequenciais.
+
+Chave Primária Composta
+Às vezes, a chave primária é formada por mais de uma coluna:
+
+sql
+Copy
+Edit
+CREATE TABLE vendas (
+    loja_id INT,
+    venda_id INT,
+    data DATE,
+    PRIMARY KEY (loja_id, venda_id)
+);
+Aqui, a combinação de loja_id e venda_id identifica unicamente cada venda.

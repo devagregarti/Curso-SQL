@@ -1,7 +1,15 @@
-	•	INNER JOIN
-	•	LEFT JOIN
-	•	RIGHT JOIN
-	•	FULL OUTER JOIN
-	•	SELF JOIN
-	•	Diferença entre eles e quando usar.
-	•	Casos práticos e diagramas para facilitar a visualização.
+🔗 Tipos de JOIN em SQL
+INNER JOIN
+Retorna apenas os registros que têm correspondência em ambas as tabelas.
+
+LEFT JOIN (ou LEFT OUTER JOIN)
+Retorna todos os registros da tabela da esquerda e os registros correspondentes da tabela da direita. Se não houver correspondência, retorna NULL para a tabela da direita.
+
+RIGHT JOIN (ou RIGHT OUTER JOIN)
+Retorna todos os registros da tabela da direita e os registros correspondentes da tabela da esquerda. Se não houver correspondência, retorna NULL para a tabela da esquerda.
+
+FULL JOIN (ou FULL OUTER JOIN)
+Retorna todos os registros quando há correspondência em uma das tabelas. Se não houver correspondência, os campos da outra tabela aparecem como NULL.
+
+CROSS JOIN
+Retorna o produto cartesiano das duas tabelas, combinando cada linha da primeira tabela com todas as linhas da segunda tabela.

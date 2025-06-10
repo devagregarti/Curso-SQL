@@ -1,0 +1,65 @@
+📊 Diagrama Entidade-Relacionamento (DER)
+O que é?
+É uma representação visual que mostra como os dados estão organizados e relacionados em um sistema.
+
+Usa símbolos para representar entidades (tabelas), atributos (colunas) e relacionamentos entre essas entidades.
+
+Por que usar?
+Ajuda a planejar e entender o modelo de dados antes de criar o banco.
+
+Facilita a comunicação entre desenvolvedores, analistas e clientes.
+
+Detecta problemas no modelo antes da implementação, economizando tempo.
+
+Elementos principais
+Entidade: Representa um objeto ou conceito, como “Cliente” ou “Produto”. Geralmente vira uma tabela.
+
+Atributo: Características da entidade, como “nome”, “telefone” ou “preço”.
+
+Relacionamento: Liga entidades entre si, mostrando como elas interagem (ex: Cliente faz Pedido).
+
+Cardinalidade: Indica quantos registros de uma entidade se relacionam com outra (1:1, 1:N, N:N).
+
+
+🛠️ Como Gerar um Diagrama Entidade-Relacionamento (DER)
+Passos básicos para criar um DER:
+Identifique as Entidades
+Liste os principais objetos ou conceitos do sistema (ex: Cliente, Produto, Pedido).
+
+Defina os Atributos de cada Entidade
+Quais informações cada entidade precisa armazenar? (ex: Cliente → nome, telefone).
+
+Determine os Relacionamentos
+Como as entidades se conectam? (ex: Cliente faz Pedido).
+
+Defina a Cardinalidade de cada Relacionamento
+Estabeleça se é 1:1, 1:N, ou N:N.
+
+Desenhe o Diagrama
+Use ferramentas ou papel para representar graficamente:
+
+Entidades como retângulos
+
+Atributos como elipses ligados às entidades
+
+Relacionamentos como losangos ligando entidades
+
+Cardinalidades indicadas perto das linhas de conexão
+
+Ferramentas para criar DER
+Desenho manual: papel, quadro branco ou software básico (PowerPoint, Google Slides).
+
+Softwares especializados:
+
+Draw.io (gratuito e online)
+
+Lucidchart
+
+Microsoft Visio
+
+MySQL Workbench (para bancos MySQL, gera DER automaticamente a partir do banco)
+
+DBDesigner
+
+ERDPlus (online e gratuito)
+
