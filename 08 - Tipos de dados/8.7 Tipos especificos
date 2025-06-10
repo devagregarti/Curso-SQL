@@ -1,61 +1,56 @@
-🟪 Tipo Enumerado
+🎯 Tipos Específicos de Dados em SQL — Principais e Simples
+1. SERIAL / AUTO_INCREMENT
+Usado para gerar automaticamente números inteiros únicos, normalmente para chaves primárias.
 
-| Tipo | Descrição                                    |
-|------|-----------------------------------------------|
-| ENUM | Lista fixa de valores definidos pelo usuário |
+Exemplo:
 
+sql
+Copy
+Edit
+id SERIAL PRIMARY KEY
+Útil para criar IDs automáticos para registros.
 
-🟦 Tipos Geométricos
+2. ENUM
+Permite definir um conjunto fixo de valores possíveis para uma coluna.
 
-| Tipo     | Descrição                 |
-|----------|----------------------------|
-| POINT    | Um ponto (x, y)           |
-| LINE     | Linha infinita            |
-| LSEG     | Segmento de linha         |
-| BOX      | Retângulo                 |
-| CIRCLE   | Círculo                   |
-| POLYGON  | Polígono fechado          |
-| PATH     | Caminho aberto ou fechado |
+Exemplo:
 
-🟫 Tipos de Rede
+sql
+Copy
+Edit
+status ENUM('ativo', 'inativo', 'pendente')
+Útil para garantir que um campo só receba valores pré-definidos.
 
-| Tipo     | Descrição                              |
-|----------|-----------------------------------------|
-| CIDR     | Bloco de IPs                           |
-| INET     | Endereço IP                            |
-| MACADDR  | Endereço MAC                           |
-| MACADDR8 | Endereço MAC com 8 bytes               |
+3. UUID
+Identificador único universal, usado para IDs que precisam ser únicos globalmente, não só no banco.
 
+Exemplo:
 
-🟨 JSON e XML
+sql
+Copy
+Edit
+id UUID DEFAULT uuid_generate_v4()
+Muito usado em sistemas distribuídos ou APIs.
 
-| Tipo   | Descrição                                 |
-|--------|--------------------------------------------|
-| JSON   | Texto JSON armazenado como string         |
-| JSONB  | JSON armazenado em binário (mais eficiente)|
-| XML    | Texto em formato XML                      |
+4. JSON / JSONB
+Armazena dados no formato JSON dentro do banco.
 
-🟩 UUID
+Exemplo:
 
-| Tipo | Descrição                                |
-|------|-------------------------------------------|
-| UUID | Identificador universal único (128 bits) |
+sql
+Copy
+Edit
+dados JSONB
+Útil para guardar informações semi-estruturadas, como preferências do usuário.
 
-🟧 Arrays e Compostos
+5. ARRAY
+Armazena múltiplos valores na mesma coluna, como uma lista.
 
-| Tipo     | Descrição                                     |
-|----------|-----------------------------------------------|
-| ARRAY    | Qualquer tipo pode ser array (ex: INTEGER[]) |
-| RECORD   | Linha com vários campos                      |
-| ROW      | Tipo composto personalizado                  |
+Exemplo:
 
-🟥 Outros Tipos
+sql
+Copy
+Edit
+telefones TEXT[]
+Prático para guardar dados relacionados que não precisam ser tabelas separadas.
 
-| Tipo       | Descrição                                  |
-|------------|--------------------------------------------|
-| TSQUERY    | Para busca textual                         |
-| TSVECTOR   | Vetor de palavras para busca textual       |
-| BIT        | Cadeia de bits                             |
-| BIT VARYING| Cadeia de bits de tamanho variável         |
-| OID        | Object Identifier (interno do PostgreSQL)  |
-| PG_LSN     | Log Sequence Number (replicação)           |

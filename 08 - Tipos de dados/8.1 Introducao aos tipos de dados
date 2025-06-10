@@ -1,0 +1,39 @@
+🗃️ Tipos de Dados em Banco de Dados
+O que são tipos de dados?
+São as categorias que definem o tipo de informação que uma coluna (atributo) pode armazenar.
+
+Indicam ao banco como interpretar, armazenar e manipular os dados.
+
+Por que escolher tipos de dados diferentes?
+Otimização do espaço: tipos menores ocupam menos espaço, melhorando performance.
+
+Validação: o banco rejeita dados que não estejam no formato esperado.
+
+Performance: tipos corretos ajudam o banco a fazer buscas e cálculos mais rápidos.
+
+Integridade: evita erros, como tentar somar texto ou armazenar data inválida.
+
+Exemplos comuns de tipos de dados
+Inteiros (INT, BIGINT, SMALLINT): para números sem casas decimais (ex: idade, quantidade).
+
+Decimal/Numeric: para números com casas decimais, como preços e valores monetários.
+
+Texto (VARCHAR, CHAR, TEXT): para palavras, nomes, descrições.
+
+Data e Hora (DATE, TIME, TIMESTAMP): para armazenar datas e horários.
+
+Booleano (BOOLEAN): para valores verdadeiro/falso.
+
+BLOB / BYTEA: para armazenar arquivos binários, como imagens e documentos.
+
+Situações em que o tipo de dado ajuda
+Usar DATE para datas evita erros de formatação e facilita consultas por períodos.
+
+Usar BOOLEAN ajuda em filtros rápidos, como “ativo = true”.
+
+Definir VARCHAR(50) limita o tamanho do texto, evitando dados excessivamente longos.
+
+Usar NUMERIC(10,2) para valores monetários evita imprecisões nos cálculos financeiros.
+
+Escolher tipos adequados pode reduzir o tamanho do banco e acelerar consultas complexas.
+

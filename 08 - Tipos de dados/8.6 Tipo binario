@@ -1,5 +1,27 @@
-🟥 Tipo Binário
+📦 Tipo Binário em SQL
+O que é?
+Armazena dados em formato binário, ou seja, dados brutos, como arquivos, imagens, áudio, vídeos, documentos e outros conteúdos não-textuais.
 
-| Tipo  | Descrição                        |
-|-------|----------------------------------|
-| BYTEA | Dados binários (ex: imagens)     |
+Principais tipos binários
+BLOB (Binary Large Object)
+Usado para armazenar grandes volumes de dados binários, como imagens, vídeos, arquivos.
+
+BYTEA (em PostgreSQL)
+Tipo específico para armazenar dados binários.
+
+VARBINARY
+Armazena dados binários de tamanho variável.
+
+Por que usar tipo binário?
+Permite guardar arquivos diretamente no banco de dados.
+
+Facilita o gerenciamento e backup junto com os dados tradicionais.
+
+Útil para aplicações que precisam guardar mídias ou documentos associados a registros.
+
+Exemplos de uso
+Armazenar a foto de um cliente dentro da tabela clientes.
+
+Guardar arquivos PDF em uma tabela de documentos.
+
+Salvar imagens para um site de e-commerce.

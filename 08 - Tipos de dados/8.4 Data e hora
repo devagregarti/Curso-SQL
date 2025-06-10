@@ -1,3 +1,45 @@
+
+⏰ Tipos de Dados de Data e Hora em SQL
+Para que servem?
+Armazenar informações sobre datas e horários, essenciais para registros, eventos, agendamentos, etc.
+
+Principais tipos
+DATE
+
+Armazena apenas a data (ano, mês, dia).
+
+Exemplo: 2025-06-10.
+
+TIME
+
+Armazena apenas a hora (hora, minuto, segundo).
+
+Exemplo: 14:30:00.
+
+TIMESTAMP
+
+Armazena data e hora completos.
+
+Exemplo: 2025-06-10 14:30:00.
+
+DATETIME (em alguns bancos)
+
+Similar ao TIMESTAMP, armazena data e hora.
+
+INTERVAL (em alguns sistemas)
+
+Representa um intervalo de tempo (ex: 3 dias, 2 horas).
+
+Por que escolher o tipo correto?
+Facilita operações e consultas envolvendo datas e horários, como filtros por período, cálculo de duração, ordenação cronológica.
+
+Evita erros de formatação e problemas com fusos horários (especialmente com TIMESTAMP).
+
+Melhora performance e precisão nos cálculos de tempo.
+
+
+
+
 🟧 Tipos de Data e Hora
 
 | Tipo                    | Descrição                                |

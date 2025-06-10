@@ -1,8 +1,32 @@
-🟦 Tipos de Texto
+📝 Tipos de Dados de Texto em SQL
+Para que servem?
+Armazenar informações em formato de texto, como nomes, descrições, endereços, e-mails etc.
 
-| Tipo       | Descrição                                             |
-|------------|--------------------------------------------------------|
-| CHAR(n)    | Cadeia de caracteres de tamanho fixo                   |
-| VARCHAR(n) | Cadeia de caracteres de tamanho variável               |
-| TEXT       | Texto de tamanho ilimitado                            |
-| NAME       | Tipo interno para nomes de objetos                    |
+Principais tipos de texto
+CHAR(n)
+
+Texto de tamanho fixo, com exatamente n caracteres.
+
+Útil para dados com tamanho sempre igual, como códigos, siglas.
+
+Se o texto for menor, é preenchido com espaços.
+
+VARCHAR(n)
+
+Texto de tamanho variável, até n caracteres.
+
+Mais eficiente para textos que variam em tamanho, como nomes ou e-mails.
+
+TEXT
+
+Texto de tamanho variável, para textos longos e sem limite fixo.
+
+Usado para descrições, observações, comentários.
+
+Quando usar qual?
+Use CHAR quando o tamanho for sempre igual (ex: siglas de estado, códigos fixos).
+
+Use VARCHAR para a maioria dos textos curtos e variáveis, como nomes e e-mails.
+
+Use TEXT para armazenar textos longos, como resumos, mensagens, ou conteúdos grandes.
+

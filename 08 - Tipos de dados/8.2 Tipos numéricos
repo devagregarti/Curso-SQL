@@ -1,3 +1,53 @@
+
+🔢 Tipos de Dados Numéricos em SQL
+Para que servem?
+Armazenar números, que podem ser usados para cálculos, contagens, medições, etc.
+
+Podem ser inteiros ou decimais (com casas decimais).
+
+Principais tipos numéricos
+INTEGER (INT)
+
+Números inteiros, sem casas decimais.
+
+Exemplo: 10, -5, 1000.
+
+SMALLINT
+
+Inteiro com menor faixa de valores, ocupa menos espaço.
+
+Útil para números pequenos, como idade ou quantidade pequena.
+
+BIGINT
+
+Inteiro para valores muito grandes.
+
+Usado quando o número pode ultrapassar o limite do INT.
+
+DECIMAL (ou NUMERIC)
+
+Números exatos com casas decimais fixas.
+
+Usado para valores financeiros, onde a precisão é essencial (ex: 10.99).
+
+FLOAT (ou REAL, DOUBLE PRECISION)
+
+Números de ponto flutuante, para valores aproximados com casas decimais.
+
+Usado em cálculos científicos ou quando a precisão exata não é essencial.
+
+Quando usar qual?
+Use INTEGER para contagens, IDs e valores inteiros simples.
+
+Use SMALLINT para economizar espaço em números pequenos.
+
+Use BIGINT para grandes quantidades, como contagem de acessos ou registros.
+
+Use DECIMAL/NUMERIC para valores financeiros ou quando precisar de precisão exata.
+
+Use FLOAT para medições, cálculos científicos, dados que aceitam pequenas imprecisões.
+
+
 🟩 Tipos Numéricos
 
 | Tipo               | Tamanho  | Descrição                                       |

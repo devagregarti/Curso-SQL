@@ -1,5 +1,20 @@
-🟨 Tipo Booleano
+✅ Tipo Booleano em SQL
+O que é?
+Armazena valores que representam verdadeiro (TRUE) ou falso (FALSE).
 
-| Tipo     | Descrição                        |
-|----------|----------------------------------|
-| BOOLEAN  | Valores TRUE, FALSE ou NULL     |
+Útil para indicar estados binários, opções ou condições.
+
+Por que usar?
+Facilita o controle lógico dentro do banco.
+
+Ajuda a manter os dados simples e claros.
+
+Permite consultas rápidas com filtros booleanos.
+
+Exemplos práticos de uso do tipo Booleano
+Situação	Exemplo de coluna	Descrição
+Controle de status	ativo BOOLEAN	Indica se um usuário está ativo ou inativo.
+Opção ligada/desligada	newsletter BOOLEAN	Se o usuário aceita receber newsletter.
+Flags de verificação	pagamento_confirmado	Indica se o pagamento foi confirmado.
+Marcação de leitura	mensagem_lida	Se uma mensagem já foi lida pelo usuário.
+Disponibilidade	produto_em_estoque	Indica se um produto está disponível para venda.
