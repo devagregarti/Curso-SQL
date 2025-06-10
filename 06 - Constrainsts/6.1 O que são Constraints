@@ -1,1 +1,44 @@
 
+🔒 O que são Constraints no PostgreSQL?
+Constraints são regras que aplicamos às colunas de uma tabela para garantir a integridade dos dados no banco. Elas funcionam como "travas de segurança" que impedem que dados inválidos sejam inseridos ou alterados.
+
+🧱 Por que usar constraints?
+Imagine que você tem uma tabela de clientes. Você não quer:
+
+Que alguém cadastre um cliente sem nome.
+
+Que o mesmo e-mail seja cadastrado duas vezes.
+
+Que alguém informe uma idade negativa.
+
+As constraints ajudam a evitar esse tipo de erro automaticamente, direto no banco de dados.
+
+⚙️ Tipos mais comuns de constraints no PostgreSQL:
+Tipo	Função
+NOT NULL	Garante que o valor não pode ser nulo.
+UNIQUE	Garante que o valor não se repete na coluna.
+PRIMARY KEY	Combina NOT NULL + UNIQUE. Identifica unicamente cada linha.
+FOREIGN KEY	Garante que o valor exista em outra tabela (relacionamento).
+CHECK	Permite criar regras personalizadas, como idade ≥ 18.
+DEFAULT	Define um valor padrão se nenhum for informado.
+
+🧪 Exemplo prático:
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE,
+    idade INT CHECK (idade >= 0)
+);
+Neste exemplo:
+
+id é a chave primária.
+
+nome não pode ficar vazio.
+
+email não pode se repetir.
+
+idade não pode ser negativa.
+
