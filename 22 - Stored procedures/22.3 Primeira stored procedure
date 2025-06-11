@@ -1,8 +1,20 @@
-CREATE PROCEDURE inserir_cliente(nome TEXT, telefone TEXT)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    INSERT INTO clientes (nome, telefone, data_registro)
-    VALUES (nome, telefone, CURRENT_DATE);
-END;
-$$;
+🛠️ Exemplo: Minha Primeira Stored Procedure
+🎯 Objetivo:
+Listar todos os clientes cadastrados.
+
+✅ Código:
+
+▶️ Como executar:
+
+🧠 Explicação passo a passo:
+Linha	O que faz
+DELIMITER $$	Muda o delimitador temporariamente para evitar conflito com ;
+CREATE PROCEDURE	Começa a criação da procedure
+listar_clientes()	Nome da procedure (sem parâmetros neste caso)
+BEGIN ... END	Bloco de comandos que será executado
+SELECT * FROM clientes;	Comando que será executado quando a procedure for chamada
+DELIMITER ;	Volta ao delimitador padrão ;
+⚠️ Pontos de atenção para iniciantes:
+Sempre teste o que está dentro da procedure com um SELECT antes de criar.
+O uso de DELIMITER é necessário em alguns bancos como MySQL.
+O nome da procedure deve ser único dentro do banco.
