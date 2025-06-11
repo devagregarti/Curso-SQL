@@ -1,0 +1,61 @@
+🔍 Usando OLD e NEW em Triggers
+✅ O que são?
+OLD representa o registro antes da operação (disponível em triggers de UPDATE e DELETE).
+
+NEW representa o registro depois da operação (disponível em triggers de INSERT e UPDATE).
+
+Quando usar:
+Evento	OLD disponível?	NEW disponível?
+INSERT	Não	Sim
+UPDATE	Sim	Sim
+DELETE	Sim	Não
+
+🛠️ Exemplo prático
+Imagine a tabela clientes:
+
+sql
+Copiar
+Editar
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome TEXT,
+  email TEXT
+);
+Queremos criar uma trigger que registre mudanças no email quando um cliente atualizar seu cadastro.
+
+Função da trigger usando OLD e NEW:
+sql
+Copiar
+Editar
+CREATE OR REPLACE FUNCTION log_email_change()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Verifica se o email foi alterado
+  IF NEW.email IS DISTINCT FROM OLD.email THEN
+    INSERT INTO log_email_update(cliente_id, email_antigo, email_novo, data_alteracao)
+    VALUES (OLD.id, OLD.email, NEW.email, now());
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+Criando a trigger:
+sql
+Copiar
+Editar
+CREATE TRIGGER trigger_email_update
+AFTER UPDATE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION log_email_change();
+⚠️ Pontos importantes
+OLD é usado para acessar valores antes da modificação.
+
+NEW é usado para acessar valores após a modificação.
+
+Em triggers de INSERT, só existe NEW.
+
+Em triggers de DELETE, só existe OLD.
+
+Em triggers de UPDATE, temos ambos OLD e NEW.
+
+🧠 Dica
+Sempre use IS DISTINCT FROM para comparar valores, pois assim você evita problemas quando o valor for NULL.
