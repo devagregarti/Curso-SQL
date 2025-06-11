@@ -1,16 +1,43 @@
-🔐 Funções com IMMUTABLE, STABLE, VOLATILE
-IMMUTABLE: sempre retorna o mesmo resultado para os mesmos argumentos (ex: matemáticas puras).
+🎯 Tópico: Funções Avançadas em SQL
+📌 O que são?
+Funções avançadas em SQL são comandos que ajudam a realizar operações mais complexas em consultas, como cálculos, manipulação de strings, datas, agregações condicionais, entre outros.
 
-STABLE: depende apenas de leituras do banco (ex: SELECT).
+🔧 1. Funções de Janela (Window Functions)
+✅ Exemplo prático:
 
-VOLATILE: pode mudar mesmo com mesmos parâmetros (ex: NOW()).
+🧠 O que faz?
+Classifica os funcionários por salário dentro de cada departamento.
 
-sql
-Copy
-Edit
-CREATE FUNCTION aleatorio()
-RETURNS INT AS $$
-BEGIN
-    RETURN floor(random() * 100)::INT;
-END;
-$$ LANGUAGE plpgsql VOLATILE;
+⚠️ Ponto de atenção:
+OVER() é obrigatório.
+PARTITION BY divide os dados em grupos.
+Não confundir com GROUP BY — aqui os dados não são agregados.
+🧮 2. Funções de Agregação com Filtro
+✅ Exemplo prático:
+
+🧠 O que faz?
+Conta quantos funcionários têm salário acima de 5000 por departamento.
+
+⚠️ Ponto de atenção:
+CASE WHEN dentro de funções de agregação é muito útil para contagens condicionais.
+🧵 3. Manipulação de Strings
+✅ Exemplo prático:
+
+🧠 O que faz?
+Transforma o nome em maiúsculas e mostra o número de caracteres.
+
+⚠️ Ponto de atenção:
+Funções como UPPER, LOWER, SUBSTRING, TRIM são muito úteis para limpeza de dados.
+📅 4. Funções de Data e Hora
+✅ Exemplo prático:
+
+🧠 O que faz?
+Calcula a idade em dias.
+
+⚠️ Ponto de atenção:
+O formato e funções de data podem variar entre bancos (MySQL, PostgreSQL, SQL Server).
+Use DATE_PART, EXTRACT, DATEDIFF conforme o banco.
+🧠 Dica Final para Iniciantes
+Teste cada função isoladamente antes de combiná-las. Use SELECT simples para entender o que cada parte faz.
+
+Se quiser, posso te ajudar a montar slides, exercícios práticos, ou até um mini-projeto para aplicar essas funções. Quer seguir por algum desses caminhos?
