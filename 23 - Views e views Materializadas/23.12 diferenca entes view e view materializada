@@ -62,3 +62,17 @@ VIEW = sempre atual, mas pode ser lenta.
 
 MATERIALIZED VIEW = rápida, mas pode estar desatualizada.
 
+
+
+Característica                     | View (normal)                    | View Materializada
+----------------------------------|----------------------------------|-------------------------------
+Armazena dados?                   | Não                              | Sim
+Atualização automática            | Sim (sempre que consultada)      | Não (precisa de REFRESH)
+Performance                       | Pode ser mais lenta              | Mais rápida para leitura
+Ocupa espaço em disco?           | Não                              | Sim
+Sempre mostra dados atualizados? | Sim                              | Não (pode ficar desatualizada)
+Ideal para                       | Consultas dinâmicas              | Relatórios e análises pesadas
+Suporte universal?                | Sim (todos os SGBDs)             | Não (depende do SGBD)
+
+
+
