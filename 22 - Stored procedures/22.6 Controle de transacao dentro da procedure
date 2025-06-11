@@ -1,20 +1,21 @@
-CREATE PROCEDURE transferir_valores(origem INT, destino INT, valor NUMERIC)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    BEGIN
-        UPDATE contas SET saldo = saldo - valor WHERE id = origem;
-        UPDATE contas SET saldo = saldo + valor WHERE id = destino;
+🔄 Tópico: Controle de Transação em Stored Procedures
+📌 O que é uma transação?
+Uma transação é um conjunto de comandos SQL que devem ser executados como uma unidade. Ou seja, ou tudo dá certo, ou nada é salvo.
 
-        IF valor < 0 THEN
-            RAISE EXCEPTION 'Valor inválido!';
-        END IF;
+🧠 Por que usar transações?
+Garantir consistência dos dados
+Evitar que operações parciais causem erros
+Permitir rollback (desfazer) em caso de falha
+🛠️ Exemplo prático: Atualizar saldo de duas contas
 
-        COMMIT;
-    EXCEPTION
-        WHEN OTHERS THEN
-            ROLLBACK;
-            RAISE NOTICE 'Transação cancelada!';
-    END;
-END;
-$$;
+🧪 O que esse exemplo faz?
+Inicia uma transação com START TRANSACTION
+Atualiza o saldo da conta de origem e da conta de destino
+Se tudo der certo, faz COMMIT (salva)
+Se der erro, faz ROLLBACK (desfaz tudo)
+⚠️ Pontos de atenção para iniciantes:
+Use START TRANSACTION, COMMIT e ROLLBACK sempre que houver mais de uma operação crítica.
+O HANDLER é usado para capturar erros e garantir que o ROLLBACK seja executado.
+Teste cada UPDATE separadamente antes de colocar dentro da procedure.
+🧰 Dica prática:
+Sempre que sua procedure mexe em mais de uma tabela ou linha, pense em usar transações.
