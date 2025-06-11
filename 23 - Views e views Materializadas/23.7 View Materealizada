@@ -1,6 +1,0 @@
-📘 1. O que é uma Materialized View?
-É como uma View, mas os dados são armazenados fisicamente.
-
-É como uma tabela gerada por uma consulta.
-
-Melhora performance em consultas pesadas.
