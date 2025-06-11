@@ -1,16 +1,24 @@
-CREATE PROCEDURE gerar_n_vendas(cli TEXT, qtd INT)
-LANGUAGE plpgsql
-AS $$
-DECLARE
-    i INT := 1;
-BEGIN
-    WHILE i <= qtd LOOP
-        INSERT INTO vendas (cliente, valor, data_venda)
-        VALUES (cli, (random() * 100)::NUMERIC(10,2), CURRENT_DATE);
-        i := i + 1;
-    END LOOP;
-END;
-$$;
+🧠 Parte 1: Lógica Condicional com CASE
+O CASE é o equivalente ao if/else em SQL. Ele é usado principalmente em consultas SELECT.
 
+✅ Exemplo Prático:
 
-CALL gerar_n_vendas('Maria', 5);
+🟡 Ponto de atenção:
+
+O CASE pode ser usado em SELECT, WHERE, ORDER BY, etc.
+Sempre tenha um ELSE para cobrir casos não previstos.
+🔁 Parte 2: Loops em SQL (em procedures ou scripts)
+SQL puro (como em SELECT) não tem loops, mas em procedures (MySQL, PostgreSQL, etc.) você pode usar WHILE, LOOP, ou FOR.
+
+✅ Exemplo Prático (MySQL):
+
+🟡 Ponto de atenção:
+
+Loops são usados em procedures ou scripts de manutenção.
+Evite loops para tarefas que podem ser resolvidas com JOIN, GROUP BY ou CTE.
+💡 Dica para o curso:
+Use analogias simples:
+
+CASE = “se isso, então aquilo”
+WHILE = “enquanto for verdade, continue”
+E sempre mostre o resultado esperado da consulta para reforçar o aprendizado.
