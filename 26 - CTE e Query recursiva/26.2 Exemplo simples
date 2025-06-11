@@ -1,16 +1,89 @@
+Exemplos básicos de CTE (Common Table Expression)
+Exemplo 1: CTE simples para melhorar legibilidade
+Suponha que você tenha uma tabela vendas:
 
-🧪 2. Exemplo simples de CTE
+id_venda	produto	quantidade	preco_unitario
+1	Caneta	10	1.5
+2	Caderno	5	7.0
+3	Caneta	3	1.5
+
+Queremos calcular o total por produto.
+
+SQL com CTE
 sql
-Copy
-Edit
-WITH clientes_ativos AS (
-    SELECT id, nome FROM clientes WHERE ativo = true
+Copiar
+Editar
+WITH totais_por_produto AS (
+  SELECT
+    produto,
+    SUM(quantidade * preco_unitario) AS total_vendas
+  FROM vendas
+  GROUP BY produto
 )
-SELECT * FROM clientes_ativos;
-✅ Vantagens da CTE:
+SELECT * FROM totais_por_produto;
+Explicação
+A parte dentro do WITH cria a CTE chamada totais_por_produto.
 
-Deixa o SQL mais legível.
+Essa CTE calcula o total vendido para cada produto.
 
-Pode ser usada várias vezes na mesma consulta.
+Depois, na consulta principal (SELECT * FROM totais_por_produto), pegamos o resultado da CTE para exibir.
 
-Ideal para quebrar consultas complexas em partes menores.
+Exemplos básicos de Queries Recursivas
+Exemplo 2: Hierarquia simples de funcionários
+Imagine uma tabela funcionarios:
+
+id	nome	id_gerente
+1	João	NULL
+2	Maria	1
+3	Carlos	1
+4	Ana	2
+5	Pedro	2
+
+Queremos listar todos os subordinados de João, incluindo níveis mais profundos.
+
+SQL com query recursiva
+sql
+Copiar
+Editar
+WITH RECURSIVE subordinados AS (
+  -- Caso base: pegar o gerente inicial (João)
+  SELECT id, nome, id_gerente
+  FROM funcionarios
+  WHERE id = 1
+
+  UNION ALL
+
+  -- Parte recursiva: pegar funcionários que têm o gerente da consulta anterior
+  SELECT f.id, f.nome, f.id_gerente
+  FROM funcionarios f
+  INNER JOIN subordinados s ON f.id_gerente = s.id
+)
+SELECT * FROM subordinados;
+Explicação passo a passo
+Caso base: seleciona o funcionário João (id=1), que é o topo da hierarquia.
+
+Parte recursiva: encontra todos os funcionários cujo id_gerente seja o id do funcionário já listado (começando por João).
+
+A consulta vai repetindo isso até não encontrar mais subordinados.
+
+O resultado lista João e todos os subordinados (Maria, Carlos, Ana, Pedro).
+
+Exemplo 3: Somando números sequencialmente (exemplo matemático)
+Queremos listar números de 1 até 5 usando recursão.
+
+sql
+Copiar
+Editar
+WITH RECURSIVE numeros AS (
+  SELECT 1 AS n  -- caso base
+  UNION ALL
+  SELECT n + 1 FROM numeros WHERE n < 5  -- recursão
+)
+SELECT * FROM numeros;
+Explicação
+Começa em 1.
+
+A cada passo, adiciona 1 ao número anterior, até chegar a 5.
+
+Gera uma sequência de números.
+
