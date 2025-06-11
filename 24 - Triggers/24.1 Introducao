@@ -1,18 +1,70 @@
+🚨 Overview: Triggers em Bancos de Dados
+✅ O que é uma trigger?
+Uma trigger (ou gatilho) é um comando automático que o banco executa quando algo acontece numa tabela.
 
-📘 1. O que é uma Trigger?
-É um gatilho automático que executa uma função sempre que ocorre um evento (INSERT, UPDATE, DELETE).
+🔹 Pode ser ativada ao:
 
-Serve para:
+Inserir (INSERT)
 
-Auditar alterações.
+Atualizar (UPDATE)
 
-Atualizar dados relacionados.
+Excluir (DELETE)
 
+🛠️ Pra que serve?
+Usamos triggers para:
 
+Auditar ações (ex: registrar quem fez uma alteração)
 
+Validar regras de negócio
 
-🧠 2. Como funciona uma Trigger?
-A Trigger depende de uma função (trigger function).
+Atualizar outras tabelas automaticamente
 
-Essa função é executada automaticamente no momento configurado.
+Evitar inconsistências
+
+📦 Exemplo prático
+Suponha que temos uma tabela clientes e uma tabela log_alteracoes.
+
+sql
+Copiar
+Editar
+CREATE TABLE log_alteracoes (
+  cliente_id INT,
+  data_alteracao TIMESTAMP,
+  campo_alterado TEXT
+);
+Criando uma trigger que registra toda alteração no campo "email":
+
+sql
+Copiar
+Editar
+CREATE OR REPLACE FUNCTION log_update_email()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.email <> OLD.email THEN
+    INSERT INTO log_alteracoes(cliente_id, data_alteracao, campo_alterado)
+    VALUES (OLD.id, now(), 'email');
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+Associando à tabela clientes:
+
+sql
+Copiar
+Editar
+CREATE TRIGGER gatilho_email
+AFTER UPDATE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION log_update_email();
+⚠️ Pontos de atenção
+Triggers rodam automaticamente, então cuidado com efeitos inesperados.
+
+Podem impactar a performance se forem mal planejadas.
+
+Triggers são difíceis de testar e depurar se você não souber exatamente o que está acontecendo no banco.
+
+Evite lógica muito complexa dentro de triggers.
+
+🧠 Dica
+Use triggers com propósito claro. Para ações simples, às vezes vale mais usar código da aplicação (backend) do que complicar com gatilhos no banco.
 
