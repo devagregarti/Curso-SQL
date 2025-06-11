@@ -1,4 +1,65 @@
+🎯 Criando uma VIEW em SQL
+✅ O que é uma VIEW?
+Uma VIEW é como uma janela para os dados.
+Você escreve uma consulta e salva com um nome. Depois, pode usar essa view como se fosse uma tabela.
+
+🛠️ Exemplo prático – Passo a passo
+Imagine que temos essa tabela clientes:
+sql
+Copiar
+Editar
+-- Tabela base
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome TEXT,
+  email TEXT,
+  ativo BOOLEAN
+);
+E esses dados:
+sql
+Copiar
+Editar
+INSERT INTO clientes (nome, email, ativo) VALUES
+('Ana', 'ana@email.com', TRUE),
+('Bruno', 'bruno@email.com', FALSE),
+('Carla', 'carla@email.com', TRUE);
+🧱 Criando uma VIEW
+Queremos ver apenas os clientes ativos:
+
+sql
+Copiar
+Editar
 CREATE VIEW clientes_ativos AS
-SELECT id, nome, email
+SELECT nome, email
 FROM clientes
-WHERE ativo = true;
+WHERE ativo = TRUE;
+Agora, você pode usar essa view assim:
+
+sql
+Copiar
+Editar
+SELECT * FROM clientes_ativos;
+💡 Resultado:
+
+sql
+Copiar
+Editar
+nome   |      email
+-------+-------------------
+Ana    | ana@email.com
+Carla  | carla@email.com
+⚠️ Pontos de atenção
+A VIEW não armazena os dados: ela executa a consulta toda vez que você acessa.
+
+Se os dados da tabela original mudarem, a VIEW mostra os dados atualizados automaticamente.
+
+Você não pode inserir diretamente em uma VIEW complexa (com JOIN, GROUP BY, etc.), a menos que ela seja bem simples.
+
+🧠 Dica de uso
+Use VIEWS para:
+
+Evitar repetir consultas complexas
+
+Organizar melhor o código SQL
+
+Proteger dados sensíveis (mostrar só o que o usuário precisa ver)
