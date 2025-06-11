@@ -1,0 +1,76 @@
+🔁 Trigger em UPDATE — SQL
+✅ O que é?
+É uma trigger que é executada automaticamente quando uma linha é atualizada em uma tabela.
+
+👉 Pode ser usada para:
+
+Registrar alterações
+
+Validar mudanças
+
+Atualizar outras tabelas automaticamente
+
+🛠️ Exemplo prático: Log de alterações de e-mail
+Suponha a tabela clientes:
+sql
+Copiar
+Editar
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome TEXT,
+  email TEXT
+);
+E a tabela de log:
+
+sql
+Copiar
+Editar
+CREATE TABLE log_email_update (
+  cliente_id INT,
+  email_antigo TEXT,
+  email_novo TEXT,
+  data_alteracao TIMESTAMP
+);
+🔧 Criando a função da trigger:
+sql
+Copiar
+Editar
+CREATE OR REPLACE FUNCTION logar_update_email()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.email IS DISTINCT FROM OLD.email THEN
+    INSERT INTO log_email_update(cliente_id, email_antigo, email_novo, data_alteracao)
+    VALUES (OLD.id, OLD.email, NEW.email, now());
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+⚙️ Criando a trigger:
+sql
+Copiar
+Editar
+CREATE TRIGGER trigger_log_email
+AFTER UPDATE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION logar_update_email();
+🧪 Testando:
+sql
+Copiar
+Editar
+UPDATE clientes
+SET email = 'novo@email.com'
+WHERE id = 1;
+💡 Resultado: uma linha será adicionada na tabela log_email_update com os dados do email antigo e do novo.
+
+⚠️ Pontos de atenção
+OLD = valores antes da atualização
+
+NEW = valores depois da atualização
+
+Use IS DISTINCT FROM em vez de <> para comparar nulos com segurança
+
+Triggers podem impactar performance em grandes volumes de atualização
+
+🧠 Dica
+Use triggers de UPDATE quando for crítico manter histórico de alterações ou validações automáticas, como em sistemas financeiros, médicos ou administrativos.
+
