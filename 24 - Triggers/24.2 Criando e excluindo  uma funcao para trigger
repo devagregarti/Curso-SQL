@@ -1,30 +1,63 @@
-CREATE OR REPLACE FUNCTION log_insercao_cliente()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO log_clientes (cliente_id, nome, data_insercao)
-    VALUES (NEW.id, NEW.nome, CURRENT_TIMESTAMP);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+✅ Passo 1: Criando uma função que será executada
+Antes de criar a trigger, precisamos de uma função que diz o que a trigger deve fazer.
 
-
-
-Excluindo 
-
-
-DROP TRIGGER cliente_insert_log ON clientes;
-Se quiser excluir também a função:
+🔹 Exemplo prático:
+Queremos registrar toda vez que um cliente for deletado da tabela clientes:
 
 sql
-Copy
-Edit
-DROP FUNCTION log_insercao_cliente();
+Copiar
+Editar
+CREATE TABLE log_exclusao (
+  cliente_id INT,
+  data_exclusao TIMESTAMP
+);
+Criamos a função que será executada pela trigger:
 
+sql
+Copiar
+Editar
+CREATE OR REPLACE FUNCTION registrar_exclusao()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO log_exclusao(cliente_id, data_exclusao)
+  VALUES (OLD.id, now());
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+✅ Passo 2: Criando a trigger
+Agora associamos essa função a uma trigger na tabela clientes:
 
+sql
+Copiar
+Editar
+CREATE TRIGGER gatilho_exclusao_cliente
+AFTER DELETE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION registrar_exclusao();
+✅ Agora, sempre que alguém for deletado da tabela clientes, o banco registra o id e a hora no log_exclusao.
 
-Verificando triggers existentes
+🗑️ Excluindo uma trigger
+Se você quiser remover a trigger:
 
+sql
+Copiar
+Editar
+DROP TRIGGER gatilho_exclusao_cliente ON clientes;
+❗ Isso só remove a trigger, não apaga a função registrar_exclusao.
 
-SELECT tgname, tgrelid::regclass AS tabela
-FROM pg_trigger
-WHERE NOT tgisinternal;
+Se quiser apagar também a função:
+
+sql
+Copiar
+Editar
+DROP FUNCTION registrar_exclusao();
+⚠️ Pontos de atenção
+Triggers são associadas a uma tabela específica.
+
+Você precisa criar a função primeiro, depois a trigger.
+
+Sempre pense se a lógica não poderia ser feita na aplicação. Triggers automáticas podem ser difíceis de rastrear em projetos maiores.
+
+🧠 Dica final
+Use triggers para automatizar tarefas do banco que devem acontecer independente da aplicação, como auditoria e controle de integridade.
+
