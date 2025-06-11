@@ -1,29 +1,70 @@
-🔁 3. O que é uma CTE Recursiva?
-É uma CTE que chama a si mesma até atingir uma condição de parada.
+🔄 CTE Recursiva: O que é?
+Uma CTE recursiva é uma Common Table Expression que se chama a si mesma, permitindo repetir uma consulta até que uma condição de parada seja atingida.
 
-Muito útil para navegar estruturas hierárquicas, como:
+Muito usada para trabalhar com dados hierárquicos, estruturas em árvore, grafos, ou qualquer situação onde um registro depende de outro.
 
-Categorias e subcategorias.
-
-Hierarquia de funcionários.
-
-Pastas e subpastas.
-
-🧠 4. Estrutura de uma CTE Recursiva
+Estrutura básica de uma CTE recursiva
 sql
-Copy
-Edit
+Copiar
+Editar
 WITH RECURSIVE nome_cte AS (
-    -- Parte base (nível 1 da hierarquia)
-    SELECT ...
-    FROM ...
-    WHERE condição_inicial
+  -- Parte não recursiva (caso base)
+  SELECT ... FROM tabela WHERE condição_inicial
 
-    UNION ALL
+  UNION ALL
 
-    -- Parte recursiva (nível 2+)
-    SELECT ...
-    FROM nome_cte
-    JOIN tabela ON condição_de_continuação
+  -- Parte recursiva (auto-referência usando o nome da CTE)
+  SELECT ... FROM tabela JOIN nome_cte ON condição_de_recursão
 )
 SELECT * FROM nome_cte;
+Passo a passo
+Parte não recursiva: define o ponto de partida (exemplo: o nó raiz da hierarquia).
+
+Parte recursiva: seleciona registros relacionados com os que já foram obtidos, unindo a tabela original com a CTE, criando uma “cadeia”.
+
+A query vai se chamando até que não existam mais registros que satisfaçam a condição.
+
+Exemplo prático: Hierarquia de funcionários
+Tabela funcionarios:
+
+id	nome	id_gerente
+1	João	NULL
+2	Maria	1
+3	Carlos	1
+4	Ana	2
+5	Pedro	2
+
+Queremos listar João e todos os subordinados em todos os níveis.
+
+SQL usando CTE recursiva
+sql
+Copiar
+Editar
+WITH RECURSIVE subordinados AS (
+  -- Caso base: seleciona o gerente inicial
+  SELECT id, nome, id_gerente
+  FROM funcionarios
+  WHERE id = 1
+
+  UNION ALL
+
+  -- Parte recursiva: encontra subordinados do gerente atual
+  SELECT f.id, f.nome, f.id_gerente
+  FROM funcionarios f
+  INNER JOIN subordinados s ON f.id_gerente = s.id
+)
+SELECT * FROM subordinados;
+Resultado esperado
+id	nome	id_gerente
+1	João	NULL
+2	Maria	1
+3	Carlos	1
+4	Ana	2
+5	Pedro	2
+
+Por que usar CTE recursiva?
+Facilita trabalhar com dados hierárquicos.
+
+Evita consultas complexas e repetitivas.
+
+Muito útil em bancos que suportam recursão (PostgreSQL, SQL Server, Oracle, etc).
