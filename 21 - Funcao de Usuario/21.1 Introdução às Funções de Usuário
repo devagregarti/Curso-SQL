@@ -1,7 +1,30 @@
-Blocos reutilizáveis de código SQL ou PL/pgSQL.
+🎯 Objetivo da Aula: Funções Definidas pelo Usuário (UDFs)
+✅ O que são UDFs?
+Funções definidas pelo usuário são blocos de código SQL que você pode criar para reutilizar lógica. Elas recebem parâmetros, executam operações e retornam um valor.
 
-Podem retornar um valor único, uma tabela, ou nenhum valor.
+🧱 Tipos de Funções em SQL Server (exemplo mais comum)
+Scalar Function
+Retorna um único valor (ex: número, texto, data).
 
-Podem ser usadas em SELECTs, WHERE, JOINS etc.
+Table-Valued Function (TVF)
+Retorna uma tabela como resultado.
 
+🛠️ Exemplo Prático: Scalar Function
 
+Como usar:
+
+🧪 Exemplo Prático: Table-Valued Function
+
+Como usar:
+
+⚠️ Pontos de Atenção
+Performance: UDFs podem ser mais lentas que queries diretas, especialmente em grandes volumes de dados.
+Limitações: Algumas UDFs não permitem comandos como INSERT, UPDATE, DELETE.
+Boas práticas:
+Use nomes claros e descritivos.
+Documente o que a função faz.
+Evite lógica muito complexa dentro da função.
+📌 Dica para Iniciantes
+Pense nas funções como "mini-programas" que você pode chamar sempre que precisar fazer o mesmo cálculo ou filtro.
+
+Se quiser, posso te ajudar a montar slides, exercícios práticos, ou até um mini-projeto para aplicar essas funções. Quer seguir por algum desses caminhos?
