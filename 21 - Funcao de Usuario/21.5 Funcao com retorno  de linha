@@ -1,14 +1,27 @@
-CREATE OR REPLACE FUNCTION info_cliente(nome_cli TEXT)
-RETURNS TABLE(nome TEXT, total NUMERIC) AS $$
-BEGIN
-    RETURN QUERY
-    SELECT cliente, SUM(valor)
-    FROM vendas
-    WHERE cliente = nome_cli
-    GROUP BY cliente;
-END;
-$$ LANGUAGE plpgsql;
-sql
-Copy
-Edit
-SELECT * FROM info_cliente('João');
+🎯 Funções com Retorno de Linha no SQL
+✅ O que são?
+São funções que retornam uma ou mais linhas como resultado — ou seja, um conjunto de registros, como se fosse uma tabela. São muito úteis para encapsular consultas complexas e reutilizá-las.
+
+Também chamadas de table-valued functions (TVF).
+
+📌 Exemplo Prático: Função que Retorna Linhas
+🔧 SQL Server
+
+Uso:
+
+
+🔧 PostgreSQL (com RETURNS TABLE)
+
+Uso:
+
+
+⚠️ Pontos de Atenção
+Essas funções podem ser usadas em JOINs, como se fossem tabelas.
+São ideais para modularizar consultas e evitar repetição de código.
+O uso de RETURNS TABLE ou RETURNS TABLE(...) depende do banco de dados.
+Em alguns bancos (como MySQL), o suporte a esse tipo de função é mais limitado — usa-se mais views ou procedures.
+💡 Dica para o Curso
+Inclua um exercício como:
+
+"Crie uma função chamada pedidos_por_cliente que recebe um id_cliente e retorna os pedidos feitos por ele, com colunas id_pedido, data e valor_total."
+
