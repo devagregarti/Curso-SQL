@@ -1,7 +1,0 @@
-| Conceito         | Explicação curta                           |
-| ---------------- | ------------------------------------------ |
-| `WITH`           | Declara uma CTE                            |
-| `WITH RECURSIVE` | Permite que a CTE chame a si mesma         |
-| `UNION ALL`      | Une a parte base com a parte recursiva     |
-| `nivel`          | Ajuda a controlar profundidade da recursão |
-| **Ideal para**   | Árvores, hierarquias, estrutura em camadas |
