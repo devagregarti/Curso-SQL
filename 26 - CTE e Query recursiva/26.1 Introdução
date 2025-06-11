@@ -1,5 +1,48 @@
+🚀 Introdução a CTEs e Queries Recursivas em SQL
+O que é uma CTE (Common Table Expression)?
+CTE é uma forma de criar uma tabela temporária dentro de uma consulta SQL.
 
-📘 1. O que é uma CTE?
-Uma CTE (Common Table Expression) é uma subconsulta nomeada temporária que pode ser reutilizada dentro da query principal.
+Serve para organizar queries complexas, deixar o código mais legível e reutilizar resultados intermediários.
 
-A sintaxe começa com WITH.
+Funciona como um “subselect” nomeado que você pode usar depois dentro da mesma query.
+
+Sintaxe básica de uma CTE
+sql
+Copiar
+Editar
+WITH nome_da_cte AS (
+  -- consulta SQL aqui
+  SELECT coluna1, coluna2 FROM tabela WHERE condição
+)
+SELECT * FROM nome_da_cte WHERE outra_condição;
+Por que usar CTE?
+Facilita a leitura e manutenção do código.
+
+Ajuda a dividir problemas complexos em partes menores.
+
+Pode melhorar a performance em alguns casos, evitando repetições.
+
+O que é uma query recursiva?
+É um tipo especial de CTE que se chama repetidamente até que uma condição pare a recursão.
+
+Muito útil para trabalhar com dados hierárquicos, como estruturas de árvore, organogramas, categorias aninhadas, etc.
+
+Estrutura básica de uma query recursiva
+sql
+Copiar
+Editar
+WITH RECURSIVE nome_da_cte AS (
+  -- Parte não recursiva (caso base)
+  SELECT ... FROM tabela WHERE condição_inicial
+
+  UNION ALL
+
+  -- Parte recursiva (se chama usando os resultados anteriores)
+  SELECT ... FROM tabela JOIN nome_da_cte ON condição_de_recursão
+)
+SELECT * FROM nome_da_cte;
+Exemplo prático de uso
+Listar todos os funcionários e seus subordinados em uma hierarquia de empresa.
+
+Montar um caminho em uma árvore genealógica.
+
