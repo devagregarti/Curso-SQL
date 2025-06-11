@@ -1,6 +1,39 @@
-| Propriedade      | Significado breve                         |
-| ---------------- | ----------------------------------------- |
-| **Atomicidade**  | Tudo ou nada                              |
-| **Consistência** | O banco sempre estará em um estado válido |
-| **Isolamento**   | Transações não interferem entre si        |
-| **Durabilidade** | Após `COMMIT`, os dados não se perdem     |
+ACID é um acrônimo que descreve as quatro propriedades fundamentais que garantem a confiabilidade e integridade das transações em bancos de dados.
+
+1. Atomicidade (Atomicity)
+A transação é uma unidade indivisível.
+
+Ou todas as operações são concluídas com sucesso, ou nenhuma é aplicada.
+
+Evita que o banco fique em estado inconsistente.
+
+2. Consistência (Consistency)
+A transação leva o banco de dados de um estado válido para outro estado válido.
+
+Regras e restrições (como chaves primárias, integridade referencial) são mantidas.
+
+Se a transação viola uma regra, ela é abortada.
+
+3. Isolamento (Isolation)
+Transações que ocorrem simultaneamente não interferem umas nas outras.
+
+Cada transação parece ser executada de forma isolada, sem “vazar” dados intermediários.
+
+Evita problemas como leituras sujas, não repetíveis e fantasmas.
+
+4. Durabilidade (Durability)
+Depois que a transação é confirmada (COMMIT), as alterações são permanentes, mesmo que o sistema falhe.
+
+Os dados são gravados de forma segura no disco.
+
+Por que o ACID é importante?
+Garante que as transações sejam seguras, confiáveis e previsíveis.
+
+Fundamental para sistemas financeiros, vendas, saúde, etc.
+
+Exemplos rápidos
+Propriedade	Exemplo prático
+Atomicidade	Transferência bancária é toda ou nada
+Consistência	Restrições de chave não são violadas
+Isolamento	Transações simultâneas não mostram dados “meio prontos”
+Durabilidade	Dados não se perdem após confirmar transação
