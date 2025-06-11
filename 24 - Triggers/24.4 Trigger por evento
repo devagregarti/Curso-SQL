@@ -1,0 +1,100 @@
+| Evento            | Exemplo de uso                             |
+| ----------------- | ------------------------------------------ |
+| **BEFORE INSERT** | Validar ou alterar dados antes da inserção |
+| **AFTER INSERT**  | Gravar log, atualizar outra tabela         |
+| **BEFORE UPDATE** | Validar ou impedir mudança                 |
+| **AFTER UPDATE**  | Atualizar logs, recalcular algo            |
+| **BEFORE DELETE** | Impedir exclusão de registros críticos     |
+| **AFTER DELETE**  | Registrar remoção em log                   |
+
+
+
+🎯 Triggers por Evento em SQL
+✅ O que são?
+Triggers por evento são gatilhos que são ativados quando um determinado tipo de evento acontece em uma tabela.
+
+Os três principais eventos:
+INSERT → Quando um novo registro é adicionado
+
+UPDATE → Quando um registro existente é modificado
+
+DELETE → Quando um registro é removido
+
+📦 Exemplo prático: tabela clientes
+Vamos criar triggers para registrar ações diferentes conforme o tipo de evento.
+
+Tabela de log:
+sql
+Copiar
+Editar
+CREATE TABLE log_eventos_clientes (
+  cliente_id INT,
+  tipo_evento TEXT,
+  data_evento TIMESTAMP
+);
+🔧 Função genérica para todos os eventos:
+sql
+Copiar
+Editar
+CREATE OR REPLACE FUNCTION registrar_evento()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO log_eventos_clientes(cliente_id, tipo_evento, data_evento)
+  VALUES (
+    CASE
+      WHEN TG_OP = 'DELETE' THEN OLD.id
+      ELSE NEW.id
+    END,
+    TG_OP,
+    now()
+  );
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+🔍 TG_OP é uma variável especial que retorna o tipo do evento (INSERT, UPDATE ou DELETE)
+
+⚙️ Criando triggers separadas para cada evento:
+sql
+Copiar
+Editar
+-- Trigger para INSERT
+CREATE TRIGGER trigger_insert_cliente
+AFTER INSERT ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION registrar_evento();
+
+-- Trigger para UPDATE
+CREATE TRIGGER trigger_update_cliente
+AFTER UPDATE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION registrar_evento();
+
+-- Trigger para DELETE
+CREATE TRIGGER trigger_delete_cliente
+AFTER DELETE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION registrar_evento();
+📌 Resultado
+Sempre que um cliente for inserido, atualizado ou excluído, será gerado um registro na log_eventos_clientes, indicando:
+
+O ID do cliente
+
+O tipo de evento (INSERT, UPDATE, DELETE)
+
+A data e hora
+
+⚠️ Pontos de atenção
+Você pode criar uma trigger para cada evento, ou até triggers diferentes com comportamentos específicos.
+
+A mesma função pode ser reutilizada se for genérica (como no exemplo).
+
+Cuidado com lógicas complexas ou redundantes, principalmente se mais de uma trigger for ativada ao mesmo tempo.
+
+🧠 Dica
+Triggers por evento são ideais para:
+
+Auditoria
+
+Histórico de ações
+
+Manutenção de integridade entre tabelas

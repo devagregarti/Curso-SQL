@@ -1,8 +1,0 @@
-| Evento            | Exemplo de uso                             |
-| ----------------- | ------------------------------------------ |
-| **BEFORE INSERT** | Validar ou alterar dados antes da inserção |
-| **AFTER INSERT**  | Gravar log, atualizar outra tabela         |
-| **BEFORE UPDATE** | Validar ou impedir mudança                 |
-| **AFTER UPDATE**  | Atualizar logs, recalcular algo            |
-| **BEFORE DELETE** | Impedir exclusão de registros críticos     |
-| **AFTER DELETE**  | Registrar remoção em log                   |
