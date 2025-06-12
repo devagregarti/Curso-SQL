@@ -1,15 +1,88 @@
-2. Validação de formatos comuns
+✅ Validações Comuns com Expressões Regulares em SQL
+Agora que você já sabe o que é regex, vamos aplicar isso em validações do dia a dia — como verificar se um e-mail está no formato correto, ou se um CPF tem 11 dígitos.
 
-📌 Exemplo 1: Verificar se um e-mail está no formato correto
+Esses exemplos vão ajudar a mostrar como expressões regulares são ferramentas poderosas para garantir a qualidade dos dados.
 
-SELECT nome, email
-FROM clientes
-WHERE email ~* '^[a-z0-9._%-]+@[a-z0-9.-]+\.[a-z]{2,}$';
+📧 1. Validação de E-mail
+Um padrão básico para validar e-mails pode ser:
 
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$';
+Começa com letras, números ou símbolos permitidos (. _ % + -)
 
-SELECT nome, email
-FROM clientes
-WHERE email ~* '^[a-z0-9._%-]+@[a-z0-9.-]+\.[a-z]{2,}$';
+Tem um @
 
-Explica: Valida e-mails com letras, números e terminações comuns (.com, .org, etc.)
+Depois vem o domínio
 
+E termina com uma extensão como .com, .br, .org, etc.
+
+🔍 Obs: validar e-mails com regex 100% perfeita é difícil. Esse padrão cobre a maioria dos casos reais.
+
+📱 2. Validação de Número de Telefone (Ex: Brasil + DDD)
+Formato: +55 seguido de 2 dígitos (DDD) e 9 dígitos (número)
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^\+55\d{2}9\d{8}$';
+Exemplo válido: +5511987654321
+
+🆔 3. Validação de CPF (somente números)
+CPF com 11 dígitos:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE cpf ~ '^\d{11}$';
+Se quiser aceitar com pontos e traço (123.456.789-09), use:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE cpf ~ '^\d{3}\.\d{3}\.\d{3}-\d{2}$';
+🆎 4. Placa de carro brasileira (modelo antigo: ABC-1234)
+sql
+Copy
+Edit
+SELECT * FROM veiculos
+WHERE placa ~ '^[A-Z]{3}-\d{4}$';
+🌍 5. CEP (Código Postal brasileiro)
+sql
+Copy
+Edit
+SELECT * FROM enderecos
+WHERE cep ~ '^\d{5}-\d{3}$';
+Exemplo válido: 12345-678
+
+🔠 6. Nomes com apenas letras (sem números ou símbolos)
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE nome ~ '^[A-Za-zÀ-ÿ\s]+$';
+Inclui letras acentuadas e espaços.
+
+🧪 7. Somente números
+Útil para campos que devem conter apenas números (como ID, código etc.):
+
+sql
+Copy
+Edit
+SELECT * FROM produtos
+WHERE codigo ~ '^\d+$';
+💡 Dica para os alunos:
+Regex não impede que dados errados entrem no banco se usado apenas em SELECT.
+Mas você pode usá-lo em CHECK constraints para validar dados na criação de tabelas, por exemplo:
+
+sql
+Copy
+Edit
+CREATE TABLE usuarios (
+  email TEXT CHECK (email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+);
