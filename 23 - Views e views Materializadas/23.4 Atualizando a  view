@@ -1,4 +1,67 @@
-CREATE OR REPLACE VIEW clientes_ativos AS
-SELECT id, nome, telefone
+🔄 Atualizando uma VIEW em SQL
+✅ Primeira coisa: Nem toda VIEW pode ser atualizada
+Uma VIEW pode ser atualizável somente se:
+
+Ela se basear em apenas uma tabela
+
+Não tiver GROUP BY, DISTINCT, JOIN, LIMIT, AGGREGATE FUNCTIONS (como SUM, AVG, etc.)
+
+🧱 Exemplo prático – VIEW simples e atualizável
+Tabela original:
+sql
+Copiar
+Editar
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome TEXT,
+  email TEXT,
+  ativo BOOLEAN
+);
+Criando uma VIEW simples:
+sql
+Copiar
+Editar
+CREATE VIEW clientes_basicos AS
+SELECT id, nome, email
+FROM clientes;
+Atualizando os dados da VIEW:
+sql
+Copiar
+Editar
+UPDATE clientes_basicos
+SET email = 'novo@email.com'
+WHERE id = 1;
+✅ Isso funciona porque a view é simples e diretamente ligada à tabela original.
+
+❌ Quando NÃO é possível atualizar a VIEW?
+Exemplo de VIEW não atualizável:
+
+sql
+Copiar
+Editar
+CREATE VIEW clientes_ativos AS
+SELECT nome, email
 FROM clientes
-WHERE ativo = true;
+WHERE ativo = TRUE;
+sql
+Copiar
+Editar
+UPDATE clientes_ativos
+SET email = 'teste@email.com'
+WHERE nome = 'Ana';
+❌ Isso gera erro em muitos bancos de dados, porque:
+
+A cláusula WHERE ativo = TRUE pode ocultar registros
+
+Não há uma forma garantida de saber como isso afeta a tabela original
+
+🧠 Dica
+Se você precisa atualizar os dados, atualize direto na tabela original, não na view.
+
+⚠️ Pontos de atenção
+Sempre prefira atualizar na tabela original
+
+Use VIEW principalmente para consultar dados
+
+Para criar uma view atualizável, deixe-a o mais simples possível
+

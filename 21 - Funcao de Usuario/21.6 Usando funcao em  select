@@ -1,2 +1,31 @@
-SELECT cliente, valor, dobro(valor) AS valor_dobrado
-FROM vendas;
+🎯 Funções em SELECT
+✅ O que são?
+São funções usadas dentro de uma consulta SELECT para transformar, calcular ou formatar dados diretamente nas colunas retornadas.
+
+📌 Exemplos Práticos
+1. Funções de Texto
+
+
+2. Funções Numéricas
+
+
+3. Funções de Data
+
+
+4. Funções de Agregação (com GROUP BY)
+
+⚠️ Pontos de Atenção
+Funções em SELECT não alteram os dados no banco, apenas o que é exibido.
+Podem ser combinadas com WHERE, GROUP BY, ORDER BY, etc.
+Algumas funções são específicas de cada banco de dados (ex: AGE() no PostgreSQL).
+É possível aninhar funções, como:
+
+💡 Dica para o Curso
+Inclua um exercício como:
+
+"Liste os nomes dos clientes em letras maiúsculas e mostre quantos caracteres cada nome possui."
+
+Ou:
+
+"Mostre o preço original e o preço com 10% de desconto usando uma função matemática."
+

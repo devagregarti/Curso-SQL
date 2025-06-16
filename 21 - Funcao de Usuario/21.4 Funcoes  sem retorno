@@ -1,10 +1,29 @@
-CREATE OR REPLACE FUNCTION log_mensagem(msg TEXT)
-RETURNS VOID AS $$
-BEGIN
-    RAISE NOTICE 'Mensagem: %', msg;
-END;
-$$ LANGUAGE plpgsql;
-sql
-Copy
-Edit
-SELECT log_mensagem('Olá do PostgreSQL');
+🎯 Funções Sem Retorno no SQL
+✅ O que são?
+Funções sem retorno (ou que não retornam um valor diretamente) são mais comuns em procedimentos armazenados ou blocos de código em SQL. Elas executam ações, como modificar dados ou registrar logs, mas não devolvem um valor direto como resultado.
+
+⚠️ Em SQL puro (como em SELECTs), quase todas as funções retornam algo. Mas em ambientes como PL/pgSQL (PostgreSQL), T-SQL (SQL Server) ou PL/SQL (Oracle), podemos criar funções ou procedimentos que não retornam valores.
+
+📌 Exemplo Prático: Procedimento Sem Retorno
+🔧 SQL Server / PostgreSQL
+
+Uso:
+
+
+✅ Esse procedimento executa uma ação (inserir um log), mas não retorna nenhum valor.
+
+🧠 Diferença entre Função e Procedimento
+Característica	Função (Function)	Procedimento (Procedure)
+Retorna valor	Sim	Não (ou opcional)
+Usado em SELECT	Sim	Não
+Usado para ações	Não recomendado	Sim
+⚠️ Pontos de Atenção
+Procedimentos são ideais para ações repetitivas como backups, logs, atualizações em lote.
+Não podem ser usados diretamente em SELECT.
+Em alguns bancos (como MySQL), a sintaxe pode variar um pouco.
+💡 Dica para o Curso
+Inclua um exercício como:
+
+"Crie um procedimento chamado atualizar_estoque que recebe um id_produto e uma quantidade e atualiza o estoque na tabela produtos."
+
+Se quiser, posso te ajudar a montar esse exercício com gabarito, ou criar um mini-projeto com procedimentos e funções. Quer seguir por esse caminho?

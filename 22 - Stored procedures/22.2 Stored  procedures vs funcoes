@@ -1,6 +1,38 @@
-| Característica       | Função (`FUNCTION`) | Procedimento (`PROCEDURE`) |
-| -------------------- | ------------------- | -------------------------- |
-| Pode retornar valor  | ✅ Sim               | ❌ Não obrigatoriamente     |
-| Pode usar `CALL`     | ❌ Não               | ✅ Sim                      |
-| Suporte a transações | ❌ Limitado          | ✅ Total (BEGIN, COMMIT...) |
-| Ideal para...        | Lógica de cálculo   | Fluxos de controle e ações |
+🧠 Tópico: Stored Procedures vs Funções
+📌 O que são?
+Conceito	Stored Procedure	Função (Function)
+Objetivo	Executar uma sequência de comandos	Retornar um valor (ou resultado)
+Retorno	Pode ou não retornar dados	Sempre retorna um valor
+Uso em SELECT	❌ Não pode ser usada diretamente	✅ Pode ser usada dentro de SELECT
+Parâmetros	Pode ter IN, OUT, INOUT	Geralmente só IN
+Controle de fluxo	Suporta IF, LOOP, WHILE, etc.	Também suporta, mas com foco em cálculo
+Exemplo de uso	Automatizar tarefas	Calcular idade, total, média, etc.
+🧪 Exemplo prático de Stored Procedure
+
+▶️ Executando:
+
+🧪 Exemplo prático de Função
+
+▶️ Usando em um SELECT:
+
+⚠️ Pontos de atenção para iniciantes
+Use Stored Procedures quando quiser executar ações (inserir, atualizar, deletar).
+Use Funções quando quiser calcular ou transformar dados dentro de consultas.
+Funções são mais restritas, mas ideais para lógica reutilizável em SELECT.
+🧰 Dica prática
+Se você precisa automatizar uma tarefa, use uma Stored Procedure.
+Se você precisa reutilizar um cálculo, use uma Função.
+
+
++------------------------+---------------------------------------------+------------------------------------------------+
+| Aspecto                | Stored Procedure                            | Função (Function)                              |
++------------------------+---------------------------------------------+------------------------------------------------+
+| Objetivo              | Executar uma sequência de comandos          | Retornar um valor (ou resultado)                |
+| Retorno               | Pode ou não retornar dados                  | Sempre retorna um valor                         |
+| Uso em SELECT         | ❌ Não pode ser usada diretamente           | ✅ Pode ser usada dentro de SELECT             |
+| Parâmetros            | IN, OUT, INOUT                              | Geralmente apenas IN                            |
+| Controle de fluxo     | Suporta IF, LOOP, WHILE                     | Suporta, mas com foco em cálculo                |
+| Exemplo de uso        | Automatizar tarefas (ex: atualizar estoque) | Cálculos reutilizáveis (ex: calcular idade)     |
++------------------------+---------------------------------------------+------------------------------------------------+
+
+

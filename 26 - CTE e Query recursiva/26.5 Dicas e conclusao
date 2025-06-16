@@ -1,0 +1,72 @@
+Dicas para trabalhar com CTEs e Queries Recursivas
+1. Sempre que possível, use CTEs para organizar consultas complexas
+Elas deixam o código mais legível e fácil de manter.
+
+Evitam duplicação de código (não precisa repetir subqueries).
+
+Facilita o debug e a identificação de erros.
+
+2. CTEs não criam tabelas físicas permanentes
+São temporárias e válidas apenas durante a execução da consulta.
+
+Portanto, não armazenam dados, só servem para organizar a consulta.
+
+3. Use CTEs recursivas para trabalhar com dados hierárquicos
+Como organogramas, árvores de categorias, estruturas de pastas, etc.
+
+Sem recursão, seria muito difícil ou impossível fazer essas consultas com SQL simples.
+
+4. Cuidado com a recursão infinita
+Sempre defina uma condição que faça a recursão parar (exemplo: quando não existirem mais subordinados).
+
+Caso contrário, a consulta pode travar ou consumir muitos recursos.
+
+5. Teste a CTE recursiva com dados pequenos antes de rodar em tabelas grandes
+Assim você evita sobrecarga e facilita o entendimento do funcionamento.
+
+Depois de entender, aplique em bases maiores.
+
+6. Entenda que CTEs recursivas podem impactar a performance
+Por envolver múltiplas iterações, elas podem ser mais lentas.
+
+Planeje e otimize os joins e filtros para minimizar custo.
+
+7. Combine CTEs com outras funcionalidades SQL
+É comum usar CTEs para preparar dados e depois aplicar agregações, joins ou filtros adicionais na consulta principal.
+
+Use CTEs em cascata (uma CTE pode chamar outra CTE).
+
+8. CTEs facilitam consultas modulares
+Permitem dividir um problema complexo em várias etapas fáceis de entender.
+
+Você pode testar cada CTE individualmente.
+
+9. Em bancos diferentes, a sintaxe e suporte para CTE recursiva pode variar
+PostgreSQL, SQL Server e Oracle suportam bem.
+
+MySQL suportou CTE recursiva a partir da versão 8.0.
+
+Sempre consulte a documentação do seu banco.
+
+10. Use alias claros e comentários para facilitar a leitura
+Nomes como subordinados, ancestors, descendants ajudam na compreensão.
+
+Comentários explicando caso base e parte recursiva ajudam iniciantes.
+
+11. Lembre-se que o UNION ALL é obrigatório para recursão
+UNION (sem ALL) elimina duplicatas, o que pode interromper a recursão.
+
+12. Entenda bem o plano de execução
+Use ferramentas do banco para analisar o desempenho.
+
+Evite joins desnecessários e filtros fora da recursão.
+
+13. Limite a profundidade da recursão se possível
+Em alguns bancos, você pode usar OPTION (MAXRECURSION n) (SQL Server) ou outras opções para evitar loops infinitos.
+
+14. CTE recursiva é uma solução elegante, mas nem sempre a mais rápida
+Para hierarquias muito grandes, às vezes soluções específicas como tabelas aninhadas (Nested Sets) ou Path Enumeration podem ser mais eficientes.
+
+15. Explore exemplos práticos para fixar o aprendizado
+Experimente com organogramas, categorias de produtos, grafos simples, etc.
+

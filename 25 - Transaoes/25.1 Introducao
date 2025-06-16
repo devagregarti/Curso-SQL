@@ -1,4 +1,47 @@
+🔄 Overview: Transações em Bancos de Dados
+✅ O que é uma transação?
+Uma transação é um conjunto de operações que são executadas como uma única unidade lógica no banco de dados.
 
-Uma transação é um conjunto de comandos SQL que são executados como uma unidade lógica.
-Ou seja, ou tudo acontece, ou nada acontece.
+👉 Ou todas as operações são feitas com sucesso, ou nenhuma é feita (tudo ou nada).
 
+🔑 Propriedades ACID
+Transações garantem que as operações sigam as propriedades ACID:
+
+Propriedade	Significado
+Atomicidade	Tudo ou nada (transação completa ou nada)
+Consistência	Banco fica consistente antes e depois
+Isolamento	Transações não interferem entre si
+Durabilidade	Após confirmação, alterações são permanentes
+
+📦 Por que usar transações?
+Para garantir integridade dos dados
+
+Evitar dados parcialmente atualizados
+
+Manter o banco em um estado correto e confiável
+
+🛠️ Como usar transações em SQL (exemplo prático)
+sql
+Copiar
+Editar
+BEGIN;
+
+UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+
+COMMIT;
+Se algo der errado, você pode cancelar a transação:
+
+sql
+Copiar
+Editar
+ROLLBACK;
+⚠️ Pontos de atenção
+Transações devem ser curtas para evitar bloqueios.
+
+Use transações para ações que precisam ser todas concluídas juntas.
+
+Em bancos diferentes, sintaxes podem variar, mas o conceito é o mesmo.
+
+🧠 Dica
+Sempre confirme (COMMIT) ou cancele (ROLLBACK) a transação para garantir a integridade dos dados.

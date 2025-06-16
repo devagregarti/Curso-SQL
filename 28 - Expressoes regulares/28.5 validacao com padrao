@@ -1,34 +1,60 @@
-4. Filtrar dados com base em padrões comerciais
+🎯 Validação por Padrão com Expressões Regulares
+📌 O que é?
+Validar por padrão significa verificar se uma string segue uma estrutura esperada, mesmo que o conteúdo específico varie.
 
-📌 Exemplo 4: Buscar produtos que comecem com “Promo”
+Exemplo: garantir que um código de produto sempre comece com 3 letras seguidas de 4 números (ex: ABC1234), ou que uma senha tenha letras e números.
 
-SELECT nome_produto
-FROM produtos
-WHERE nome_produto ~* '^promo';
+🧠 Por que usar isso?
+Para manter consistência em dados como códigos, senhas, identificadores e nomes.
 
-Explica: Útil para buscar promoções automaticamente
+Para facilitar buscas, ordenações e integração com sistemas externos.
 
-📌 Exemplo 5: Encontrar clientes com sobrenomes compostos
+Para evitar erros causados por dados mal formatados.
 
-SELECT nome
-FROM clientes
-WHERE nome ~ '\s\w+\s\w+';
+🧪 Exemplos comuns de validações por padrão
+🔢 1. Código de produto: 3 letras + 4 números
+Exemplo válido: ABC1234
 
-Explica: Detecta nomes com dois sobrenomes ou nomes longos (padrões comuns em cadastros mal segmentados
+sql
+Copy
+Edit
+SELECT * FROM produtos
+WHERE codigo ~ '^[A-Z]{3}\d{4}$';
+🔐 2. Senha com pelo menos uma letra e um número
+Senha deve ter no mínimo 6 caracteres, sendo letras e números.
 
-📌 Exemplo 6: Remover caracteres especiais do nome
+sql
+Copy
+Edit
+SELECT * FROM usuarios
+WHERE senha ~ '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$';
+Essa expressão usa lookahead (?=), que o PostgreSQL suporta.
 
-SELECT REGEXP_REPLACE(nome, '[^a-zA-Z\s]', '', 'g') AS nome_limpo
-FROM clientes;
+🧾 3. Identificador que começa com “ID-” seguido de 6 números
+Exemplo válido: ID-123456
 
-Explica: Remove acentos, símbolos e pontuações do nome.
+sql
+Copy
+Edit
+SELECT * FROM registros
+WHERE identificador ~ '^ID-\d{6}$';
+🅰️ 4. Nomes que devem começar com letra maiúscula
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE nome ~ '^[A-Z][a-z]+$';
+Isso garante que o nome começa com uma letra maiúscula, seguida de letras minúsculas. Pode ser expandido para mais palavras com espaço, se desejar.
 
-📌 Exemplo 7: Padronizar telefones tirando tudo que não for númer
-
-SELECT REGEXP_REPLACE(telefone, '\D', '', 'g') AS telefone_limpo
-FROM clientes;
-
-Explica: Mantém só os dígitos, útil para normalização antes de análise.
-
-
-
+🌍 5. Domínio de site simples (ex: exemplo.com)
+sql
+Copy
+Edit
+SELECT * FROM sites
+WHERE dominio ~ '^[a-z0-9-]+\.[a-z]{2,}$';
+✅ Resumo para os alunos
+Objetivo	Regex	Exemplo válido
+Código produto ABC1234	^[A-Z]{3}\d{4}$	ABC1234
+Senha com letra e número	(?=.*[A-Za-z])(?=.*\d).{6,}	abc123
+ID com prefixo + números	^ID-\d{6}$	ID-000001
+Nome com inicial maiúscula	^[A-Z][a-z]+$	João

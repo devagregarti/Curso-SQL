@@ -1,21 +1,78 @@
+💡 Exemplos Práticos de Transações em SQL
+Exemplo 1: Transferência bancária entre contas
+Suponha que temos uma tabela contas com colunas id e saldo.
+
+sql
+Copiar
+Editar
+CREATE TABLE contas (
+  id INT PRIMARY KEY,
+  saldo NUMERIC
+);
+Queremos transferir 100 unidades da conta 1 para a conta 2. Isso deve ser feito como uma transação, para garantir que nenhuma parte fique incompleta.
+
+Passo a passo com transação:
+sql
+Copiar
+Editar
 BEGIN;
 
-UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
-UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+UPDATE contas
+SET saldo = saldo - 100
+WHERE id = 1;
+
+UPDATE contas
+SET saldo = saldo + 100
+WHERE id = 2;
 
 COMMIT;
+Se algo der errado (exemplo: saldo insuficiente), podemos fazer:
 
-
-Roll back 
-
+sql
+Copiar
+Editar
+ROLLBACK;
+Exemplo 2: Inserindo dados com rollback em erro
+sql
+Copiar
+Editar
 BEGIN;
 
-UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+INSERT INTO clientes (id, nome) VALUES (1, 'João');
+INSERT INTO clientes (id, nome) VALUES (1, 'Maria'); -- Erro: id duplicado
 
--- Simulando erro:
--- SELECT 1 / 0;
+COMMIT;
+Nesse caso, a segunda inserção falha por causa do id duplicado e a transação não é confirmada. Se o banco suportar, você pode:
 
-UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+sql
+Copiar
+Editar
+ROLLBACK;
+E o banco volta ao estado anterior, sem nenhum cliente inserido.
 
-ROLLBACK;  -- Nada será alterado
+Exemplo 3: Usando SAVEPOINT para controle parcial
+sql
+Copiar
+Editar
+BEGIN;
 
+INSERT INTO pedidos (id, produto) VALUES (1, 'Camisa');
+
+SAVEPOINT antes_do_pagamento;
+
+INSERT INTO pagamentos (id_pedido, status) VALUES (1, 'Pendente');
+
+-- Se o pagamento falhar:
+ROLLBACK TO SAVEPOINT antes_do_pagamento;
+
+-- Corrige o problema e continua
+
+COMMIT;
+⚠️ Dicas finais
+Sempre inicie a transação com BEGIN.
+
+Use COMMIT para salvar tudo.
+
+Use ROLLBACK para desfazer se algo não sair como esperado.
+
+SAVEPOINT ajuda a controlar transações longas e complexas.

@@ -1,4 +1,0 @@
-CREATE MATERIALIZED VIEW resumo_vendas AS
-SELECT cliente, SUM(valor) AS total_gasto
-FROM vendas
-GROUP BY cliente;

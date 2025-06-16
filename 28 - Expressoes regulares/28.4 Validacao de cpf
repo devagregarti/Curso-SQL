@@ -1,7 +1,0 @@
-📌 Exemplo 3: Encontrar CPFs inválidos (com letras ou formato errado)
-
-SELECT nome, cpf
-FROM clientes
-WHERE cpf !~ '^\d{3}\.\d{3}\.\d{3}-\d{2}$';
-
-Explica: Ajuda a detectar CPFs fora do padrão comum “000.000.000-00”

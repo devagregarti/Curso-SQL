@@ -1,2 +1,15 @@
-REFRESH MATERIALIZED VIEW resumo_vendas;
-Essa operação recalcula os dados com base nas tabelas originais.
+
+🔄 Atualizando uma View Materializada
+📌 O que significa "atualizar"?
+Atualizar uma view materializada significa recalcular e armazenar novamente os dados com base na consulta original. Isso é necessário porque os dados não se atualizam automaticamente (a menos que você configure isso).
+
+🧱 Exemplo prático: PostgreSQL
+
+✅ Exemplo real:
+
+⚠️ Pontos de atenção:
+- Esse comando pode demorar se a view for grande.
+- Durante o refresh, a view pode ficar indisponível (dependendo do banco).
+- Em PostgreSQL, você pode usar "CONCURRENTLY" para evitar bloqueios:
+
+- Mas para usar "CONCURRENTLY", a view precisa ter um índice único.

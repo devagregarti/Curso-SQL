@@ -1,5 +1,56 @@
-| Comando                        | O que faz                                              |
-| ------------------------------ | ------------------------------------------------------ |
-| `BEGIN` ou `START TRANSACTION` | Inicia a transação                                     |
-| `COMMIT`                       | Salva todas as alterações feitas durante a transação   |
-| `ROLLBACK`                     | Cancela todas as alterações feitas durante a transação |
+1. BEGIN (ou START TRANSACTION)
+Inicia uma nova transação.
+
+Tudo que vier depois será parte da mesma transação até o COMMIT ou ROLLBACK.
+
+sql
+Copiar
+Editar
+BEGIN;
+2. COMMIT
+Finaliza a transação confirmando todas as operações feitas.
+
+As alterações são salvas permanentemente no banco.
+
+sql
+Copiar
+Editar
+COMMIT;
+3. ROLLBACK
+Cancela todas as operações feitas dentro da transação atual.
+
+O banco volta ao estado antes do BEGIN.
+
+sql
+Copiar
+Editar
+ROLLBACK;
+4. SAVEPOINT
+Cria um ponto intermediário dentro da transação.
+
+Permite voltar (rollback) só até esse ponto, sem cancelar tudo.
+
+sql
+Copiar
+Editar
+SAVEPOINT nome_do_ponto;
+5. ROLLBACK TO SAVEPOINT
+Reverte as operações até o savepoint, mantendo o restante da transação.
+
+sql
+Copiar
+Editar
+ROLLBACK TO SAVEPOINT nome_do_ponto;
+6. RELEASE SAVEPOINT
+Remove um savepoint criado, já que não será mais necessário.
+
+sql
+Copiar
+Editar
+RELEASE SAVEPOINT nome_do_ponto;
+⚠️ Dicas rápidas
+Use BEGIN e COMMIT para garantir que as operações sejam feitas juntas.
+
+Use ROLLBACK para desfazer em caso de erro.
+
+Use SAVEPOINT para criar checkpoints dentro de transações longas.

@@ -1,1 +1,36 @@
-CALL inserir_cliente('Carlos Silva', '11999999999');
+🧠 Tópico: Executando e Monitorando uma Stored Procedure
+▶️ 1. Executando uma Stored Procedure
+Depois de criada, você pode executá-la com o comando:
+
+
+✅ Exemplo:
+
+Se a procedure tiver parâmetros:
+
+
+🧪 Dica prática para iniciantes:
+Antes de executar, sempre pergunte:
+
+A procedure precisa de parâmetros?
+Ela altera dados ou só consulta?
+🧭 2. Monitorando uma Stored Procedure
+🔍 A. Verificando se foi criada corretamente
+
+Mostra todas as procedures do banco atual.
+
+🔍 B. Verificando o conteúdo da procedure
+
+Exibe o código SQL da procedure.
+
+🔍 C. Verificando erros (em MySQL)
+Se algo deu errado, use:
+
+
+Ou para ver warnings:
+
+
+⚠️ Pontos de atenção:
+Nem todos os bancos (PostgreSQL, SQL Server, etc.) usam os mesmos comandos para monitoramento.
+Em ambientes de produção, é comum usar logs do banco ou ferramentas de monitoramento para acompanhar o desempenho de procedures.
+🧰 Dica extra:
+Em bancos como MySQL, você pode usar o Workbench ou DBeaver para ver e editar procedures visualmente, o que ajuda muito quem está começando.

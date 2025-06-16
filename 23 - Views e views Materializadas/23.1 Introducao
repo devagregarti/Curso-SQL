@@ -1,7 +1,27 @@
+👁️‍🗨️ Overview: Views e Views Materializadas
+📌 O que é uma View?
+Uma view é como uma janela para uma consulta SQL. Ela não armazena dados, apenas exibe o resultado de uma query como se fosse uma tabela.
 
-Uma View é como uma consulta salva que pode ser usada como uma tabela.
+✅ Exemplo simples:
+Imagine que você tem uma tabela vendas e quer sempre ver só as vendas do mês atual. Você pode criar uma view com essa lógica.
 
-Não armazena dados, apenas mostra dados atualizados em tempo real a partir das tabelas base.
+📌 O que é uma View Materializada?
+Uma view materializada é parecida com uma view, mas armazena os dados fisicamente. Ou seja, ela salva o resultado da consulta e pode ser atualizada periodicamente.
 
- para que serve ?
- 
+🧠 Analogia:
+View = consulta ao vivo (sempre atualizada)
+View materializada = foto da consulta (precisa ser atualizada manual ou automaticamente)
+Característica              | View (normal)               | View Materializada
+---------------------------|-----------------------------|-----------------------------
+Armazena dados?            | Não                         | Sim
+Atualização automática     | Sim (sempre que consultada) | Não (precisa ser atualizada)
+Performance                | Pode ser mais lenta         | Mais rápida para leitura
+Ocupa espaço em disco?     | Não                         | Sim
+Sempre atualizada?         | Sim                         | Não (pode ficar desatualizada)
+Suporte em todos os bancos?| Sim                         | Não (depende do SGBD)
+
+
+⚠️ Pontos de atenção para iniciantes:
+Views não substituem tabelas, apenas facilitam consultas.
+Views materializadas ocupam espaço e podem ficar desatualizadas.
+Nem todos os bancos suportam views materializadas (ex: MySQL não tem nativamente).

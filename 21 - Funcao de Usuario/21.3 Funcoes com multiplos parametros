@@ -1,9 +1,37 @@
-CREATE OR REPLACE FUNCTION soma(a INT, b INT)
-RETURNS INT AS $$
-BEGIN
-    RETURN a + b;
-END;
-$$ LANGUAGE plpgsql;.
+🎯 Funções com Múltiplos Parâmetros no SQL
+✅ O que são?
+Funções em SQL podem receber um ou mais parâmetros para realizar operações específicas, como manipulação de strings, datas, números, etc.
+
+📌 Exemplos Práticos
+1. CONCAT(string1, string2, ...)
+Objetivo: Junta duas ou mais strings.
 
 
-SELECT soma(5, 7); -- Resultado: 12
+2. SUBSTRING(string, start, length)
+Objetivo: Extrai parte de uma string.
+
+
+3. ROUND(numero, casas_decimais)
+Objetivo: Arredonda um número para o número de casas decimais especificado.
+
+
+4. REPLACE(string, de, para)
+Objetivo: Substitui parte de uma string por outra.
+
+
+5. DATEADD(parte_data, quantidade, data)
+Objetivo: Adiciona um intervalo de tempo a uma data.
+
+
+⚠️ Pontos de Atenção
+A ordem dos parâmetros importa! Por exemplo, SUBSTRING('texto', 1, 3) é diferente de SUBSTRING('texto', 3, 1).
+Alguns bancos de dados usam nomes diferentes para funções semelhantes. Ex: DATE_ADD no MySQL vs DATEADD no SQL Server.
+Sempre verifique o tipo de dado esperado por cada parâmetro (string, número, data, etc.).
+💡 Dica para o Curso
+Inclua exercícios práticos como:
+
+"Use a função REPLACE para trocar todas as ocorrências de 'a' por 'x' na palavra 'banana'."
+
+Ou:
+
+"Use ROUND para arredondar o número 98.765 para 1 casa decimal."

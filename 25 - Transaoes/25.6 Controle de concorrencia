@@ -1,3 +1,59 @@
-BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-Garante que duas transações simultâneas não gerem dados corrompidos.
-Pode causar erros se houver conflito — isso é intencional para proteger os dados.
+🔄 Controle de Concorrência em Transações
+O que é controle de concorrência?
+É o conjunto de técnicas que o banco de dados usa para gerenciar múltiplas transações executando ao mesmo tempo (concorrência), garantindo que o resultado seja correto e consistente.
+
+Por que é importante?
+Em ambientes com vários usuários acessando e modificando dados simultaneamente, pode haver conflitos, como:
+
+Leituras de dados inconsistentes
+
+Atualizações perdidas
+
+Dados corrompidos
+
+Problemas comuns sem controle adequado
+Problema	O que é
+Leitura suja	Ler dados que foram modificados, mas não confirmados (rollback depois)
+Leitura não repetível	Ler o mesmo dado duas vezes e obter valores diferentes devido a outra transação ter modificado no meio
+Phantom read (Leitura fantasma)	Ler um conjunto de linhas, e na próxima leitura, novas linhas aparecem porque outra transação inseriu dados
+
+Técnicas comuns de controle de concorrência
+Bloqueios (Locks)
+
+O banco “trava” linhas ou tabelas durante a transação para evitar conflitos.
+
+Exemplo: bloqueio exclusivo para escrita, bloqueio compartilhado para leitura.
+
+Controle de Versão (MVCC - Multi-Version Concurrency Control)
+
+O banco mantém várias versões dos dados, permitindo que leituras não bloqueiem escritas e vice-versa.
+
+Muito usado em bancos modernos como PostgreSQL e Oracle.
+
+Níveis de isolamento (Isolation Levels)
+Definem o grau de visibilidade que uma transação tem sobre as mudanças feitas por outras.
+
+Os níveis padrões são:
+
+Nível	Características principais
+Read Uncommitted	Pode ler dados não confirmados (leitura suja possível)
+Read Committed	Só lê dados confirmados (evita leitura suja)
+Repeatable Read	Garante que dados lidos não mudem durante a transação (evita leituras não repetíveis)
+Serializable	Maior isolamento, transações executam como se fossem uma por vez (evita phantoms)
+
+Exemplo prático: bloqueio em UPDATE
+sql
+Copiar
+Editar
+BEGIN;
+
+UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+-- Esta linha pode ser bloqueada para outras transações até o COMMIT
+
+COMMIT;
+Durante a execução da transação, outras tentativas de modificar a mesma linha podem ser bloqueadas até a confirmação.
+
+⚠️ Dicas
+Use o nível de isolamento adequado para seu sistema (maior isolamento pode causar mais bloqueios e lentidão).
+
+Entenda o comportamento do banco que está usando, pois a implementação pode variar.

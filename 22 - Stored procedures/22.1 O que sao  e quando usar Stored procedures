@@ -1,12 +1,28 @@
+🧠 Tópico: Introdução às Stored Procedures
+📌 O que são?
+Stored Procedures são blocos de código SQL que ficam armazenados no banco de dados e podem ser executados sempre que necessário. Elas ajudam a automatizar tarefas repetitivas, como inserções, atualizações ou cálculos.
 
-Stored Procedures são blocos de código armazenados no banco que executam ações (como inserções, atualizações, controle de transações), sem a obrigação de retornar um valor.
+🧪 Exemplo prático simples
+✅ Criando uma procedure:
 
+▶️ Executando:
 
-🧠 9. Quando usar Stored Procedure
-Para automatizar processos administrativos
+🧠 O que faz?
+Retorna todos os clientes da tabela clientes.
 
-Para sequenciar várias instruções SQL com controle de erro
+✍️ Exemplo com parâmetros
 
-Para inserções, atualizações ou deletes em massa
+▶️ Executando:
 
-Quando for necessário controle explícito de transações
+🧠 O que faz?
+Mostra os dados do cliente com id = 3.
+
+⚠️ Pontos de atenção para iniciantes
+Procedures são como funções: você escreve uma vez e usa várias.
+Use IN para receber valores, OUT para retornar valores (mais avançado).
+Nem todos os bancos usam a mesma sintaxe (ex: MySQL vs SQL Server vs PostgreSQL).
+Sempre teste o que está dentro da procedure com SELECT antes de criar.
+🧰 Quando usar Stored Procedures?
+Para automatizar tarefas (ex: gerar relatórios diários).
+Para padronizar operações (ex: inserir dados com validações).
+Para melhorar a segurança, evitando SQL direto na aplicação.

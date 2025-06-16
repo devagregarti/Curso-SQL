@@ -1,2 +1,54 @@
+🔍 Consultando uma VIEW em SQL
+✅ O que é consultar uma VIEW?
+Consultar uma VIEW é igual consultar uma tabela.
+Você usa um SELECT normal, como se a view fosse uma tabela com os dados prontos.
+
+🧱 Exemplo prático
+Vamos usar a VIEW que criamos antes:
+
+sql
+Copiar
+Editar
+CREATE VIEW clientes_ativos AS
+SELECT nome, email
+FROM clientes
+WHERE ativo = TRUE;
+Agora, para consultar essa VIEW:
+sql
+Copiar
+Editar
 SELECT * FROM clientes_ativos;
-O PostgreSQL executa a consulta original toda vez que a View é chamada.
+💡 Resultado (dados da tabela original):
+
+sql
+Copiar
+Editar
+nome   |      email
+-------+-------------------
+Ana    | ana@email.com
+Carla  | carla@email.com
+🎯 Você também pode filtrar a VIEW
+sql
+Copiar
+Editar
+SELECT * FROM clientes_ativos
+WHERE nome LIKE 'C%';
+💡 Resultado:
+
+sql
+Copiar
+Editar
+nome   |      email
+-------+-------------------
+Carla  | carla@email.com
+⚠️ Pontos de atenção
+A view executa a consulta original em tempo real. Se os dados da tabela clientes mudarem, o resultado da view muda também.
+
+Views são somente leitura na maioria dos casos. Para alterar dados, você precisa fazer isso na tabela original.
+
+🧠 Dica
+Use a VIEW como se fosse uma tabela:
+
+Pode aplicar WHERE, ORDER BY, JOIN e até LIMIT.
+
+Mas lembre-se: ela não guarda dados, apenas mostra o resultado da consulta que foi salva.

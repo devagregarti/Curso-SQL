@@ -1,8 +1,74 @@
-1. Introdução às Expressões Regulares em SQL
-	•	O que são expressões regulares (Regex)
-	•	Operadores no PostgreSQL:
-	•	~  → case sensitive
-	•	~* → case insensitive
-	•	!~ e !~* → negação dos anteriores
-	•	Funções úteis:
-	•	SIMILAR TO, REGEXP_REPLACE, REGEXP_MATCHES, REGEXP_SPLIT_TO_TABLE
+📌 O que são Expressões Regulares (Regex)?
+Expressões regulares são padrões usados para buscar, comparar ou manipular textos com base em regras específicas.
+No contexto de SQL, usamos regex principalmente para filtrar dados que seguem um certo padrão de texto, como:
+
+Números de telefone
+
+E-mails
+
+Códigos postais
+
+Palavras que começam ou terminam com certas letras
+
+🧠 Por que aprender Regex em SQL?
+Imagine que você quer buscar no banco de dados:
+
+Todos os e-mails que terminam com @gmail.com
+
+Todos os nomes que começam com “Jo”
+
+Todas as placas de carro no formato “ABC-1234”
+
+Com expressões regulares, isso se torna possível e prático!
+
+🔧 Como usamos Regex no SQL?
+A maioria dos bancos de dados (como PostgreSQL, MySQL, Oracle) oferece suporte a regex através de comandos específicos.
+No PostgreSQL, por exemplo, usamos o operador ~ (case sensitive) ou ~* (case insensitive):
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE email ~ '@gmail\.com$';
+Isso retorna todos os clientes com email terminando em @gmail.com
+
+🧱 Conceitos básicos de Regex
+Símbolo	Significado	Exemplo	Significado do exemplo
+.	Qualquer caractere	a.c	“abc”, “a1c”, “a-c”, etc.
+*	Zero ou mais ocorrências	ab*c	“ac”, “abc”, “abbc”, etc.
++	Uma ou mais ocorrências	ab+c	“abc”, “abbc”, mas não “ac”
+?	Zero ou uma ocorrência	ab?c	“ac”, “abc”
+^	Início da string	^Jo	Começa com “Jo”
+$	Fim da string	com$	Termina com “com”
+[abc]	Qualquer um dos caracteres a, b ou c	[abc]at	“aat”, “bat”, “cat”
+[a-z]	Qualquer letra de a até z	[a-z]{3}	Três letras seguidas
+
+📚 Exemplos práticos em SQL (PostgreSQL)
+1. E-mails que terminam com .br
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE email ~ '\.br$';
+2. Telefones que começam com “+55”
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^\+55';
+3. Nomes que contêm apenas letras (sem números)
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE nome ~ '^[A-Za-z]+$';
+⚠️ Dicas para o iniciante
+Comece com exemplos simples e vá complicando aos poucos.
+
+Use ferramentas online para testar expressões regulares, como regex101.com.
+
+Lembre que o ~ funciona apenas em bancos que suportam regex nativamente (como o PostgreSQL).
+

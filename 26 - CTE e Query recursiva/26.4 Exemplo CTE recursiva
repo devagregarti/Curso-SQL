@@ -1,32 +1,87 @@
-🧩 5. Exemplo prático: Hierarquia de funcionários
-Imagine esta tabela:
-
+Explicação detalhada da query com CTE recursiva
 sql
-Copy
-Edit
-CREATE TABLE funcionarios (
-    id SERIAL PRIMARY KEY,
-    nome TEXT,
-    gerente_id INT
-);
-Consulta recursiva para listar hierarquia de um gerente:
+Copiar
+Editar
+WITH RECURSIVE subordinados AS (
+  -- Caso base: seleciona o gerente inicial
+  SELECT id, nome, id_gerente
+  FROM funcionarios
+  WHERE id = 1
 
-sql
-Copy
-Edit
-WITH RECURSIVE hierarquia AS (
-    -- Parte base: o gerente principal
-    SELECT id, nome, gerente_id, 1 AS nivel
-    FROM funcionarios
-    WHERE id = 1  -- gerente raiz
+  UNION ALL
 
-    UNION ALL
-
-    -- Parte recursiva: subordinados diretos
-    SELECT f.id, f.nome, f.gerente_id, h.nivel + 1
-    FROM funcionarios f
-    JOIN hierarquia h ON f.gerente_id = h.id
+  -- Parte recursiva: encontra subordinados do gerente atual
+  SELECT f.id, f.nome, f.id_gerente
+  FROM funcionarios f
+  INNER JOIN subordinados s ON f.id_gerente = s.id
 )
-SELECT * FROM hierarquia;
-Esse exemplo lista todos os subordinados diretos e indiretos do funcionário com id = 1.
+SELECT * FROM subordinados;
+1. WITH RECURSIVE subordinados AS ( ... )
+WITH cria uma CTE (Common Table Expression), ou seja, uma tabela temporária que existe apenas durante a execução da consulta.
+
+O uso de RECURSIVE permite que essa CTE chame a si mesma, ou seja, que faça uma recursão para construir resultados em múltiplos níveis.
+
+subordinados é o nome dado a essa CTE, que poderá ser referenciada dentro da query principal.
+
+2. Caso base:
+sql
+Copiar
+Editar
+SELECT id, nome, id_gerente
+FROM funcionarios
+WHERE id = 1
+Essa é a parte não recursiva da CTE, também chamada de âncora ou ponto de partida.
+
+Seleciona o funcionário cujo id = 1 — neste exemplo, é o gerente inicial (João).
+
+Esse resultado inicial será usado para começar a construir a hierarquia.
+
+3. UNION ALL
+Combina os resultados do caso base com os resultados da parte recursiva.
+
+Importante usar UNION ALL (em vez de UNION) para garantir que todos os registros sejam mantidos, inclusive duplicados se existirem (o que é normal em hierarquias).
+
+Essa junção é o que permite construir a lista progressivamente.
+
+4. Parte recursiva:
+sql
+Copiar
+Editar
+SELECT f.id, f.nome, f.id_gerente
+FROM funcionarios f
+INNER JOIN subordinados s ON f.id_gerente = s.id
+Essa parte faz o trabalho recursivo.
+
+Aqui, a CTE subordinados (que já contém o resultado até agora) é usada para buscar novos registros.
+
+Para cada funcionário listado em subordinados (começando pelo gerente inicial), o banco procura todos os funcionários que têm como gerente o funcionário atual (f.id_gerente = s.id).
+
+Assim, a consulta “desce” um nível na hierarquia para encontrar subordinados diretos.
+
+5. O ciclo da recursão
+A CTE começa com o gerente inicial (id=1).
+
+Depois busca todos os funcionários cujo id_gerente é 1.
+
+Esses funcionários são adicionados à CTE.
+
+Para cada novo funcionário adicionado, a parte recursiva roda novamente, buscando seus subordinados.
+
+Isso acontece até que não existam mais funcionários com gerentes listados na CTE (condição de parada implícita).
+
+6. Consulta final
+sql
+Copiar
+Editar
+SELECT * FROM subordinados;
+Após a recursão terminar, o banco retorna todos os registros acumulados na CTE subordinados.
+
+O resultado é uma lista completa do gerente inicial e todos os seus subordinados diretos e indiretos.
+
+Resumo visual do processo:
+Passo	Resultado atual da CTE	Explicação
+1	João (id=1)	Caso base: ponto inicial
+2	João (id=1), Maria (id=2), Carlos (id=3)	Subordinados diretos de João
+3	João, Maria, Carlos, Ana (id=4), Pedro(id=5)	Subordinados de Maria adicionados
+4	Nenhum subordinado adicional encontrado	Recursão para de expandir
 

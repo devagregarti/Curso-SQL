@@ -1,28 +1,41 @@
-Atualizando
+🛠️ Tópico: Atualizando e Deletando Dados em SQL
+📌 Objetivo:
+Ensinar como modificar ou remover dados de uma tabela com segurança e clareza.
 
-CREATE OR REPLACE FUNCTION dobro(numero INT)
-RETURNS INT AS $$
-BEGIN
-    RETURN numero * 2;
-END;
-$$ LANGUAGE plpgsql;
-O OR REPLACE permite atualizar sem apagar a função anterio
+🔄 1. Atualizando Dados com UPDATE
+✅ Exemplo prático:
+
+🧠 O que faz?
+Atualiza o e-mail do cliente com id = 1.
+
+⚠️ Pontos de atenção:
+Sempre use WHERE para evitar atualizar todos os registros.
+Teste antes com um SELECT:
+
+🧪 Exemplo com múltiplos campos:
+
+Aumenta o preço em 10% e reduz o estoque em 5 para produtos da categoria "Eletrônicos".
+
+🗑️ 2. Deletando Dados com DELETE
+✅ Exemplo prático:
+
+🧠 O que faz?
+Remove o cliente com id = 1.
+
+⚠️ Pontos de atenção:
+Nunca use DELETE sem WHERE se não quiser apagar tudo!
+Faça um SELECT antes para confirmar:
+
+💣 Exemplo perigoso (evite sem necessidade):
+
+Apaga todos os registros da tabela clientes.
+
+🧠 Dica para iniciantes
+Sempre que for usar UPDATE ou DELETE, faça um SELECT com o mesmo WHERE antes para garantir que está afetando os dados certos.
+
+🧰 Extra: Apagando tudo com segurança
+Se quiser apagar todos os dados, mas manter a estrutura da tabela:
 
 
-Deletando
-
-DROP FUNCTION nome_funcao(tipo_argumento);
--- Ex: DROP FUNCTION soma(INT, INT);
-
-
-
-✅ Dica prática: listar funções do banco
-sql
-Copy
-Edit
--- Ver funções criadas pelo usuário
-SELECT proname, proargtypes, prosrc
-FROM pg_proc
-WHERE pronamespace IN (
-    SELECT oid FROM pg_namespace WHERE nspname = 'public'
-);
+Mais rápido que DELETE.
+Não pode ser desfeito (em muitos bancos).

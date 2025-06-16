@@ -1,1 +1,37 @@
-UPDATE clientes SET nome = 'Carlos'; -- COMMIT automático
+🔍 Transações Implícitas em Bancos de Dados
+O que são transações implícitas?
+Transações implícitas são aquelas que o banco de dados inicia e finaliza automaticamente para cada instrução SQL individual.
+
+Você não precisa usar explicitamente BEGIN, COMMIT ou ROLLBACK.
+
+Como funcionam?
+Cada comando INSERT, UPDATE, DELETE ou SELECT (em alguns casos) é executado dentro de sua própria transação.
+
+Assim que o comando termina com sucesso, o banco confirma automaticamente (commit).
+
+Se ocorrer um erro, o banco cancela a operação automaticamente (rollback).
+
+Exemplo prático:
+sql
+Copiar
+Editar
+UPDATE clientes SET email = 'novo@email.com' WHERE id = 1;
+-- Essa única instrução já é uma transação implícita:
+-- o banco inicia, executa e confirma automaticamente.
+Vantagens
+Facilita operações simples sem precisar controlar manualmente transações.
+
+Bom para comandos rápidos e isolados.
+
+Desvantagens
+Não é adequado para operações que precisam de várias instruções executadas juntas (ex: transferências bancárias).
+
+Não dá controle para agrupar múltiplos comandos em uma única transação.
+
+Quando usar?
+Em operações simples e isoladas.
+
+Para evitar complicações se você não precisa garantir atomicidade entre vários comandos.
+
+🧠 Dica
+Para operações complexas ou críticas, prefira usar transações explícitas com BEGIN, COMMIT e ROLLBACK.

@@ -1,16 +1,20 @@
-⚠️ 8. Dicas práticas de uso
-Use transações sempre que executar duas ou mais alterações dependentes.
+🔚 Conclusão: Transações e Controle de Concorrência em Bancos de Dados
+As transações são fundamentais para garantir a integridade, confiabilidade e consistência dos dados em sistemas de bancos de dados, especialmente quando múltiplas operações precisam ser executadas juntas.
 
-Combine com tratamento de erros em procedures ou scripts de backend.
+Por meio das propriedades ACID, as transações asseguram que:
 
-Em sistemas críticos, sempre use transações com controle de exceções.
+Todas as operações ocorram completamente (atomicidade),
 
+O banco mantenha um estado consistente,
 
+As transações sejam isoladas umas das outras,
 
-BEGIN inicia
+E as alterações sejam duráveis e permanentes.
 
-COMMIT confirma
+Além disso, o controle de concorrência é essencial para que múltiplas transações possam acontecer ao mesmo tempo sem causar conflitos, protegendo os dados contra leituras sujas, atualizações perdidas e outros problemas comuns.
 
-ROLLBACK cancela
+Saber usar corretamente os comandos de transação (BEGIN, COMMIT, ROLLBACK), entender as transações implícitas, e escolher o nível de isolamento adequado, são passos importantes para desenvolver sistemas confiáveis e eficientes.
 
-Ideal para ações em lote, integrações entre tabelas e manutenção da consistência
+🧠 Dica final
+Dominar esses conceitos e práticas vai te ajudar a garantir que suas aplicações lidem com dados de forma segura e eficiente, mesmo em ambientes complexos e com muitos usuários.
+

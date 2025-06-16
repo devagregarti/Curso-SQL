@@ -1,10 +1,27 @@
-CREATE OR REPLACE FUNCTION dobro(numero INT)
-RETURNS INT AS $$
-BEGIN
-    RETURN numero * 2;
-END;
-$$ LANGUAGE plpgsql;
-sql
-Copy
-Edit
-SELECT dobro(10); -- Resultado: 20
+🎯 Objetivo: Criar sua Primeira Função de Usuário (UDF)
+🧠 O que é uma função de usuário?
+É um bloco de código que você cria para reutilizar uma lógica. Ela recebe um valor, faz um cálculo e devolve um resultado.
+
+🛠️ Exemplo Prático: Criando uma Função para Calcular Desconto
+📌 Cenário:
+Você tem um preço e quer aplicar um desconto de forma automática.
+
+✅ Passo a Passo:
+
+▶️ Como usar essa função:
+
+Resultado esperado: 90.00
+
+⚠️ Pontos de Atenção para Iniciantes
+Sempre use CREATE FUNCTION com RETURNS para indicar o tipo de valor que será devolvido.
+O nome da função deve ser único dentro do banco de dados.
+Use dbo. antes do nome da função (é o esquema padrão).
+Funções não podem alterar dados (não fazem INSERT, UPDATE, DELETE).
+💡 Dica Visual para o Slide
+Você pode usar um esquema simples como:
+
+Entrada: Preço = 100, Desconto = 10%
+↓
+Função: CalculaDesconto
+↓
+Saída: 90

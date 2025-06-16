@@ -1,8 +1,58 @@
-📌 Exemplo 2: Validar número de telefone (formato brasileiro)
+📱 Validação de Número de Telefone com Expressões Regulares
+📌 Objetivo:
+Garantir que o número de telefone siga um padrão específico, como o modelo brasileiro com código do país, DDD e número.
 
-SELECT nome, telefone
-FROM clientes
-WHERE telefone ~ '^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$';
+✅ Formato básico para telefones brasileiros (com DDI e DDD)
+Formato esperado: +55 + 2 dígitos de DDD + 9 dígitos do número (ex: +5511999999999)
 
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^\+55\d{2}9\d{8}$';
+🔍 Explicação da regex:
+Parte	Significado
+^	Início da string
+\+55	Deve começar com "+55" (código do Brasil)
+\d{2}	Dois dígitos (DDD)
+9	O número do celular no Brasil geralmente começa com 9
+\d{8}	Oito dígitos do número
+$	Fim da string
 
-Explica: Aceita formatos com ou sem parênteses, com ou sem traço
+📞 Formato com espaços ou hífens (mais flexível)
+Aceita: +55 11 99999-9999 ou +55-11-99999-9999
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^\+55[-\s]?\d{2}[-\s]?9\d{4}[-\s]?\d{4}$';
+Esse padrão aceita hífens ou espaços entre as partes do número.
+
+🧹 Formato só com DDD (sem DDI)
+Exemplo: 11999999999
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^(\d{2})9\d{8}$';
+❌ Filtrar números inválidos (ex: menos de 11 dígitos)
+Se quiser garantir que só aparecem números com 11 dígitos exatos, use:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes
+WHERE telefone ~ '^\d{11}$';
+⚠️ Boas práticas
+Oriente seus alunos a padronizar o formato de telefone desde a entrada dos dados.
+
+Para bancos como PostgreSQL, também é possível usar CHECK para validar na criação da tabela:
+
+sql
+Copy
+Edit
+CREATE TABLE contatos (
+  telefone TEXT CHECK (telefone ~ '^\+55\d{2}9\d{8}$')
+);

@@ -1,21 +1,78 @@
-| Característica         | VIEW       | MATERIALIZED VIEW              |
-| ---------------------- | ---------- | ------------------------------ |
-| Armazena dados         | ❌ Não      | ✅ Sim                          |
-| Sempre atualizada      | ✅ Sim      | ❌ Não (requer `REFRESH`)       |
-| Performance            | Mais lenta | Mais rápida para consultas     |
-| Atualização automática | Sim        | Não (a menos que use triggers) |
+🎯 Diferença entre VIEW e MATERIALIZED VIEW
+✅ VIEW (Visão)
+O que é:
+Uma view é uma consulta salva. Sempre que você acessa uma view, o banco de dados executa a consulta em tempo real.
+
+Quando usar:
+Quando você quer simplificar consultas complexas, sem armazenar dados duplicados.
+
+Vantagens:
+
+Reflete sempre os dados atualizados da tabela original.
+
+Leve, pois não armazena dados — apenas a lógica da consulta.
+
+Desvantagens:
+
+Pode ser mais lenta, já que sempre executa a consulta ao ser usada.
+
+Exemplo prático:
+
+sql
+Copiar
+Editar
+CREATE VIEW clientes_ativos AS
+SELECT nome, email
+FROM clientes
+WHERE ativo = TRUE;
+📦 MATERIALIZED VIEW (Visão Materializada)
+O que é:
+Uma materialized view guarda os dados da consulta. Ela é como uma tabela criada a partir de uma view.
+
+Quando usar:
+Quando você precisa de performance, ou seja, consultas mais rápidas, mesmo que os dados não estejam sempre atualizados.
+
+Vantagens:
+
+Muito mais rápida, pois lê os dados já armazenados, sem precisar executar a consulta toda vez.
+
+Desvantagens:
+
+Os dados podem ficar desatualizados.
+
+É necessário atualizar manualmente (ou programar uma atualização).
+
+Exemplo prático:
+
+sql
+Copiar
+Editar
+CREATE MATERIALIZED VIEW vendas_diarias AS
+SELECT data_venda, SUM(valor) AS total
+FROM vendas
+GROUP BY data_venda;
+Para atualizar:
+
+sql
+Copiar
+Editar
+REFRESH MATERIALIZED VIEW vendas_diarias;
+🧠 Dica para lembrar:
+VIEW = sempre atual, mas pode ser lenta.
+
+MATERIALIZED VIEW = rápida, mas pode estar desatualizada.
 
 
 
-💡 7. Quando usar cada uma
-VIEW:
+Característica                     | View (normal)                    | View Materializada
+----------------------------------|----------------------------------|-------------------------------
+Armazena dados?                   | Não                              | Sim
+Atualização automática            | Sim (sempre que consultada)      | Não (precisa de REFRESH)
+Performance                       | Pode ser mais lenta              | Mais rápida para leitura
+Ocupa espaço em disco?           | Não                              | Sim
+Sempre mostra dados atualizados? | Sim                              | Não (pode ficar desatualizada)
+Ideal para                       | Consultas dinâmicas              | Relatórios e análises pesadas
+Suporte universal?                | Sim (todos os SGBDs)             | Não (depende do SGBD)
 
-Quando os dados precisam estar sempre atualizados.
 
-Para abstração e organização de consultas.
 
-MATERIALIZED VIEW:
-
-Quando a consulta é muito pesada e não muda com frequência.
-
-Para relatórios, dashboards e análises periódicas.

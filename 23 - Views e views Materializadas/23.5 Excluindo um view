@@ -1,1 +1,46 @@
+🗑️ Excluindo uma VIEW em SQL
+✅ O que significa excluir uma VIEW?
+Excluir uma view é remover a "janela" para os dados, ou seja, apagar a consulta salva com nome.
+
+🔹 Importante:
+Excluir uma VIEW não apaga os dados da tabela original — apenas a view deixa de existir.
+
+🧱 Exemplo prático
+Vamos supor que você criou essa view:
+
+sql
+Copiar
+Editar
+CREATE VIEW clientes_ativos AS
+SELECT nome, email
+FROM clientes
+WHERE ativo = TRUE;
+Para excluir essa view:
+
+sql
+Copiar
+Editar
 DROP VIEW clientes_ativos;
+✅ Pronto! A view foi excluída.
+
+⚠️ Pontos de atenção
+Dado nenhum é perdido.
+A tabela original (clientes) continua existindo com todos os dados.
+
+Se você tentar usar a view depois de excluí-la:
+
+sql
+Copiar
+Editar
+SELECT * FROM clientes_ativos;
+❌ Vai receber um erro: relation "clientes_ativos" does not exist.
+
+Se quiser evitar erro caso a view não exista, use:
+
+sql
+Copiar
+Editar
+DROP VIEW IF EXISTS clientes_ativos;
+🧠 Dica
+Sempre revise seu código antes de apagar uma view.
+Ela pode estar sendo usada por outros scripts ou relatórios.
