@@ -83,9 +83,7 @@ WHERE cliente_id IN (
 
 💡 Extras Interessantes
 📍 Apagar só se não houver relação ativa
-sql
-Copy
-Edit
+
 DELETE FROM clientes
 WHERE id = 10 AND id NOT IN (
   SELECT cliente_id FROM pedidos
