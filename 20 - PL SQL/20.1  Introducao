@@ -1,1 +1,52 @@
-Melhorar
+📘 O que é PL/SQL?
+PL/SQL significa Procedural Language/Structured Query Language.
+
+É uma extensão da linguagem SQL usada principalmente em bancos de dados Oracle, mas conceitos semelhantes existem no PostgreSQL, com funções e blocos de código chamados de PL/pgSQL.
+
+Permite criar programas dentro do banco de dados, com comandos como IF, LOOP, e FOR, parecidos com os de linguagens de programação.
+
+🧠 Para que serve o PL/SQL (ou PL/pgSQL no PostgreSQL)?
+Automatizar tarefas repetitivas dentro do banco de dados.
+
+Criar funções e procedimentos que economizam tempo.
+
+Fazer validações, cálculos ou verificações sem depender de sistemas externos.
+
+Trabalhar com lógica de programação diretamente no banco.
+
+🛠️ Exemplos simples de uso
+Calcular automaticamente o valor de um desconto com base na quantidade de produtos comprados.
+
+Criar uma função que envia um aviso sempre que o estoque de um produto estiver baixo.
+
+Atualizar o status de um pedido baseado na data atual.
+
+💼 Como o PL/SQL pode ajudar profissionais de qualquer área
+📊 Profissionais de negócios e marketing:
+Criar relatórios automatizados com dados de vendas, clientes ou campanhas.
+
+Atualizar dados em massa com regras simples (ex: marcar clientes inativos automaticamente).
+
+🏥 Profissionais da saúde:
+Acompanhar agendamentos, lembretes ou alertas de exames.
+
+Automatizar atualizações em prontuários com base em datas ou eventos.
+
+🏫 Professores e educadores:
+Gerar listas de presença automaticamente com base em registros de entrada.
+
+Calcular médias e gerar resultados de avaliações.
+
+🏗️ Profissionais da engenharia:
+Monitorar status de projetos e atualizar campos com base em prazos ou medições.
+
+🧾 Profissionais administrativos:
+Automatizar tarefas de conferência de documentos, geração de alertas ou envio de e-mails (com ajuda de integrações externas).
+
+✅ Resumo
+PL/SQL é uma forma de programar dentro do banco de dados.
+
+Ele permite automatizar tarefas, criar regras e facilitar o dia a dia de quem trabalha com dados.
+
+Não é necessário ser programador para começar a usar – com exemplos simples, qualquer pessoa pode aprender!
+
