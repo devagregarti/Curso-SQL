@@ -1,15 +1,141 @@
-🧹 10. Gerenciar partições
-Excluir uma partição inteira:
+Aula: Gerenciando Partições no PostgreSQL
+✅ O que significa “gerenciar partições”?
+É o processo de:
+
+Adicionar novas partições
+
+Remover partições
+
+Alterar partições existentes
+
+Verificar se os dados estão sendo distribuídos corretamente
+
+Fazer manutenção preventiva na estrutura da tabela particionada
+
+📌 Lembrando: o que é uma partição?
+É uma subdivisão da tabela principal
+
+Pode ser criada com base em valores fixos (LIST), intervalos (RANGE) ou distribuição automática (HASH)
+
+O PostgreSQL coloca os dados na partição certa, conforme a regra definida
+
+🧱 1. Adicionando novas partições
+▶️ Para tabelas com particionamento por RANGE:
+sql
+Copy
+Edit
+CREATE TABLE vendas_2025 PARTITION OF vendas
+FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
+Você está dizendo: tudo de 2025 vai nessa partição
+
+Importante quando um novo ano começa
+
+▶️ Para tabelas com particionamento por LIST:
+sql
+Copy
+Edit
+CREATE TABLE vendas_rn PARTITION OF vendas
+FOR VALUES IN ('RN');  -- Estado do Rio Grande do Norte
+Útil se a empresa começou a vender em um novo estado
+
+▶️ Para tabelas com particionamento por HASH:
+sql
+Copy
+Edit
+CREATE TABLE clientes_hash_4 PARTITION OF clientes
+FOR VALUES WITH (MODULUS 5, REMAINDER 4);
+Atenção: mudar o número de partições no HASH exige reorganizar as antigas — o PostgreSQL não faz isso sozinho
+
+🧹 2. Removendo uma partição
+Você pode remover uma partição se ela não for mais necessária.
 
 sql
 Copy
 Edit
-DROP TABLE vendas_2024;
-Ver as partições existentes:
+DROP TABLE vendas_2022;
+⚠️ Isso apaga todos os dados daquela partição!
+
+🧪 3. Verificando as partições existentes
+Para ver as partições de uma tabela:
 
 sql
 Copy
 Edit
-SELECT inhrelid::regclass AS particao
+SELECT relname AS particao
 FROM pg_inherits
+JOIN pg_class ON pg_inherits.inhrelid = pg_class.oid
 WHERE inhparent = 'vendas'::regclass;
+Lista os nomes das partições da tabela vendas
+
+✍️ 4. Verificando em qual partição os dados estão
+sql
+Copy
+Edit
+SELECT tableoid::regclass AS particao, *
+FROM vendas
+WHERE data_venda = '2023-10-15';
+tableoid::regclass mostra o nome real da partição de onde o dado veio
+
+🛠️ 5. Modificar uma partição (renomear, adicionar índice, etc.)
+🔁 Renomear uma partição:
+sql
+Copy
+Edit
+ALTER TABLE vendas_2023 RENAME TO vendas_ano_2023;
+➕ Criar um índice em uma partição específica:
+sql
+Copy
+Edit
+CREATE INDEX idx_data_venda_2023 ON vendas_2023 (data_venda);
+🧯 6. Criar uma partição DEFAULT (caso ainda não exista)
+Evita erro ao inserir dados que não se encaixam em nenhuma outra partição.
+
+sql
+Copy
+Edit
+CREATE TABLE vendas_outras PARTITION OF vendas DEFAULT;
+🚨 7. O que acontece se tentar inserir dados sem uma partição correta?
+Exemplo: inserindo um pedido com data de 2026, mas só há partições até 2025:
+
+sql
+Copy
+Edit
+INSERT INTO vendas (data_venda, cliente) VALUES ('2026-03-01', 'João');
+❌ Resultado: erro, a não ser que haja uma partição DEFAULT.
+
+🔁 8. Movendo dados de uma partição para outra (caso necessário)
+Não é automático, você precisa:
+
+Copiar os dados
+
+Inserir na nova partição
+
+Remover da antiga
+
+Exemplo:
+
+sql
+Copy
+Edit
+INSERT INTO vendas (data_venda, cliente)
+SELECT data_venda, cliente FROM vendas_2023
+WHERE data_venda >= '2024-01-01';
+
+DELETE FROM vendas_2023
+WHERE data_venda >= '2024-01-01';
+📌 Dica final
+Mantenha uma rotina de revisão da estrutura de partições:
+
+Verifique se há necessidade de criar novas
+
+Apague partições antigas só se tiver certeza de que não precisará mais dos dados
+
+Use índices locais nas partições para melhorar a performance
+
+🔚 Conclusão
+Gerenciar partições é parte essencial para manter a tabela organizada e rápida
+
+PostgreSQL dá bastante controle, mas exige atenção manual
+
+Bons hábitos de manutenção evitam erros futuros e mantêm o sistema saudável
+

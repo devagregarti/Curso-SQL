@@ -1,12 +1,114 @@
+Aula: Exemplo com Particionamento por LISTA (LIST) no PostgreSQL
+✅ O que é particionamento por LISTA?
+É quando a tabela é dividida em partes (partições) com base em valores específicos.
+
+Diferente do particionamento por faixa (RANGE), aqui você define os valores exatos que vão em cada partição.
+
+🧠 Quando usar?
+Quando os dados podem ser agrupados por uma categoria ou valor fixo.
+
+Exemplo: por estado, por tipo de produto, por status (ativo/inativo), por categoria, etc.
+
+🧱 Exemplo prático: pedidos por estado
+Vamos guardar pedidos feitos em diferentes estados do Brasil.
+
+1. Criando a tabela principal (particionada por LISTA)
+sql
+Copy
+Edit
 CREATE TABLE pedidos (
-    id SERIAL,
-    estado TEXT NOT NULL,
-    valor NUMERIC
+  id SERIAL PRIMARY KEY,
+  cliente TEXT NOT NULL,
+  estado TEXT NOT NULL
 ) PARTITION BY LIST (estado);
+Explicando:
 
+Estamos dizendo que a partição será feita com base no valor da coluna estado.
 
+Cada partição terá estados específicos (por exemplo, SP, RJ, MG...).
+
+2. Criando as partições
+sql
+Copy
+Edit
 CREATE TABLE pedidos_sp PARTITION OF pedidos
 FOR VALUES IN ('SP');
 
 CREATE TABLE pedidos_rj PARTITION OF pedidos
 FOR VALUES IN ('RJ');
+
+CREATE TABLE pedidos_mg PARTITION OF pedidos
+FOR VALUES IN ('MG');
+Observações:
+
+Cada partição aceita apenas os valores definidos.
+
+Se tentar inserir um estado diferente, vai dar erro (a menos que exista uma partição DEFAULT).
+
+3. (Opcional) Criar partição DEFAULT
+sql
+Copy
+Edit
+CREATE TABLE pedidos_outros PARTITION OF pedidos DEFAULT;
+Serve para receber os pedidos de estados que não estão nas partições principais.
+
+✍️ Inserindo dados
+sql
+Copy
+Edit
+INSERT INTO pedidos (cliente, estado) VALUES
+('João', 'SP'),
+('Maria', 'RJ'),
+('Carlos', 'MG'),
+('Fernanda', 'BA');  -- Vai para a partição DEFAULT
+🔍 Consultando os dados
+Consulta normal:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos;
+Consulta com filtro:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos WHERE estado = 'SP';
+Consulta por partição (opcional):
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos_sp;
+🧪 Verificando onde cada dado foi parar
+sql
+Copy
+Edit
+SELECT * FROM pedidos_rj;
+-- Deve retornar apenas a Maria
+
+SELECT * FROM pedidos_outros;
+-- Deve retornar a Fernanda (estado BA)
+⚠️ Cuidados
+Não pode repetir o mesmo valor em duas partições.
+
+O valor do campo usado (neste caso, estado) precisa existir na partição correta.
+
+Sem a partição DEFAULT, valores fora das listas definidas causam erro na inserção.
+
+📌 Quando usar LIST em vez de RANGE?
+Use LIST quando:
+
+Os valores são fixos e bem definidos.
+
+Você não precisa de intervalos (como datas ou números).
+
+Ex: estados, tipos, categorias, status.
+
+🔚 Conclusão
+O particionamento por LISTA é simples e muito útil para categorias com valores definidos.
+
+Ajuda a organizar melhor os dados e facilita buscas por grupos específicos.
+
+O PostgreSQL cuida de colocar cada registro na partição correta, desde que as regras estejam bem definidas.
+

@@ -1,13 +1,115 @@
-CREATE TABLE acessos (
-    id SERIAL,
-    usuario_id INT
-) PARTITION BY HASH (usuario_id);
+Aula: Exemplo com Particionamento por HASH no PostgreSQL
+✅ O que é particionamento por HASH?
+É quando a tabela é dividida em várias partes (partições), com base em um cálculo automático feito pelo banco.
+
+Esse cálculo usa uma função de hash (uma fórmula interna) sobre o valor de uma coluna.
+
+🧠 Quando usar HASH?
+Quando você tem muitos dados espalhados e quer distribuí-los de forma balanceada entre várias partições.
+
+Útil quando não dá para usar LIST ou RANGE, porque os valores são muito variados ou imprevisíveis.
+
+🧱 Exemplo prático: pedidos por CPF do cliente
+Vamos criar uma tabela de pedidos que será dividida com base no CPF do cliente (ou qualquer outro identificador único).
+
+1. Criando a tabela principal (com particionamento por HASH)
 sql
 Copy
 Edit
+CREATE TABLE pedidos (
+  id SERIAL PRIMARY KEY,
+  cliente TEXT NOT NULL,
+  cpf TEXT NOT NULL
+) PARTITION BY HASH (cpf);
+Explicando:
 
+A coluna cpf será usada para calcular em qual partição cada pedido vai ficar.
 
+O PostgreSQL faz esse cálculo automaticamente, usando o valor do cpf.
 
+2. Criando as partições
+No particionamento por HASH, precisamos dizer quantas partições teremos.
 
-CREATE TABLE acessos_p0 PARTITION OF acessos FOR VALUES WITH (MODULUS 4, REMAINDER 0);
-CREATE TABLE acessos_p1 PARTITION OF acessos FOR VALUES WITH (MODULUS 4, REMAINDER 1);
+Vamos criar 4 partições, por exemplo:
+
+sql
+Copy
+Edit
+CREATE TABLE pedidos_hash_0 PARTITION OF pedidos
+FOR VALUES WITH (MODULUS 4, REMAINDER 0);
+
+CREATE TABLE pedidos_hash_1 PARTITION OF pedidos
+FOR VALUES WITH (MODULUS 4, REMAINDER 1);
+
+CREATE TABLE pedidos_hash_2 PARTITION OF pedidos
+FOR VALUES WITH (MODULUS 4, REMAINDER 2);
+
+CREATE TABLE pedidos_hash_3 PARTITION OF pedidos
+FOR VALUES WITH (MODULUS 4, REMAINDER 3);
+Explicando os termos:
+
+MODULUS 4 = total de partições que vamos usar.
+
+REMAINDER = identifica cada partição.
+
+O PostgreSQL calcula: HASH(cpf) % 4, e o resultado define em qual partição o dado vai.
+
+✍️ Inserindo dados
+sql
+Copy
+Edit
+INSERT INTO pedidos (cliente, cpf) VALUES
+('João', '111.111.111-11'),
+('Maria', '222.222.222-22'),
+('Carlos', '333.333.333-33'),
+('Fernanda', '444.444.444-44');
+Você não precisa se preocupar com qual partição será usada — o PostgreSQL cuida disso automaticamente.
+
+🔍 Consultando os dados
+Consulta normal:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos;
+Consulta com filtro:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos WHERE cpf = '222.222.222-22';
+Consulta por partição (opcional):
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos_hash_2;
+🧠 Por que usar HASH?
+Quando não há uma ordem natural ou valores fixos nos dados.
+
+Quando você quer balancear o volume de dados entre partições.
+
+Quando os dados não se encaixam bem nos modelos de RANGE ou LIST.
+
+⚠️ Cuidados com particionamento por HASH
+Não dá para saber facilmente em qual partição está um determinado dado.
+
+É o PostgreSQL que decide, baseado no resultado do hash.
+
+Se mudar o número de partições, será necessário reorganizar os dados (isso não é automático).
+
+🧼 Boas práticas
+Use HASH quando:
+
+Os dados são muito variados.
+
+Não há uma lógica clara para dividir os dados por lista ou por intervalo.
+
+Você quer distribuir bem a carga de trabalho entre as partições.
+
+🔚 Conclusão
+O particionamento por HASH é automático e ajuda a manter boa performance com grandes volumes de dados.
+
+É simples de usar: você só define a coluna e o número de partições.
+
+Ótimo para situações em que você não pode prever os valores dos dados.

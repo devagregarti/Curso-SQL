@@ -1,2 +1,100 @@
-INSERT INTO vendas (data_venda, valor)
-VALUES ('2024-03-15', 200.00);
+✅ Relembrando: o que é uma tabela particionada?
+É uma tabela que foi dividida em partes menores chamadas partições.
+
+Cada partição armazena dados com base em uma regra (como data, região, etc).
+
+O PostgreSQL cuida de enviar cada dado para a partição correta automaticamente.
+
+📌 Como funciona a inserção de dados em tabelas particionadas?
+Você insere os dados na tabela principal, normalmente.
+
+O PostgreSQL detecta em qual partição o dado deve ir, de acordo com as regras que você criou.
+
+🧱 Exemplo prático
+1. Criando a tabela principal (por faixa de datas)
+sql
+Copy
+Edit
+CREATE TABLE pedidos (
+  id SERIAL PRIMARY KEY,
+  data_pedido DATE NOT NULL,
+  cliente TEXT NOT NULL
+) PARTITION BY RANGE (data_pedido);
+2. Criando as partições
+sql
+Copy
+Edit
+CREATE TABLE pedidos_2023 PARTITION OF pedidos
+FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+
+CREATE TABLE pedidos_2024 PARTITION OF pedidos
+FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+✍️ Inserindo dados
+Agora vamos inserir dois pedidos. Um feito em 2023 e outro em 2024:
+
+sql
+Copy
+Edit
+INSERT INTO pedidos (data_pedido, cliente) VALUES
+('2023-08-10', 'Carlos'),
+('2024-02-15', 'Ana');
+O PostgreSQL analisa a data e envia cada linha para a partição correta.
+
+🔍 Como verificar para onde o dado foi?
+Podemos consultar diretamente cada partição para ver onde o dado foi parar:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos_2023;
+-- Vai mostrar apenas o pedido do Carlos
+
+SELECT * FROM pedidos_2024;
+-- Vai mostrar apenas o pedido da Ana
+⚠️ Atenção: e se o dado não se encaixar em nenhuma partição?
+Se você tentar inserir uma data que não esteja coberta por nenhuma partição, o PostgreSQL vai dar erro.
+
+Exemplo:
+
+sql
+Copy
+Edit
+INSERT INTO pedidos (data_pedido, cliente)
+VALUES ('2025-03-01', 'Joana');
+💥 Erro: porque não existe uma partição para 2025.
+
+✅ Solução: criar uma partição default
+Para evitar erros quando um dado "não se encaixa", você pode criar uma partição padrão:
+
+sql
+Copy
+Edit
+CREATE TABLE pedidos_outras_datas PARTITION OF pedidos DEFAULT;
+Agora, se a data não pertencer a nenhuma faixa, ela será inserida na partição default.
+
+🛠️ Dicas práticas
+Crie partições suficientes para os dados que você espera receber.
+
+Use partições por ano, mês, ou outro critério lógico.
+
+Use a partição default para evitar falhas inesperadas.
+
+Sempre teste com alguns INSERTs antes de usar em produção.
+
+🤔 Posso inserir diretamente numa partição?
+Sim, mas não é o mais comum. Exemplo:
+
+sql
+Copy
+Edit
+INSERT INTO pedidos_2023 (data_pedido, cliente)
+VALUES ('2023-12-01', 'Bruna');
+⚠️ Cuidado: se a data não estiver dentro do intervalo da partição, vai dar erro.
+
+🔚 Conclusão
+Inserir dados em tabelas particionadas é quase igual a uma tabela normal.
+
+O PostgreSQL cuida da distribuição dos dados, desde que as partições estejam bem definidas.
+
+Partições ajudam a organizar melhor seus dados e a melhorar a performance do banco.
+

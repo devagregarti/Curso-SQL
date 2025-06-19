@@ -1,14 +1,98 @@
--- Criando a tabela
-CREATE TABLE vendas (
-    id SERIAL,
-    data_venda DATE NOT NULL,
-    valor NUMERIC,
-    PRIMARY KEY (id, data_venda)
-) PARTITION BY RANGE (data_venda);
+Aula: Criando uma Tabela Particionada no PostgreSQL
+✅ O que é uma tabela particionada?
+É uma tabela “normal” que é dividida automaticamente em partes menores chamadas de partições.
 
--- Criando a particao
-CREATE TABLE vendas_2024 PARTITION OF vendas
+Essas partes armazenam os dados de acordo com alguma regra que você define (ex: por ano, por estado, por categoria...).
+
+O usuário não precisa saber onde está o dado – ele consulta normalmente, e o PostgreSQL cuida do resto.
+
+🛠️ Passo a passo: como criar uma tabela particionada
+1. Criar a tabela principal (a tabela mãe)
+Essa tabela vai ser a base para todas as partições.
+
+Exemplo: queremos guardar pedidos de clientes, separados por ano.
+
+sql
+Copy
+Edit
+CREATE TABLE pedidos (
+  id SERIAL PRIMARY KEY,
+  data_pedido DATE NOT NULL,
+  cliente TEXT NOT NULL
+) PARTITION BY RANGE (data_pedido);
+Explicando o comando:
+
+id: identificador único do pedido.
+
+data_pedido: será usada para definir em qual partição o dado vai ficar.
+
+PARTITION BY RANGE (data_pedido): estamos dizendo que as partições vão ser baseadas em faixas de datas.
+
+2. Criar as partições (as tabelas filhas)
+Agora vamos criar as partições da tabela, ou seja, as partes que vão armazenar os dados de verdade.
+
+sql
+Copy
+Edit
+CREATE TABLE pedidos_2023 PARTITION OF pedidos
+FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+
+CREATE TABLE pedidos_2024 PARTITION OF pedidos
 FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+Explicando:
 
-CREATE TABLE vendas_2025 PARTITION OF vendas
-FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
+pedidos_2023 vai guardar apenas os pedidos feitos em 2023.
+
+pedidos_2024 vai guardar os pedidos de 2024.
+
+Você pode criar uma partição para cada ano, mês, região ou outro critério, dependendo da sua necessidade.
+
+🔍 Exemplo de inserção de dados
+Vamos inserir dois pedidos em anos diferentes:
+
+sql
+Copy
+Edit
+INSERT INTO pedidos (data_pedido, cliente) VALUES
+('2023-05-10', 'João'),
+('2024-03-22', 'Maria');
+O PostgreSQL entende em qual partição colocar cada linha com base na data.
+
+🧪 Verificando as partições
+Você pode verificar se os dados foram colocados corretamente:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos_2023;
+-- Deve mostrar apenas o pedido do João
+
+SELECT * FROM pedidos_2024;
+-- Deve mostrar apenas o pedido da Maria
+📌 Regras importantes ao criar partições
+As faixas não podem se sobrepor (ex: duas partições com o mesmo intervalo).
+
+Todos os dados precisam se encaixar em uma partição — senão, vai dar erro ao inserir.
+
+É comum criar uma partição especial chamada “default” para casos que não se encaixam em nenhuma regra. Exemplo:
+
+sql
+Copy
+Edit
+CREATE TABLE pedidos_outras_datas PARTITION OF pedidos DEFAULT;
+🧼 Dica prática
+Antes de criar partições, pense:
+
+Como meus dados vão crescer?
+
+Qual o critério mais lógico para separar? (por data? por região?)
+
+Quantas partições vão existir agora? E no futuro?
+
+🔚 Conclusão
+Criar uma tabela particionada no PostgreSQL não é difícil.
+
+É só criar a tabela principal com PARTITION BY, depois criar as partições com as regras de separação.
+
+Isso ajuda muito a performance e a organização do banco de dados, especialmente com tabelas grandes.
+

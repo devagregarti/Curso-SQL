@@ -1,1 +1,104 @@
-SELECT * FROM vendas WHERE data_venda BETWEEN '2024-01-01' AND '2024-12-31';
+Aula: Consultando Dados em Tabelas Particionadas no PostgreSQL
+✅ Relembrando: o que é uma tabela particionada?
+É uma tabela que foi dividida em partes menores chamadas de partições.
+
+O usuário consulta como se fosse uma única tabela.
+
+O PostgreSQL decide em qual partição procurar os dados.
+
+🔍 Consultar dados é igual ao que já vimos
+Você consulta a tabela principal normalmente, usando comandos SELECT.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos;
+Mesmo que os dados estejam divididos em pedidos_2023, pedidos_2024, etc., você não precisa se preocupar:
+👉 O PostgreSQL traz os resultados de todas as partições automaticamente.
+
+🎯 Consultas com filtros (WHERE)
+Usar filtros ajuda o PostgreSQL a procurar somente nas partições necessárias, o que pode deixar a busca mais rápida.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos
+WHERE data_pedido BETWEEN '2023-01-01' AND '2023-12-31';
+O PostgreSQL verifica a regra de particionamento (por data) e acessa apenas a partição de 2023.
+
+Isso se chama "Pruning de Partições" (partition pruning).
+
+📦 Consultar diretamente uma partição (opcional)
+Você também pode consultar uma partição específica, se quiser:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos_2023;
+Isso é útil se você sabe exatamente em qual partição o dado está.
+
+Mas em geral, não é necessário — o PostgreSQL cuida disso para você.
+
+🧠 Exemplos simples com WHERE
+sql
+Copy
+Edit
+-- Buscar todos os pedidos do cliente João
+SELECT * FROM pedidos
+WHERE cliente = 'João';
+
+-- Buscar pedidos feitos em fevereiro de 2024
+SELECT * FROM pedidos
+WHERE data_pedido BETWEEN '2024-02-01' AND '2024-02-29';
+Em ambos os casos, o PostgreSQL analisa o filtro e usa só as partições relevantes.
+
+🧪 Exemplo prático completo
+Vamos imaginar que temos essas partições:
+
+pedidos_2023 para pedidos de 2023
+
+pedidos_2024 para pedidos de 2024
+
+E os seguintes dados:
+
+sql
+Copy
+Edit
+INSERT INTO pedidos (data_pedido, cliente) VALUES
+('2023-05-10', 'Lucas'),
+('2024-03-20', 'Fernanda');
+Agora, se rodarmos:
+
+sql
+Copy
+Edit
+SELECT * FROM pedidos WHERE cliente = 'Fernanda';
+O PostgreSQL vai direto na partição de 2024 — sem precisar ler os dados de 2023.
+
+📈 Usando funções de agregação com partições
+Você pode usar COUNT, AVG, SUM, etc., da mesma forma que em tabelas normais:
+
+sql
+Copy
+Edit
+-- Contar quantos pedidos foram feitos em 2024
+SELECT COUNT(*) FROM pedidos
+WHERE data_pedido BETWEEN '2024-01-01' AND '2024-12-31';
+🧼 Boas práticas
+Sempre use WHERE com colunas que fazem parte do particionamento (ex: data), para acelerar a consulta.
+
+Use índices nas partições se precisar melhorar ainda mais a performance.
+
+Evite consultar partições diretamente se não for necessário — mantenha tudo centralizado pela tabela principal.
+
+🔚 Conclusão
+Consultar dados em tabelas particionadas é igual a consultar uma tabela normal.
+
+O PostgreSQL cuida de acessar só as partições certas — desde que os filtros sejam bem usados.
+
+Usar bem o WHERE ajuda a deixar as buscas mais rápidas e eficientes.
+
