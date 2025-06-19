@@ -1,1 +1,101 @@
-Melhorar
+🧮 O que são variáveis no PL/pgSQL?
+🧠 Conceito simples
+Variáveis são espaços na memória usados para guardar valores temporários enquanto o código está rodando.
+
+Podemos dar nomes aos valores, usá-los, somá-los, alterá-los, comparar, etc.
+
+É como guardar números ou palavras em caixinhas com nome.
+
+📝 Exemplo de uso de variável
+sql
+Copy
+Edit
+DECLARE
+  nome_cliente TEXT;
+BEGIN
+  nome_cliente := 'Maria';
+  RAISE NOTICE 'Cliente: %', nome_cliente;
+END;
+DECLARE: parte onde declaramos (criamos) as variáveis.
+
+nome_cliente TEXT: criamos uma variável chamada nome_cliente que guarda texto.
+
+:= 'Maria': atribuímos o valor 'Maria' à variável.
+
+RAISE NOTICE: imprime algo na tela (como um aviso).
+
+📦 Tipos de variáveis mais usados
+Tipo	Quando usar	Exemplo de valor
+INTEGER	Para números inteiros	1, 100, -25
+NUMERIC	Para números com casas decimais	10.5, 99.99
+TEXT	Para textos e palavras	'João', 'Produto A'
+BOOLEAN	Para verdadeiro ou falso	TRUE, FALSE
+DATE	Para datas	'2025-06-19'
+TIMESTAMP	Para data e hora completas	'2025-06-19 14:30'
+
+✅ Como declarar variáveis corretamente
+sql
+Copy
+Edit
+DECLARE
+  idade INTEGER;
+  nome TEXT;
+  valor_total NUMERIC(10,2);
+  ativo BOOLEAN := TRUE;
+Sempre declare variáveis antes do bloco BEGIN.
+
+Pode ou não atribuir um valor inicial.
+
+Use nomes que façam sentido (ex: idade, valor_total, cliente_nome).
+
+⚠️ Erros comuns (e como evitar)
+Erro	Correto
+Usar variável sem declarar	Sempre use DECLARE antes do BEGIN
+Nome genérico demais	Prefira preco_unitario em vez de x
+Esquecer o tipo	Ex: total precisa de um tipo como NUMERIC
+Confundir = com :=	Use := para atribuir valor, não =
+
+🧹 Boas práticas com variáveis
+✅ Use nomes claros e descritivos (evite a, b, var1, etc).
+
+✅ Declare apenas o que vai usar.
+
+✅ Use um padrão de nomes: ex. tudo minúsculo e com _ para separar palavras.
+
+❌ Evite reusar variáveis para coisas diferentes dentro da mesma função.
+
+✅ Se possível, inicie a variável com um valor (isso ajuda a evitar erros).
+
+🧠 Dica extra: usar %TYPE para herdar tipo de uma tabela
+sql
+Copy
+Edit
+DECLARE
+  nome_cliente clientes.nome%TYPE;
+Isso faz com que a variável tenha o mesmo tipo da coluna nome da tabela clientes.
+
+Muito útil para manter o código coerente e à prova de erros.
+
+🧾 Exemplo completo com variáveis
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION saudacao(nome TEXT)
+RETURNS TEXT AS $$
+DECLARE
+  mensagem TEXT;
+BEGIN
+  mensagem := 'Olá, ' || nome || '! Bem-vindo!';
+  RETURN mensagem;
+END;
+$$ LANGUAGE plpgsql;
+✅ Resumo da aula
+Variáveis guardam valores temporários durante a execução de uma função.
+
+Precisam ser declaradas antes de serem usadas.
+
+Devem ter nomes claros e tipos corretos.
+
+Boas práticas ajudam a manter o código limpo e sem erros.
+
+É possível usar tipos padrão (INTEGER, TEXT) ou herdar de uma tabela usando %TYPE.

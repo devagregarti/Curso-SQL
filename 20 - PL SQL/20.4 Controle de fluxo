@@ -1,1 +1,114 @@
-Melhorar
+🔁 Controle de Fluxo no PL/pgSQL
+✅ O que é "controle de fluxo"?
+Controle de fluxo é a forma de tomar decisões ou repetir ações dentro de um programa.
+
+É o que permite ao código escolher caminhos diferentes dependendo de uma condição (como "se isso for verdade, faça aquilo").
+
+Também permite repetir tarefas com laços de repetição, como contar ou verificar listas.
+
+🧩 Tipos de controle de fluxo no PL/pgSQL
+IF / ELSIF / ELSE
+
+CASE
+
+LOOP / WHILE / FOR
+
+1️⃣ IF / ELSIF / ELSE – Usado para decisões simples
+sql
+Copy
+Edit
+IF idade >= 18 THEN
+  RAISE NOTICE 'Maior de idade';
+ELSIF idade >= 13 THEN
+  RAISE NOTICE 'Adolescente';
+ELSE
+  RAISE NOTICE 'Criança';
+END IF;
+IF: testa uma condição.
+
+THEN: o que fazer se a condição for verdadeira.
+
+ELSIF: outra condição opcional (pode ter várias).
+
+ELSE: o que fazer se nenhuma condição for verdadeira.
+
+END IF: final do bloco.
+
+2️⃣ CASE – Quando há muitas opções
+sql
+Copy
+Edit
+CASE nivel
+  WHEN 1 THEN RAISE NOTICE 'Iniciante';
+  WHEN 2 THEN RAISE NOTICE 'Intermediário';
+  WHEN 3 THEN RAISE NOTICE 'Avançado';
+  ELSE RAISE NOTICE 'Nível desconhecido';
+END CASE;
+Usado para várias comparações com o mesmo valor.
+
+Mais organizado do que vários IFs seguidos.
+
+3️⃣ LOOPs – Para repetir ações
+🔁 LOOP simples (infinito, precisa de EXIT)
+sql
+Copy
+Edit
+LOOP
+  RAISE NOTICE 'Executando...';
+  EXIT; -- sai do loop imediatamente
+END LOOP;
+🔄 WHILE – Repete enquanto a condição for verdadeira
+sql
+Copy
+Edit
+WHILE contador <= 5 LOOP
+  RAISE NOTICE 'Contador: %', contador;
+  contador := contador + 1;
+END LOOP;
+🔢 FOR – Para repetir um número fixo de vezes
+sql
+Copy
+Edit
+FOR i IN 1..3 LOOP
+  RAISE NOTICE 'Número: %', i;
+END LOOP;
+⚠️ Cuidados e boas práticas
+Sempre use EXIT ou uma condição clara para parar o LOOP, senão ele roda para sempre.
+
+Use nomes de variáveis claros, como contador, indice, valor_total.
+
+Evite lógica muito complexa em um único bloco. Divida se necessário.
+
+Testar bem as condições evita comportamentos inesperados (ex: loops infinitos).
+
+🧠 Exemplo prático completo
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION verificar_idade(idade INTEGER)
+RETURNS TEXT AS $$
+DECLARE
+  resultado TEXT;
+BEGIN
+  IF idade >= 18 THEN
+    resultado := 'Maior de idade';
+  ELSE
+    resultado := 'Menor de idade';
+  END IF;
+
+  RETURN resultado;
+END;
+$$ LANGUAGE plpgsql;
+sql
+Copy
+Edit
+-- Como usar:
+SELECT verificar_idade(20); -- Resultado: 'Maior de idade'
+✅ Resumo da aula
+Controle de fluxo permite tomar decisões e repetir ações no código.
+
+Use IF, CASE, LOOP, WHILE e FOR para controlar o que acontece e quando.
+
+Muito útil para deixar o código inteligente e automatizado.
+
+Boas práticas evitam erros e deixam o código mais fácil de entender.

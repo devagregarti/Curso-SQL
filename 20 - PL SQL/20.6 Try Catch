@@ -1,1 +1,89 @@
-Melhorar
+🧯 Tratamento de Erros (TRY e CATCH) no PL/pgSQL
+❓ O que é o TRY / CATCH?
+TRY e CATCH são estruturas usadas para tratar erros que podem acontecer no meio do código.
+
+No PostgreSQL (PL/pgSQL), o nome correto da estrutura é:
+BEGIN ... EXCEPTION ... END
+(funciona como um TRY/CATCH).
+
+💡 Por que usar?
+Para evitar que o código quebre quando algo dá errado.
+
+Permite mostrar uma mensagem amigável ou tomar uma ação alternativa.
+
+Muito útil ao lidar com dados que podem estar errados ou operações que podem falhar.
+
+🧱 Estrutura básica do tratamento de erro
+sql
+Copy
+Edit
+BEGIN
+  -- Código que pode causar erro
+EXCEPTION
+  WHEN tipo_do_erro THEN
+    -- O que fazer se o erro acontecer
+END;
+🧪 Exemplo simples
+sql
+Copy
+Edit
+DO $$
+BEGIN
+  -- Vamos dividir por zero (erro!)
+  RAISE NOTICE 'Resultado: %', 10 / 0;
+EXCEPTION
+  WHEN division_by_zero THEN
+    RAISE NOTICE 'Erro: tentativa de dividir por zero!';
+END;
+$$;
+O código tenta dividir 10 por 0 → isso causa erro.
+
+Mas o erro é tratado, e o código mostra uma mensagem controlada.
+
+📋 Erros comuns que podem ser tratados
+Tipo do erro	Quando acontece
+division_by_zero	Divisão por zero
+unique_violation	Inserção duplicada em coluna única
+foreign_key_violation	Violação de chave estrangeira
+undefined_column	Coluna não existe
+others	Qualquer outro erro não tratado acima
+
+🔄 Exemplo com múltiplos erros
+sql
+Copy
+Edit
+DO $$
+BEGIN
+  INSERT INTO clientes(id, nome) VALUES (1, 'Ana');
+  -- Tenta inserir o mesmo ID novamente
+  INSERT INTO clientes(id, nome) VALUES (1, 'João');
+EXCEPTION
+  WHEN unique_violation THEN
+    RAISE NOTICE 'Erro: ID duplicado!';
+  WHEN others THEN
+    RAISE NOTICE 'Outro erro aconteceu!';
+END;
+$$;
+🧠 Dica: sempre que possível, trate erros previsíveis
+Erros comuns devem ser tratados com nomes específicos (ex: division_by_zero).
+
+Use WHEN others THEN como último caso, para pegar erros inesperados.
+
+⚠️ Boas práticas no tratamento de erros
+✅ Use mensagens claras no RAISE NOTICE, para facilitar o entendimento.
+
+✅ Não esconda erros sérios – registre ou trate de forma adequada.
+
+❌ Evite deixar o bloco EXCEPTION vazio (sem ação nenhuma).
+
+✅ Mantenha o código indentado e organizado para facilitar a leitura.
+
+✅ Resumo da aula
+O bloco BEGIN ... EXCEPTION ... END é o equivalente ao TRY / CATCH.
+
+Ele permite capturar e tratar erros de forma controlada.
+
+Use isso para evitar que o código pare de funcionar com erros simples.
+
+Sempre trate os erros de forma clara e objetiva.
+

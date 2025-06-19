@@ -1,1 +1,87 @@
-melhored
+🔄 RETURN QUERY no PL/pgSQL
+1. O que é o RETURN QUERY?
+RETURN QUERY é uma forma de uma função em PL/pgSQL devolver o resultado de uma consulta (SELECT) para quem chamou a função.
+
+Permite que a função retorne várias linhas e colunas ao invés de um único valor.
+
+Usado principalmente em funções que retornam tabelas ou conjuntos de dados.
+
+2. Quando usar RETURN QUERY?
+Quando você quer que a função retorne uma lista de registros (várias linhas).
+
+Útil para encapsular consultas complexas em funções.
+
+Ajuda a organizar e reaproveitar consultas SQL dentro de funções.
+
+3. Como funciona na prática?
+Dentro da função, você escreve:
+
+plpgsql
+Copy
+Edit
+RETURN QUERY
+SELECT * FROM tabela WHERE condição;
+Isso faz a função enviar o resultado da consulta para fora.
+
+4. Estrutura básica de uma função com RETURN QUERY
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION buscar_clientes_ativos()
+RETURNS TABLE(id INT, nome TEXT, idade INT) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT id, nome, idade
+  FROM clientes
+  WHERE ativo = TRUE;
+END;
+$$ LANGUAGE plpgsql;
+A função retorna uma tabela com colunas id, nome e idade.
+
+A consulta dentro do RETURN QUERY seleciona apenas clientes ativos.
+
+5. Como usar essa função
+sql
+Copy
+Edit
+SELECT * FROM buscar_clientes_ativos();
+Essa consulta retorna todos os clientes ativos usando a função.
+
+6. Vantagens do RETURN QUERY
+Facilita o reuso de consultas SQL dentro de funções.
+
+Permite combinar lógica procedural com consultas que retornam dados.
+
+Dá mais organização para códigos que precisam retornar vários resultados.
+
+7. Observações importantes
+A função deve declarar que retorna uma tabela (RETURNS TABLE) ou um setof registros.
+
+Pode usar RETURN QUERY várias vezes dentro da mesma função para adicionar resultados.
+
+Depois de RETURN QUERY, você pode colocar qualquer comando SELECT válido.
+
+8. Exemplo com múltiplos RETURN QUERY
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION buscar_clientes_por_idade()
+RETURNS TABLE(id INT, nome TEXT, idade INT) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT id, nome, idade FROM clientes WHERE idade < 30;
+
+  RETURN QUERY
+  SELECT id, nome, idade FROM clientes WHERE idade >= 30;
+END;
+$$ LANGUAGE plpgsql;
+Retorna primeiro clientes jovens, depois clientes mais velhos.
+
+Os resultados são concatenados na saída da função.
+
+9. Resumo rápido
+Conceito	Descrição
+RETURN QUERY	Retorna o resultado de uma consulta dentro da função
+Usado para	Funções que precisam devolver várias linhas e colunas
+Retorno da função	Declaração RETURNS TABLE ou RETURNS SETOF
+Vantagem	Organiza consultas e lógica em um único lugar

@@ -1,1 +1,79 @@
-Melhore
+💾 Manipulação de Dados: INSERT, UPDATE e DELETE dentro de funções no PL/pgSQL
+1. O que são INSERT, UPDATE e DELETE?
+INSERT: serve para inserir novos dados em uma tabela.
+
+UPDATE: serve para alterar dados existentes em uma tabela.
+
+DELETE: serve para remover dados de uma tabela.
+
+2. Por que usar dentro de uma função?
+Permite automatizar operações complexas que envolvem inserção, alteração e exclusão.
+
+Você pode executar vários comandos juntos de forma organizada.
+
+Facilita reutilizar código para manipulação de dados.
+
+Ajuda a manter regras de negócio dentro do banco, tornando seu sistema mais seguro.
+
+3. Estrutura básica de uma função com INSERT, UPDATE e DELETE
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION exemplo_funcao()
+RETURNS VOID AS $$
+BEGIN
+  -- Inserir dado
+  INSERT INTO tabela_exemplo (coluna1, coluna2) VALUES ('valor1', 'valor2');
+
+  -- Atualizar dado
+  UPDATE tabela_exemplo SET coluna2 = 'novo_valor' WHERE coluna1 = 'valor1';
+
+  -- Deletar dado
+  DELETE FROM tabela_exemplo WHERE coluna1 = 'valor_para_deletar';
+END;
+$$ LANGUAGE plpgsql;
+4. Exemplo prático
+Imagine uma tabela clientes:
+
+id	nome	idade
+1	Ana	30
+2	João	25
+
+Função que insere, atualiza e deleta:
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION manipula_clientes()
+RETURNS VOID AS $$
+BEGIN
+  -- Inserir um cliente novo
+  INSERT INTO clientes (id, nome, idade) VALUES (3, 'Maria', 28);
+
+  -- Atualizar a idade do cliente João
+  UPDATE clientes SET idade = 26 WHERE nome = 'João';
+
+  -- Deletar o cliente Ana
+  DELETE FROM clientes WHERE nome = 'Ana';
+END;
+$$ LANGUAGE plpgsql;
+5. Como executar a função
+sql
+Copy
+Edit
+SELECT manipula_clientes();
+Isso vai rodar todas as operações: inserir Maria, atualizar João e deletar Ana.
+
+6. Dicas importantes ao usar esses comandos em funções
+Use BEGIN ... EXCEPTION ... END para tratar erros (evitar que a função pare se algo der errado).
+
+Sempre cheque as condições no WHERE para evitar deletar ou atualizar dados errados.
+
+Mantenha a função simples e clara para facilitar a manutenção.
+
+Evite fazer operações muito pesadas dentro de uma única função.
+
+7. Resumo rápido
+Comando	O que faz	Exemplo de uso dentro da função
+INSERT	Adiciona dados novos	INSERT INTO clientes ...
+UPDATE	Modifica dados existentes	UPDATE clientes SET ... WHERE ...
+DELETE	Remove dados da tabela	DELETE FROM clientes WHERE ...

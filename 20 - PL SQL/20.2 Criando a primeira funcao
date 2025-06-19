@@ -1,1 +1,69 @@
-Melhorar
+🛠️ Criando o primeiro PL/pgSQL (PostgreSQL)
+✅ O que vamos aprender nesta aula
+O que é uma função no PostgreSQL.
+
+Como escrever o primeiro código PL/pgSQL.
+
+Criar um exemplo simples e útil, fácil de entender mesmo sem experiência em programação.
+
+📌 O que é uma função no banco de dados?
+Uma função é um bloco de código que executa uma tarefa específica.
+
+É como uma receita de bolo: você dá os ingredientes (dados) e ela entrega o resultado (resposta).
+
+No PostgreSQL, funções podem ser escritas em PL/pgSQL, a linguagem procedural do sistema.
+
+🧪 Nosso primeiro exemplo – função que soma dois números
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION somar(a INTEGER, b INTEGER)
+RETURNS INTEGER AS $$
+BEGIN
+  RETURN a + b;
+END;
+$$ LANGUAGE plpgsql;
+🧾 Explicando o código, passo a passo
+CREATE OR REPLACE FUNCTION: cria a função (ou substitui, se ela já existir).
+
+somar: é o nome da função.
+
+(a INTEGER, b INTEGER): são os dois números que a função vai receber.
+
+RETURNS INTEGER: o resultado da função será um número inteiro.
+
+BEGIN ... END;: é o bloco principal onde a lógica acontece.
+
+RETURN a + b;: devolve a soma dos dois números.
+
+LANGUAGE plpgsql: indica que usamos a linguagem PL/pgSQL.
+
+▶️ Como usar a função depois de criada
+sql
+Copy
+Edit
+SELECT somar(3, 5);
+-- Resultado: 8
+🧠 Por que isso é útil?
+Mesmo um exemplo simples como esse já mostra o potencial do PL/pgSQL.
+
+Podemos criar funções para automatizar tarefas, calcular valores, verificar condições, etc.
+
+Isso facilita muito a vida de quem trabalha com dados, mesmo sem ser programador.
+
+💡 Dica prática
+Você pode adaptar esse exemplo para tarefas do dia a dia, como:
+
+Calcular desconto em uma compra.
+
+Verificar se um número está acima de um limite.
+
+Converter temperatura de Celsius para Fahrenheit.
+
+✅ Resumo da aula
+Criamos nossa primeira função usando PL/pgSQL no PostgreSQL.
+
+Entendemos o que cada parte do código faz.
+
+Vimos como funções podem simplificar e automatizar tarefas com dados.
+

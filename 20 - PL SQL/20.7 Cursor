@@ -1,1 +1,113 @@
-Melhore
+🧭 Cursores (Cursors) no PL/pgSQL
+✅ O que é um cursor?
+Um cursor é uma ferramenta usada para percorrer linha por linha o resultado de uma consulta (SELECT).
+
+Ele é como um marcador que vai passando por cada linha de uma tabela, uma de cada vez.
+
+Muito útil quando você precisa processar cada linha separadamente, de forma controlada.
+
+🧠 Exemplo do mundo real
+Imagine que você tem uma lista de nomes e quer enviar uma mensagem personalizada para cada pessoa.
+O cursor permite pegar um nome por vez e executar uma ação.
+
+🎯 Quando usar cursores?
+Quando você precisa ler e processar várias linhas, uma por uma.
+
+Quando a lógica depende do valor de cada linha individualmente.
+
+Quando loops simples não são suficientes, por exemplo:
+
+Enviar um e-mail por cliente.
+
+Calcular valores personalizados por item.
+
+Executar regras diferentes para cada linha.
+
+⚠️ Quando não usar?
+Se você pode resolver tudo com um SELECT, UPDATE, ou JOIN, evite cursores.
+
+Cursores são mais lentos que operações em lote.
+
+Use apenas quando for necessário controlar o processamento linha a linha.
+
+🧱 Como funciona um cursor?
+Declarar o cursor com uma consulta.
+
+Abrir o cursor (abrir a “porta” para a consulta).
+
+Buscar (FETCH) a próxima linha.
+
+Usar os dados da linha buscada.
+
+Fechar o cursor no final.
+
+🧪 Exemplo simples de cursor
+sql
+Copy
+Edit
+DO $$
+DECLARE
+  cliente_nome TEXT;
+  meu_cursor CURSOR FOR SELECT nome FROM clientes;
+BEGIN
+  OPEN meu_cursor;
+
+  LOOP
+    FETCH meu_cursor INTO cliente_nome;
+    EXIT WHEN NOT FOUND;
+
+    RAISE NOTICE 'Nome do cliente: %', cliente_nome;
+  END LOOP;
+
+  CLOSE meu_cursor;
+END;
+$$;
+🔍 O que acontece nesse exemplo:
+CURSOR FOR SELECT → define a consulta que será percorrida.
+
+OPEN → inicia o cursor.
+
+FETCH INTO → pega uma linha e coloca na variável cliente_nome.
+
+EXIT WHEN NOT FOUND → para o loop quando não houver mais linhas.
+
+CLOSE → fecha o cursor.
+
+🔁 Cursor + FOR LOOP (forma simplificada)
+O PostgreSQL permite um jeito mais simples com FOR record IN cursor:
+
+sql
+Copy
+Edit
+DO $$
+DECLARE
+  cliente RECORD;
+BEGIN
+  FOR cliente IN SELECT nome FROM clientes LOOP
+    RAISE NOTICE 'Cliente: %', cliente.nome;
+  END LOOP;
+END;
+$$;
+Mais limpo e direto.
+
+Útil quando não é necessário controlar manualmente o cursor.
+
+🎯 Por que usar cursores?
+Permite controle total sobre o processamento das linhas.
+
+Facilita aplicar regras específicas para cada linha.
+
+Boa opção quando outras abordagens são complexas ou limitadas.
+
+✅ Resumo da aula
+Cursores servem para percorrer resultado de consultas linha por linha.
+
+São úteis quando o processamento depende de cada linha individualmente.
+
+Use com cuidado: cursores são poderosos, mas podem ser lentos.
+
+No PostgreSQL, podemos usar:
+
+A versão completa com OPEN, FETCH, CLOSE.
+
+Ou uma versão simplificada com FOR ... IN SELECT.

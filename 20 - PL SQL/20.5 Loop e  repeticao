@@ -1,1 +1,127 @@
-Melhorar
+🔁 Estruturas de Repetição no PL/pgSQL
+✅ O que são estruturas de repetição (loops)?
+São comandos que permitem repetir uma ou mais ações várias vezes.
+
+Muito úteis para automatizar tarefas que precisam ser feitas repetidamente.
+
+Exemplo do dia a dia: contar de 1 a 10, verificar vários itens de uma lista, ou repetir uma mensagem.
+
+📦 Tipos de loops no PL/pgSQL
+LOOP (loop infinito, precisa de EXIT para parar)
+
+WHILE (repete enquanto a condição for verdadeira)
+
+FOR (repete um número fixo de vezes)
+
+1️⃣ LOOP – Repetição infinita (usa EXIT para sair)
+sql
+Copy
+Edit
+DECLARE
+  contador INTEGER := 1;
+BEGIN
+  LOOP
+    RAISE NOTICE 'Contador: %', contador;
+    contador := contador + 1;
+    
+    -- Sai do loop quando chegar em 5
+    EXIT WHEN contador > 5;
+  END LOOP;
+END;
+Útil quando não sabemos quantas vezes algo será repetido.
+
+IMPORTANTE: sempre tenha um EXIT para evitar loops infinitos.
+
+2️⃣ WHILE – Enquanto uma condição for verdadeira
+sql
+Copy
+Edit
+DECLARE
+  numero INTEGER := 1;
+BEGIN
+  WHILE numero <= 3 LOOP
+    RAISE NOTICE 'Número: %', numero;
+    numero := numero + 1;
+  END LOOP;
+END;
+Usado quando queremos repetir até uma condição deixar de ser verdadeira.
+
+A condição é verificada antes de cada repetição.
+
+3️⃣ FOR – Repetição com número fixo de vezes
+sql
+Copy
+Edit
+BEGIN
+  FOR i IN 1..4 LOOP
+    RAISE NOTICE 'Valor de i: %', i;
+  END LOOP;
+END;
+A mais simples e comum para contar de 1 até um número específico.
+
+i IN 1..4: significa que i vai de 1 até 4.
+
+🔁 FOR REVERSE – Contagem regressiva
+sql
+Copy
+Edit
+BEGIN
+  FOR i IN REVERSE 5..1 LOOP
+    RAISE NOTICE 'Contagem: %', i;
+  END LOOP;
+END;
+Conta de trás para frente: 5, 4, 3, 2, 1.
+
+Muito útil em contagens regressivas ou checagens ao contrário.
+
+🎯 Onde usar loops na prática?
+Processar todos os clientes de uma lista.
+
+Verificar várias linhas de uma tabela.
+
+Criar relatórios com somas ou médias.
+
+Enviar mensagens automáticas para cada item.
+
+⚠️ Boas práticas com loops
+✅ Sempre tenha uma condição clara de parada (EXIT, limite, etc).
+
+✅ Use nomes de variáveis claros como contador, i, cliente_id.
+
+❌ Evite repetir ações pesadas demais dentro do loop.
+
+✅ Mantenha o código organizado e indentado.
+
+✅ Teste bem os loops para evitar erros como loop infinito.
+
+🧠 Exemplo prático com FOR
+sql
+Copy
+Edit
+CREATE OR REPLACE FUNCTION listar_nomes()
+RETURNS VOID AS $$
+DECLARE
+  nome_cliente TEXT;
+BEGIN
+  FOR nome_cliente IN SELECT nome FROM clientes LOOP
+    RAISE NOTICE 'Cliente: %', nome_cliente;
+  END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+Este exemplo pega todos os nomes da tabela clientes e mostra um por um.
+
+Ideal para mostrar como loops podem acessar tabelas do banco de dados.
+
+✅ Resumo da aula
+Loops servem para repetir ações automaticamente.
+
+Você pode usar:
+
+LOOP → repetição geral com EXIT
+
+WHILE → enquanto a condição for verdadeira
+
+FOR → para um número fixo de repetições
+
+Loops tornam o código mais inteligente e eficiente.
+
