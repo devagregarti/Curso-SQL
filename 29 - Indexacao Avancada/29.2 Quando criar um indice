@@ -1,5 +1,0 @@
-2. Quando criar um índice?
-	•	Alta cardinalidade (muitos valores únicos)
-	•	Filtros frequentes em consultas
-	•	Ordenações (ORDER BY)
-	•	Colunas usadas em JOIN, WHERE, GROUP BY

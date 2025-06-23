@@ -1,6 +1,0 @@
-1. Revisão Rápida: O que é um índice?
-	•	Conceito de índice como “atalho”
-	•	Analogia com sumário de livro
-	•	Tipos básicos: B-tree (default)
-	•	Impacto na performance: leitura mais rápida, escrita mais lenta
-

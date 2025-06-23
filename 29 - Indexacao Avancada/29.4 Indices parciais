@@ -1,5 +1,0 @@
-	•	Índices com filtro condicional
-
-CREATE INDEX idx_clientes_ativos ON clientes(id) WHERE status = 'ativo';
-
-•	Exemplo: empresas com muitos clientes inativos que raramente são consultados
