@@ -1,25 +1,116 @@
-8. Tabelas particionadas ajudam na performance
-Já abordado antes, mas vale lembrar:
+🧩 Performance das Tabelas Particionadas no PostgreSQL
+📌 O que é uma tabela particionada?
+É uma tabela grande dividida em partes menores, chamadas de partições.
 
-Tabelas grandes com filtros de data (ex: logs) ficam muito mais rápidas com particionamento.
+Cada partição guarda um pedaço dos dados, geralmente com base em datas, faixas de valores ou categorias.
 
-🧠 9. Use LIMIT quando for possível
+🎯 Por que particionar uma tabela?
+Para melhorar a performance de consultas em tabelas grandes.
+
+Reduz o volume de dados que o banco precisa ler.
+
+Facilita a manutenção, arquivamento e até a exclusão de dados antigos.
+
+🧠 Exemplo simples
+Imagina uma tabela de vendas com milhões de registros ao longo dos anos.
+
+Sem particionar:
+
 sql
 Copy
 Edit
-SELECT * FROM produtos LIMIT 50;
-Evita retorno desnecessário de milhares de linhas.
+SELECT * FROM vendas WHERE ano = 2024;
+-- O banco precisa procurar em tudo!
+Com particionamento por ano:
 
-🛑 10. Evite subconsultas desnecessárias
 sql
 Copy
 Edit
--- Evite isso:
-SELECT * FROM (
-   SELECT * FROM pedidos
-) AS sub WHERE total > 100;
+-- O banco acessa só a partição do ano 2024
+SELECT * FROM vendas WHERE ano = 2024;
+Resultado: Muito mais rápido.
 
--- Prefira:
-SELECT * FROM pedidos WHERE total > 100;
+🏗️ Tipos comuns de particionamento
+Por intervalo (range)
+Ex: por data, ano, mês.
 
-d
+sql
+Copy
+Edit
+PARTITION BY RANGE (ano)
+Por lista (list)
+Ex: por estado, categoria.
+
+sql
+Copy
+Edit
+PARTITION BY LIST (estado)
+Por hash (menos comum para iniciantes)
+Divide de forma uniforme com base em um valor.
+
+⚙️ Como criar uma tabela particionada (exemplo por ano)
+sql
+Copy
+Edit
+CREATE TABLE vendas (
+  id SERIAL,
+  data DATE,
+  valor NUMERIC
+) PARTITION BY RANGE (data);
+Criando as partições:
+
+sql
+Copy
+Edit
+CREATE TABLE vendas_2023 PARTITION OF vendas
+  FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+
+CREATE TABLE vendas_2024 PARTITION OF vendas
+  FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+🚀 Como isso ajuda na performance?
+O PostgreSQL faz o que chamamos de "Pruning de partição".
+
+Ele ignora automaticamente as partições que não têm os dados que você está buscando.
+
+Isso reduz o tempo de leitura e aumenta a velocidade da consulta.
+
+🧪 Comparando sem e com particionamento
+Sem particionamento:
+A tabela tem 10 milhões de linhas.
+
+Você faz uma consulta por dados de janeiro de 2024.
+
+O banco verifica todas as 10 milhões de linhas.
+
+Com particionamento por mês:
+O banco olha apenas a partição de janeiro de 2024.
+
+Muito mais rápido e eficiente.
+
+✅ Boas práticas com tabelas particionadas
+Sempre que possível, use filtros (WHERE) que ajudem o banco a escolher a partição certa.
+
+sql
+Copy
+Edit
+SELECT * FROM vendas WHERE data >= '2024-01-01' AND data < '2024-02-01';
+Crie índices nas partições, se necessário.
+
+Automatize a criação de novas partições, se o sistema crescer muito.
+
+⚠️ Atenção
+Tabelas particionadas não são mágicas: elas ajudam, mas precisam ser bem configuradas.
+
+Consultas que não filtram pela coluna de particionamento podem perder a vantagem de performance.
+
+Em alguns casos, pode ser necessário ajustar o planejamento de consultas com EXPLAIN.
+
+📋 Resumo
+Tabelas particionadas dividem grandes tabelas em partes menores.
+
+Melhoram a performance ao evitar leitura desnecessária.
+
+São ideais para dados que crescem com o tempo (ex: logs, vendas, acessos).
+
+Devem ser usadas com boas práticas de filtragem e manutenção.
+

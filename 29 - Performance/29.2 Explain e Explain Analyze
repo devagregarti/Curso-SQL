@@ -1,7 +1,100 @@
-** Ferramentas para entender como uma query é executada.
+🔍 EXPLAIN e ANALYZE no PostgreSQL
+📌 Para que servem?
+Usamos os comandos EXPLAIN e ANALYZE para entender como o banco executa uma consulta.
+
+Eles ajudam a descobrir se a consulta está rápida ou lenta, e por quê.
+
+Isso é essencial para melhorar a performance.
+
+🛠️ O que é o EXPLAIN?
+O EXPLAIN mostra o plano de execução da consulta.
+
+Ele não executa a consulta de verdade — só mostra o que o PostgreSQL pretende fazer.
+
+Útil para prever se a consulta vai ser lenta antes de rodá-la.
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+EXPLAIN SELECT * FROM clientes WHERE cidade = 'Dublin';
+💬 O que ele mostra?
+Como o banco vai procurar os dados: linha por linha, por índice, etc.
+
+O "caminho" que ele vai seguir para buscar os dados.
+
+🧪 E o que é o EXPLAIN ANALYZE?
+O EXPLAIN ANALYZE vai executar de verdade a consulta.
+
+Ele mostra o tempo real gasto em cada etapa.
+
+É mais completo, porque mostra o que realmente aconteceu, não só o plano.
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+EXPLAIN ANALYZE SELECT * FROM clientes WHERE cidade = 'Dublin';
+💬 O que ele mostra?
+Quanto tempo levou cada parte da consulta.
+
+Quantas linhas foram lidas.
+
+Se o banco usou índice ou não.
+
+📈 Exemplo prático e simples
+Suponha que temos esta tabela:
+sql
+Copy
+Edit
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome TEXT,
+  cidade TEXT
+);
+Agora, com índice:
+sql
+Copy
+Edit
+CREATE INDEX idx_cidade ON clientes(cidade);
+Consulta:
+sql
+Copy
+Edit
+EXPLAIN ANALYZE SELECT * FROM clientes WHERE cidade = 'Dublin';
+Resultado (simplificado):
+sql
+Copy
+Edit
+Index Scan using idx_cidade on clientes ...
+Rows: 50   Time: 0.5ms
+✅ Isso significa que o banco usou o índice, leu 50 linhas e fez isso em 0.5 milissegundos.
+
+🔧 Quando usar EXPLAIN e ANALYZE?
+Quando a consulta está demorando.
+
+Quando você quer saber se um índice está sendo usado.
+
+Quando precisa otimizar a performance.
+
+⚠️ Dica importante
+Use EXPLAIN ANALYZE com cuidado em comandos que alteram dados (como UPDATE ou DELETE), porque ele executa de verdade.
+
+Se quiser testar sem alterar nada, use só EXPLAIN.
+
+✅ Resumo
+EXPLAIN mostra o plano da consulta (não executa).
+
+EXPLAIN ANALYZE mostra o que realmente aconteceu (executa e mede).
+
+Muito útil para entender e melhorar a performance das consultas.
+
+Se quiser, posso montar a próxima parte com como interpretar os números do plano de execução ou seguir para o próximo tópico do seu curso. Deseja isso?
 
 
-EXPLAIN ANALYZE SELECT * FROM clientes WHERE email = 'x@email.com';
 
 
-Mostra se está usando index scan, sequential scan, tempo de execução etc.
+
+
+
+

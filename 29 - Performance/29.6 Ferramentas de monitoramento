@@ -1,10 +1,141 @@
-🛠️ 11. Use Connection Pooling
-Ferramentas como PgBouncer reduzem sobrecarga de conexões frequentes.
+🛠️ Ferramentas de Monitoramento no PostgreSQL
+📌 Por que monitorar o banco de dados?
+Para saber como está o desempenho do banco.
 
-📈 12. Monitoramento
-Ferramentas úteis para acompanhar performance:
+Para identificar problemas antes que fiquem graves.
 
-pg_stat_statements (extensão para ver queries mais pesadas)
+Para analisar o uso de recursos, como memória, disco e CPU.
 
-pgAdmin, PostgreSQL Dashboard, Prometheus + Grafana
+Para entender quais consultas estão lentas ou travando o sistema.
+
+🔎 Monitoramento básico com comandos SQL
+1. Ver conexões ativas
+sql
+Copy
+Edit
+SELECT * FROM pg_stat_activity;
+Mostra todas as conexões ativas no momento.
+
+Você vê:
+
+Qual usuário está conectado.
+
+Qual consulta está rodando.
+
+Há quanto tempo ela está em execução.
+
+2. Ver estatísticas gerais das tabelas
+sql
+Copy
+Edit
+SELECT * FROM pg_stat_user_tables;
+Mostra:
+
+Quantas vezes cada tabela foi lida ou escrita.
+
+Quantos updates, inserts e deletes foram feitos.
+
+3. Ver índices e seu uso
+sql
+Copy
+Edit
+SELECT * FROM pg_stat_user_indexes;
+Indica se os índices estão sendo usados ou estão “parados”.
+
+Índices sem uso podem ser removidos para melhorar a performance.
+
+4. Ver uso de disco por tabela
+sql
+Copy
+Edit
+SELECT relname AS tabela,
+       pg_size_pretty(pg_total_relation_size(relid)) AS tamanho
+FROM pg_catalog.pg_statio_user_tables
+ORDER BY pg_total_relation_size(relid) DESC;
+Mostra quais tabelas estão ocupando mais espaço no disco.
+
+5. Ver consultas lentas em execução
+sql
+Copy
+Edit
+SELECT pid, now() - query_start AS duracao, query
+FROM pg_stat_activity
+WHERE state = 'active'
+ORDER BY duracao DESC;
+Útil para encontrar consultas que estão rodando há muito tempo.
+
+🖥️ Ferramentas gráficas para monitorar PostgreSQL
+1. pgAdmin
+Ferramenta oficial de administração do PostgreSQL.
+
+Mostra:
+
+Conexões, consultas ativas, estatísticas.
+
+Gráficos simples de uso de disco e índices.
+
+Fácil de usar, ideal para iniciantes.
+
+2. PgHero
+Interface web muito amigável.
+
+Mostra:
+
+Consultas lentas.
+
+Índices ineficientes.
+
+Conexões e cache.
+
+Muito usada para diagnósticos rápidos.
+
+3. pg_stat_statements
+Extensão oficial do PostgreSQL.
+
+Armazena estatísticas detalhadas das consultas.
+
+Mostra:
+
+Quais são as consultas mais executadas.
+
+Tempo médio de execução.
+
+Quantidade de leituras e escritas.
+
+Como ativar:
+No arquivo postgresql.conf, adicione:
+
+ini
+Copy
+Edit
+shared_preload_libraries = 'pg_stat_statements'
+Depois:
+
+sql
+Copy
+Edit
+CREATE EXTENSION pg_stat_statements;
+E para consultar:
+
+sql
+Copy
+Edit
+SELECT * FROM pg_stat_statements ORDER BY total_time DESC LIMIT 10;
+4. Prometheus + Grafana (para ambientes mais avançados)
+Prometheus coleta dados.
+
+Grafana exibe em gráficos interativos e bonitos.
+
+Usado em empresas e servidores com muitos bancos em produção.
+
+✅ Resumo
+Monitorar o banco é essencial para garantir boa performance e estabilidade.
+
+O PostgreSQL tem ferramentas internas e gráficas para isso.
+
+Comece com pg_stat_activity, pg_stat_user_tables e o pgAdmin.
+
+Com o tempo, explore pg_stat_statements, PgHero e até Grafana.
+
+Monitoramento é o que previne problemas, não só o que resolve.
 

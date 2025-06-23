@@ -1,9 +1,96 @@
-Possiveis problemas de performance
+🏁 Introdução à Performance em Bancos de Dados (PostgreSQL)
+📌 O que é performance em banco de dados?
+Performance é o desempenho do banco de dados: o quão rápido ele consegue responder às perguntas (consultas).
 
-Conhecimento chave -  Indices
+Um banco de dados com boa performance responde rápido e sem travar, mesmo com muitos dados.
 
-Índices aceleram leitura, mas podem deixar a escrita mais lenta (inserts/updates).
+🤔 Por que se preocupar com performance?
+Consultas lentas deixam o sistema devagar.
 
-Evite indexar colunas com muitos valores repetidos.
+Isso pode afetar sites, aplicativos e empresas inteiras.
 
+Otimizar a performance evita gastos com servidores caros.
 
+Ajuda a melhorar a experiência do usuário final.
+
+⚠️ Exemplos de problemas comuns de performance
+Consultas que demoram muito.
+
+Muitos usuários acessando ao mesmo tempo.
+
+Falta de índice (vamos ver o que é isso mais adiante).
+
+Tabelas com milhões de linhas sendo consultadas sem filtros.
+
+Má escrita de consultas SQL (ex: SELECT * em tudo).
+
+🔍 Fatores que afetam a performance
+1. Tamanho da tabela
+Quanto mais dados, mais tempo pode levar.
+
+Uma consulta em uma tabela com 10 linhas é rápida.
+
+Em uma com 10 milhões de linhas, precisa de cuidados especiais.
+
+2. Filtros e condições
+Consultas sem WHERE trazem tudo da tabela, mesmo que não seja necessário.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes; -- ruim em tabelas grandes
+SELECT * FROM clientes WHERE cidade = 'Dublin'; -- melhor
+3. Uso de índices
+Índices são como atalhos para encontrar dados mais rápido.
+
+Sem índice, o banco lê linha por linha até achar o que precisa.
+
+Com índice, ele já sabe onde ir direto.
+
+Exemplo:
+
+sql
+Copy
+Edit
+CREATE INDEX idx_cidade ON clientes(cidade);
+4. Quantidade de colunas
+SELECT * pega todas as colunas, mesmo que você só precise de uma.
+
+Isso pode ser lento e gastar memória.
+
+Melhor:
+
+sql
+Copy
+Edit
+SELECT nome, cidade FROM clientes;
+5. Quantidade de dados retornados
+Limitar a quantidade de resultados ajuda.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes LIMIT 10;
+🛠️ Boas práticas iniciais para melhorar performance
+Sempre use filtros (WHERE) quando possível.
+
+Evite usar SELECT * sem necessidade.
+
+Crie índices nas colunas mais usadas em buscas e filtros.
+
+Use LIMIT quando estiver testando consultas.
+
+Mantenha os dados organizados e limpos.
+
+✅ Resumo
+Performance é a velocidade com que o banco de dados responde.
+
+Pequenas mudanças em como você escreve a consulta podem fazer grande diferença.
+
+Aprender a pensar em performance desde o início evita dores de cabeça no futuro.
+
+Em breve veremos como analisar consultas e criar índices na prática.

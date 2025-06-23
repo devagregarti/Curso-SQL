@@ -1,36 +1,112 @@
-🧹 **3. Evite SELECT * **
-Use apenas as colunas necessárias:
+🚀 Boas Práticas para Performance em SQL (PostgreSQL)
+📌 Por que se preocupar com performance?
+Consultas mal feitas podem deixar o sistema lento.
 
+Em sistemas com muitos usuários, isso pode causar travamentos.
+
+Melhorar a performance reduz o uso do servidor e melhora a experiência do usuário.
+
+Não basta “funcionar” — tem que funcionar rápido e bem.
+
+🛠️ Boas práticas fundamentais
+1. Use apenas as colunas que você precisa
+Evite SELECT *, que traz todas as colunas, mesmo as que não são usadas.
+
+Isso gasta mais memória e pode deixar tudo mais lento.
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+-- Ruim:
+SELECT * FROM clientes;
+
+-- Melhor:
+SELECT nome, cidade FROM clientes;
+2. Sempre que possível, use WHERE
+Sem WHERE, o banco precisa olhar todas as linhas.
+
+Com WHERE, ele pode ir direto ao que interessa.
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+-- Evite isso:
+SELECT * FROM pedidos;
+
+-- Prefira:
+SELECT * FROM pedidos WHERE status = 'Entregue';
+3. Crie índices nas colunas certas
+Índices ajudam o banco a encontrar dados mais rápido.
+
+Crie índices nas colunas mais usadas em filtros (WHERE), junções (JOIN) ou ordenações (ORDER BY).
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+CREATE INDEX idx_status ON pedidos(status);
+⚠️ Mas cuidado: muitos índices demais podem deixar os inserts e updates mais lentos.
+
+4. Use LIMIT ao testar ou buscar poucos dados
+Quando você só precisa ver alguns resultados, use LIMIT para evitar sobrecarregar a consulta.
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+SELECT * FROM clientes LIMIT 10;
+5. Evite funções nas colunas de filtro
+Usar funções nas colunas do WHERE impede o uso de índices.
+
+🧠 Exemplo:
 sql
 Copy
 Edit
 -- Evite:
-SELECT * FROM pedidos;
+SELECT * FROM clientes WHERE UPPER(cidade) = 'DUBLIN';
 
--- Melhor:
-SELECT id, total FROM pedidos;
+-- Prefira:
+SELECT * FROM clientes WHERE cidade = 'Dublin';
+6. Evite subconsultas desnecessárias
+Subconsultas podem ser úteis, mas às vezes um JOIN simples resolve melhor.
 
-
-🧮 4. Filtros inteligentes
-Coloque os filtros mais restritivos primeiro:
-
+🧠 Exemplo:
 sql
 Copy
 Edit
-SELECT * FROM vendas
-WHERE status = 'finalizado' AND data > CURRENT_DATE - INTERVAL '30 days';
+-- Em vez disso:
+SELECT nome FROM clientes WHERE id IN (SELECT cliente_id FROM pedidos);
 
+-- Prefira:
+SELECT c.nome FROM clientes c
+JOIN pedidos p ON c.id = p.cliente_id;
+7. Use tipos de dados apropriados
+Use o tipo de dado certo para cada coluna: INTEGER, TEXT, DATE, etc.
 
-🔄 5. Joins eficientes
-Prefira INNER JOIN se possível (é mais rápido que LEFT JOIN).
+Tipos certos ocupam menos espaço e facilitam o trabalho do banco.
 
-Certifique-se de que as colunas usadas no JOIN tenham índices.
+8. Remova dados desnecessários
+Tabelas gigantes com dados que não são mais usados prejudicam a performance.
 
-sql
-Copy
-Edit
-SELECT * FROM pedidos p
-JOIN clientes c ON c.id = p.cliente_id;
+Considere arquivar ou excluir dados antigos quando possível.
 
+9. Evite ORDER BY desnecessário
+Ordenar dados consome tempo e memória.
 
+Só use ORDER BY quando for realmente necessário.
 
+10. Analise e otimize consultas com EXPLAIN ANALYZE
+Use EXPLAIN ANALYZE para entender como o banco executa a consulta.
+
+Com isso, você pode identificar gargalos de performance.
+
+✅ Resumo
+Boas práticas evitam lentidão e travamentos.
+
+Use apenas o que você precisa, filtre bem e use índices com inteligência.
+
+Otimize desde o início — fica mais difícil corrigir depois.
+
+Performance é responsabilidade de quem escreve o SQL, não só do servidor.

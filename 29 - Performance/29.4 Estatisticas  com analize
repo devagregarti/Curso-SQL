@@ -1,22 +1,129 @@
-PostgreSQL toma decisões com base em estatísticas. Sempre mantenha atualizadas:
+📊 Estatísticas com Análise no PostgreSQL
+🧠 O que são estatísticas em bancos de dados?
+O PostgreSQL guarda informações internas sobre as tabelas e colunas.
+
+Essas informações são chamadas de estatísticas.
+
+Elas ajudam o banco a decidir como executar uma consulta da forma mais rápida possível.
+
+🔍 Para que servem as estatísticas?
+Ajudam o otimizador (motor do PostgreSQL) a escolher o melhor plano de execução.
+
+Indicam:
+
+Quantas linhas existem em uma tabela.
+
+Quais valores aparecem com mais frequência em uma coluna.
+
+A distribuição dos dados (valores únicos, repetidos etc.).
+
+🧪 Como o PostgreSQL coleta estatísticas?
+Automaticamente, quando os dados mudam bastante.
+
+Também é possível forçar essa coleta com o comando:
+
+🧠 Exemplo:
+sql
+Copy
+Edit
+ANALYZE;
+Ou, se quiser analisar apenas uma tabela:
 
 sql
 Copy
 Edit
-ANALYZE clientes;
-Ou combine com VACUUM:
+ANALYZE nome_da_tabela;
+⚙️ Quando usar ANALYZE manualmente?
+Depois de inserir muitos dados novos.
 
+Após excluir ou atualizar muitos registros.
+
+Depois de importações grandes.
+
+Quando a consulta está lenta e você quer ajudar o otimizador a ter dados atualizados.
+
+📈 Onde as estatísticas são usadas?
+Ao executar comandos como:
+
+sql
+Copy
+Edit
+EXPLAIN SELECT * FROM clientes WHERE cidade = 'Dublin';
+O PostgreSQL vai usar as estatísticas da coluna cidade para decidir:
+
+Se deve usar um índice.
+
+Se deve fazer uma leitura total da tabela (seq scan).
+
+Qual caminho é mais eficiente.
+
+🔧 Comando completo: VACUUM ANALYZE
+Esse comando faz duas coisas:
+
+Limpa o banco (remove restos de dados antigos).
+
+Atualiza as estatísticas.
+
+🧠 Exemplo:
 sql
 Copy
 Edit
 VACUUM ANALYZE;
-🧽 7. VACUUM
-PostgreSQL não remove linhas deletadas imediatamente — ele marca para limpeza.
+Muito usado de tempos em tempos para manter o banco saudável.
+
+📋 Como ver estatísticas de uma tabela?
+Você pode ver algumas informações com esta consulta:
 
 sql
 Copy
 Edit
-VACUUM tabela;
-VACUUM limpa dados mortos.
+SELECT * FROM pg_stats WHERE tablename = 'clientes';
+Isso mostra dados como:
 
-AUTOVACUUM geralmente está ativado automaticamente, mas às vezes precisa ser manual.
+Quantos valores distintos existem por coluna.
+
+Quais são os valores mais comuns.
+
+Distribuição dos dados.
+
+📌 Exemplo prático
+Crie uma tabela e insira muitos dados:
+
+sql
+Copy
+Edit
+CREATE TABLE produtos (
+  id SERIAL PRIMARY KEY,
+  categoria TEXT
+);
+
+-- Insere 10 mil linhas (exemplo com categorias repetidas)
+INSERT INTO produtos (categoria)
+SELECT CASE
+  WHEN i % 2 = 0 THEN 'Eletrônicos'
+  ELSE 'Roupas'
+END
+FROM generate_series(1, 10000) i;
+Rode ANALYZE para atualizar as estatísticas:
+
+sql
+Copy
+Edit
+ANALYZE produtos;
+Veja como o banco usa isso com EXPLAIN:
+
+sql
+Copy
+Edit
+EXPLAIN SELECT * FROM produtos WHERE categoria = 'Eletrônicos';
+✅ Resumo
+O PostgreSQL usa estatísticas internas para escolher o plano mais rápido para cada consulta.
+
+Você pode atualizar essas estatísticas com o comando ANALYZE.
+
+Estatísticas atualizadas são essenciais para performance.
+
+Use também VACUUM ANALYZE para manter o banco limpo e otimizado.
+
+Consultas lentas podem melhorar muito só com ANALYZE.
+
