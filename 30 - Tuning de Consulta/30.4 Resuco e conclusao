@@ -1,9 +1,0 @@
-| Técnica                   | Benefício principal                  |
-| ------------------------- | ------------------------------------ |
-| EXPLAIN ANALYZE           | Diagnosticar problemas de desempenho |
-| Índices bem colocados     | Reduzem tempo de busca               |
-| Evitar funções em filtros | Permite uso de índices               |
-| Substituir subqueries     | Mais eficiência com JOIN/EXISTS      |
-| LIMIT sem OFFSET alto     | Paginação mais rápida                |
-| ANALYZE frequente         | Estatísticas atualizadas             |
-| pg\_stat\_statements      | Monitoramento contínuo               |
