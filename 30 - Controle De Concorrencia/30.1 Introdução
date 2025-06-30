@@ -1,10 +1,113 @@
+Slide 1: Introdução ao Controle de Concorrência
+Título: O que é Controle de Concorrência?
 
-ChatGPT said:
-Excelente escolha! O controle de concorrência é um dos pilares do PostgreSQL como banco de dados transacional. A seguir, organizei os principais tópicos, com explicações diretas, exemplos práticos e recomendações claras que você pode usar no seu curso.
+Conjunto de técnicas que garantem a integridade dos dados quando várias transações ocorrem ao mesmo tempo.
 
-🧩 Módulo: Controle de Concorrência no PostgreSQL
-📌 1. O que é Concorrência?
-Ocorre quando vários usuários acessam e modificam os mesmos dados simultaneamente.
+Sem controle de concorrência, dados podem ser corrompidos por transações simultâneas.
 
-O PostgreSQL precisa garantir que as operações sejam consistentes, isoladas e corretas, mesmo com acessos concorrentes.
+Exemplo: Dois usuários tentando atualizar o mesmo saldo bancário.
+
+Slide 2: Problemas Clássicos de Concorrência
+Título: Quais problemas podem acontecer?
+
+Dirty Read: Uma transação lê dados não confirmados por outra.
+
+Non-repeatable Read: Um dado lido muda antes da transação terminar.
+
+Phantom Read: Registros somem ou aparecem durante a transação.
+
+Slide 3: Transações no SQL
+Título: Revisando o conceito de Transação
+
+Uma transação é um bloco de operações que devem ser executadas completamente ou não serem executadas.
+
+Comando básico:
+
+sql
+Copy
+Edit
+BEGIN;
+-- operações
+COMMIT; -- ou ROLLBACK;
+Slide 4: ACID – Os 4 Pilares das Transações
+Título: O que garante a segurança das transações?
+
+Atomicidade: Tudo ou nada.
+
+Consistência: Regras do banco sempre respeitadas.
+
+Isolamento: Transações independentes.
+
+Durabilidade: Após confirmada, a transação é permanente.
+
+Slide 5: Níveis de Isolamento
+Título: Níveis de Isolamento em SQL
+
+Read Uncommitted
+
+Read Committed (padrão do PostgreSQL)
+
+Repeatable Read
+
+Serializable
+
+Cada nível oferece mais proteção contra problemas de concorrência, mas também pode causar mais bloqueios ou lentidão.
+
+Slide 6: Isolamento Padrão no PostgreSQL
+Título: Read Committed no PostgreSQL
+
+Leitura só enxerga dados confirmados (committed).
+
+Se a mesma query for feita duas vezes na transação, o valor pode mudar.
+
+Evita dirty reads, mas não evita non-repeatable ou phantom reads.
+
+Slide 7: Como o PostgreSQL implementa concorrência
+Título: MVCC - Multi-Version Concurrency Control
+
+PostgreSQL usa MVCC para permitir leitura sem bloqueio.
+
+Cada transação vê uma “foto” (snapshot) dos dados no tempo em que começou.
+
+Dados não são sobrescritos: novas versões são criadas.
+
+Slide 8: Exemplo prático de concorrência
+Título: Simulando um conflito
+
+sql
+Copy
+Edit
+-- Terminal A
+BEGIN;
+UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+
+-- Terminal B
+BEGIN;
+UPDATE contas SET saldo = saldo - 50 WHERE id = 1;
+-- Fica aguardando Terminal A dar COMMIT ou ROLLBACK
+PostgreSQL lida com isso usando locks internos e MVCC.
+
+Slide 9: Estratégias para Evitar Problemas
+Título: Boas práticas no controle de concorrência
+
+Use o nível de isolamento certo.
+
+Evite transações longas.
+
+Atualize dados em ordem consistente.
+
+Quando necessário, use locks explícitos:
+
+sql
+Copy
+Edit
+SELECT * FROM contas WHERE id = 1 FOR UPDATE;
+Slide 10: Conclusão
+Título: O que aprendemos?
+
+Concorrência é inevitável em ambientes reais.
+
+PostgreSQL usa MVCC para gerenciar múltiplas transações com eficiência.
+
+Entender isolamento e transações ajuda a escrever código seguro e confiável.
 
