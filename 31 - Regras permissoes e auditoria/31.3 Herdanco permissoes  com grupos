@@ -1,9 +1,69 @@
-🧪 Exemplo:
+Slide 1: O que são grupos (roles com herança)?
+Título: Organizando permissões com grupos
+
+Em PostgreSQL, não há "grupos" no sentido tradicional.
+
+Mas você pode criar roles (papéis) que funcionam como grupos.
+
+Depois, outros usuários herdam permissões desses papéis.
+
+Slide 2: Criando uma role de grupo
+Título: Criando um papel com permissões
+
 sql
 Copy
 Edit
--- Adiciona o usuário ao grupo
-GRANT equipe_dados TO ana;
+-- Cria o "grupo"
+CREATE ROLE leitores;
 
--- Agora ana herda as permissões atribuídas a equipe_dados
-⚠️ Por padrão, a herança é imediata. Se não quiser, use SET ROLE explicitamente.
+-- Concede permissão ao grupo
+GRANT SELECT ON clientes TO leitores;
+Agora, qualquer usuário que fizer parte da role leitores terá acesso de leitura à tabela clientes.
+
+Slide 3: Adicionando usuários ao grupo
+Título: Adicionando usuários a uma role
+
+sql
+Copy
+Edit
+-- Criar usuários
+CREATE USER joao WITH PASSWORD '123';
+CREATE USER maria WITH PASSWORD '456';
+
+-- Adicioná-los ao grupo
+GRANT leitores TO joao;
+GRANT leitores TO maria;
+joao e maria agora herdam as permissões da role leitores.
+
+Slide 4: Verificando a herança
+Título: Testando a permissão herdada
+
+sql
+Copy
+Edit
+-- Acessar como 'joao' e tentar:
+SELECT * FROM clientes;
+Funciona porque joao herda SELECT via o grupo leitores.
+
+É possível desativar a herança, mas por padrão ela está ativada.
+
+Slide 5: Boas práticas com roles herdadas
+Título: Organize com papéis, não com caos
+
+✅ Crie roles por função: leitores, escritores, administradores
+✅ Use GRANT para conectar usuários a essas roles
+✅ Mude permissões no grupo, e todos os membros serão atualizados
+✅ Para ambientes grandes, isso evita erros e repetições
+
+Se quiser, posso complementar com:
+
+Slide extra explicando INHERIT vs NOINHERIT
+
+Exemplo visual de herança com diagrama
+
+Comando para ver quais roles um usuário possui:
+
+sql
+Copy
+Edit
+\du joao  -- no psql

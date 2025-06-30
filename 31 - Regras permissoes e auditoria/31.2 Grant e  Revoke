@@ -1,24 +1,67 @@
-👥 2. Atribuição de Permissões (GRANT e REVOKE)
-GRANT: concede permissões.
+Slide 1: O que são GRANT e REVOKE
+Título: Controlando o que cada usuário pode fazer
 
-REVOKE: remove permissões.
+GRANT: concede permissões a um usuário ou papel.
 
-📋 Permissões comuns:
-SELECT, INSERT, UPDATE, DELETE
+REVOKE: remove permissões previamente concedidas.
 
-ALL PRIVILEGES
+Permissões podem ser aplicadas a:
 
-USAGE e EXECUTE (em funções e schemas)
+Tabelas, views, funções, esquemas, bancos, etc.
 
-🧪 Exemplo:
+Slide 2: Tipos de permissões comuns
+Título: O que posso conceder com GRANT?
+
+Objeto	Permissões comuns
+Tabelas	SELECT, INSERT, UPDATE, DELETE
+Funções	EXECUTE
+Esquemas	USAGE, CREATE
+Bancos	CONNECT, CREATE
+
+Slide 3: Exemplo simples de GRANT
+Título: Concedendo acesso a uma tabela
+
 sql
 Copy
 Edit
--- Conceder leitura em uma tabela
-GRANT SELECT ON clientes TO ana;
+-- Criar usuário
+CREATE USER joao WITH PASSWORD 'senha';
 
--- Dar permissões de escrita
-GRANT INSERT, UPDATE ON pedidos TO equipe_dados;
+-- Dar permissão para leitura na tabela 'clientes'
+GRANT SELECT ON clientes TO joao;
+Agora o usuário joao pode executar SELECT na tabela clientes.
 
--- Retirar permissões
-REVOKE UPDATE ON pedidos FROM ana;
+Slide 4: Exemplo de REVOKE
+Título: Removendo permissões de um usuário
+
+sql
+Copy
+Edit
+-- Tirar a permissão de leitura da tabela
+REVOKE SELECT ON clientes FROM joao;
+A partir de agora, joao não pode mais consultar a tabela clientes.
+
+Slide 5: GRANT para todos os usuários (PUBLIC)
+Título: Acesso aberto para todos
+
+sql
+Copy
+Edit
+GRANT SELECT ON clientes TO PUBLIC;
+PUBLIC significa todos os usuários existentes e futuros.
+
+Use com muito cuidado, especialmente com dados sensíveis.
+
+Slide 6: Dicas e boas práticas
+Título: Gerenciando permissões com segurança
+
+✅ Use roles (papéis) para agrupar permissões e facilitar a gestão.
+✅ Evite dar permissões diretamente ao PUBLIC.
+✅ Conceda o mínimo necessário (princípio do menor privilégio).
+✅ Teste com usuários diferentes para garantir o comportamento esperado.
+✅ Consulte permissões com:
+
+sql
+Copy
+Edit
+\z clientes  -- no psql

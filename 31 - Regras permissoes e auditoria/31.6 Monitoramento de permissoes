@@ -1,12 +1,91 @@
-📜 6. Verificando permissões
+Slide 1: Por que monitorar permissões?
+Título: Segurança não é só conceder — é acompanhar
+
+Ver quem tem acesso a quê é fundamental para:
+✅ Cumprir requisitos de auditoria (LGPD, GDPR, etc.)
+✅ Evitar acessos indevidos ou esquecidos
+✅ Manter o princípio do menor privilégio
+✅ Entender o impacto de revogar permissões
+
+Slide 2: Consultando permissões de objetos
+Título: Como ver quem pode fazer o quê
+
+No terminal psql, use:
+
 sql
 Copy
 Edit
--- Ver permissões de uma tabela
-\z clientes
+\z nome_da_tabela
+-- ou apenas: \z  (lista tudo)
+Mostra as permissões por objeto:
 
--- Ver roles existentes
-\du
+pgsql
+Copy
+Edit
+Access privileges
+Schema | Name    | Type  | Access privileges
+-------+---------+-------+-------------------
+public | clientes | table | joao=arwdDxt/owner
+Significado dos códigos:
 
--- Ver permissões no schema
-SELECT * FROM information_schema.role_table_grants WHERE table_name = 'clientes';
+r: SELECT
+
+w: UPDATE
+
+a: INSERT
+
+d: DELETE
+
+D: TRUNCATE
+
+x: REFERENCES
+
+t: TRIGGER
+
+Slide 3: Consultando roles e heranças
+Título: Quem tem qual papel?
+
+sql
+Copy
+Edit
+\du      -- mostra usuários e papéis
+Exemplo:
+
+pgsql
+Copy
+Edit
+Role name | Attributes             | Member of
+----------+------------------------+-----------
+joao      |                        | {leitores}
+leitores  | Cannot login           | {}
+Você também pode consultar diretamente:
+
+sql
+Copy
+Edit
+SELECT * FROM pg_roles;
+Slide 4: Verificando permissões em schemas e funções
+Título: Explorando além das tabelas
+
+Para schemas:
+
+sql
+Copy
+Edit
+\dn+    -- lista schemas com permissões
+Para funções:
+
+sql
+Copy
+Edit
+\df+ nome_da_funcao
+Mostra quem pode executar, e se usa SECURITY DEFINER.
+
+Slide 5: Dicas finais de monitoramento
+Título: Melhore o controle de acessos
+
+✅ Crie uma rotina de revisão de permissões (mensal ou trimestral)
+✅ Use roles nomeadas claramente (leitores, devs, admin_relatorios)
+✅ Revogue permissões não utilizadas
+✅ Evite GRANT TO PUBLIC em ambientes de produção
+✅ Use views ou scripts para extrair relatórios automatizados

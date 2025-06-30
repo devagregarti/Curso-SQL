@@ -1,12 +1,71 @@
-🛡️ 4. Permissões em Schemas e Funções
-Para acessar objetos dentro de um schema, é preciso USAGE no schema + permissão no objeto.
+Slide 1: Permissões em Esquemas e Funções
+Título: Controlando acesso a estruturas do banco
 
-🧪 Exemplo:
+Além de tabelas, o PostgreSQL permite controlar permissões em:
+
+Esquemas: onde objetos (tabelas, views, funções) são organizados.
+
+Funções: que encapsulam lógica em SQL ou PL/pgSQL.
+
+Slide 2: Permissões em Esquemas
+Título: O que é um esquema?
+
+Um schema é como uma "pasta" que agrupa objetos.
+
+Permissões comuns:
+
+USAGE: permite acessar o schema, mas não os objetos.
+
+CREATE: permite criar objetos dentro do schema.
+
+Slide 3: Exemplo: permissões em esquema
 sql
 Copy
 Edit
--- Permitir acesso ao schema
-GRANT USAGE ON SCHEMA vendas TO ana;
+-- Criar um schema
+CREATE SCHEMA financeiro;
 
--- Permitir execução de uma função
-GRANT EXECUTE ON FUNCTION gerar_relatorio(int) TO equipe_dados;
+-- Dar acesso a usuários
+GRANT USAGE ON SCHEMA financeiro TO joao;
+GRANT CREATE ON SCHEMA financeiro TO joao;
+joao agora pode navegar e criar objetos no schema financeiro.
+
+Ele ainda precisa de permissão nos objetos individuais para usá-los.
+
+Slide 4: Permissões em Funções
+Título: Quem pode executar uma função?
+
+Permissão padrão: só o criador da função pode executá-la.
+
+Para liberar para outros:
+
+sql
+Copy
+Edit
+GRANT EXECUTE ON FUNCTION calcular_imposto(integer) TO maria;
+O PostgreSQL exige especificar parâmetros da função ao conceder permissão.
+
+Slide 5: Dica avançada: funções com SECURITY DEFINER
+Título: Funções com privilégios elevados
+
+sql
+Copy
+Edit
+CREATE FUNCTION operacao_secreta()
+RETURNS void AS $$
+BEGIN
+  -- Ação protegida
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+A função será executada com os privilégios de quem a criou, não de quem a executa.
+
+Útil para permitir ações sensíveis com controle.
+
+Slide 6: Resumo e boas práticas
+Título: Fechando permissões com chave de ouro
+
+✅ Use GRANT USAGE em schemas para acesso básico.
+✅ Combine com GRANT SELECT/EXECUTE para permitir uso real.
+✅ Para funções sensíveis, considere SECURITY DEFINER com cautela.
+✅ Nunca dependa apenas do controle de tabela — proteja também os esquemas e funções.
+

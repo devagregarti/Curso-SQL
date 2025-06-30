@@ -1,5 +1,95 @@
-📌 1. Por que auditar?
-Monitorar quem fez o quê e quando.
+Slide 1: O que é auditoria?
+Título: Rastreando atividades no banco de dados
 
-Atender normas de segurança, compliance (ex: LGPD, GDPR, ISO).
+Auditoria registra ações realizadas no banco, por quem e quando.
 
+Importante para:
+
+Segurança (identificar acessos indevidos)
+
+Compliance (LGPD, GDPR, SOX)
+
+Diagnóstico de problemas e análise forense
+
+Slide 2: Auditoria nativa com logging
+Título: Logs básicos do PostgreSQL
+
+Configurações em postgresql.conf para capturar comandos:
+
+log_statement = 'all' (registra todas as queries)
+
+log_duration = on (tempo de execução)
+
+Logs ficam em arquivos, acessados pelo administrador.
+
+Bom para monitoramento geral, mas pode gerar muitos dados.
+
+Slide 3: Logs de auditoria focados
+Título: Log de comandos sensíveis
+
+Pode-se usar:
+
+log_statement = 'ddl' para registrar apenas comandos DDL (CREATE, ALTER, DROP)
+
+log_statement = 'mod' para registrar comandos que modificam dados (INSERT, UPDATE, DELETE)
+
+Ajuda a focar em ações relevantes para auditoria.
+
+Slide 4: Extensão pgAudit
+Título: Auditoria avançada com pgAudit
+
+Extensão que adiciona camada de auditoria detalhada.
+
+Permite registrar comandos específicos, função por função.
+
+Registra em formato estruturado no log do PostgreSQL.
+
+Instalação:
+
+sql
+Copy
+Edit
+CREATE EXTENSION pgaudit;
+Configurações detalhadas no postgresql.conf para ajustar o nível de auditoria.
+
+Slide 5: Auditoria via triggers
+Título: Auditoria customizada com triggers
+
+Pode criar triggers em tabelas para registrar operações em tabelas de log.
+
+Exemplo: gravar inserções, atualizações e exclusões numa tabela de auditoria.
+
+Flexível, mas impacta performance.
+
+Slide 6: Exemplo básico de trigger de auditoria
+sql
+Copy
+Edit
+CREATE TABLE audit_log (
+  id SERIAL PRIMARY KEY,
+  tabela TEXT,
+  operacao TEXT,
+  usuario TEXT,
+  data_hora TIMESTAMP DEFAULT now()
+);
+
+CREATE OR REPLACE FUNCTION audit_func()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO audit_log(tabela, operacao, usuario)
+  VALUES (TG_TABLE_NAME, TG_OP, current_user);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON clientes
+FOR EACH ROW EXECUTE FUNCTION audit_func();
+Slide 7: Boas práticas de auditoria
+Título: Implantando auditoria segura e eficiente
+
+✅ Defina quais operações precisam ser auditadas (evite excesso de logs).
+✅ Proteja os logs para evitar alterações indevidas.
+✅ Revise periodicamente os logs.
+✅ Automatize alertas para atividades suspeitas.
+✅ Combine ferramentas nativas com extensões como pgAudit para maior controle.

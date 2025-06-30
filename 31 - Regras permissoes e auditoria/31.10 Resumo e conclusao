@@ -1,0 +1,62 @@
+1. Permissões no PostgreSQL
+Controle de acesso é feito via permissões concedidas a usuários (roles).
+
+Comandos básicos:
+
+GRANT — concede permissões (ex: SELECT, INSERT, UPDATE, DELETE) em objetos como tabelas, schemas, funções.
+
+REVOKE — remove permissões concedidas anteriormente.
+
+Grupos (roles de grupo) permitem herdar permissões, facilitando gestão de acesso.
+
+Permissões podem ser definidas em diferentes níveis:
+
+Banco de dados
+
+Schema
+
+Tabela / View
+
+Função
+
+Permissões de criação (CREATE) também são controladas e importantes para limitar quem pode criar objetos.
+
+2. Monitoramento de Permissões
+Use comandos \z, \du, \dn+ no psql para consultar permissões e roles.
+
+Manter rotinas de revisão periódica das permissões é fundamental para segurança.
+
+Evite permissões excessivas, principalmente GRANT TO PUBLIC em produção.
+
+É recomendado usar roles nomeadas com função clara para facilitar manutenção.
+
+3. Auditoria no PostgreSQL
+Auditoria registra quem fez o quê e quando, fundamental para segurança e compliance.
+
+Formas básicas:
+
+Logs nativos: Configuração via log_statement e outros parâmetros no postgresql.conf.
+
+Triggers customizadas: Registrar ações em tabelas específicas.
+
+Extensão pgAudit: ferramenta oficial para auditoria avançada, que grava logs detalhados e estruturados para DDL, DML, roles e funções.
+
+Auditoria deve ser configurada com cuidado para evitar excesso de logs e impacto na performance.
+
+Logs devem ser protegidos e revisados periodicamente, com possível integração a ferramentas externas para análise e alertas (ex: ELK, Splunk).
+
+4. Logs do PostgreSQL
+Logs capturam atividades, erros, desempenho e são essenciais para monitoramento e diagnóstico.
+
+Parâmetros-chave no postgresql.conf incluem:
+
+logging_collector
+
+log_statement (niveis: none, ddl, mod, all)
+
+log_min_duration_statement (para queries lentas)
+
+log_rotation_age e log_rotation_size para controle dos arquivos.
+
+Ferramentas como pgBadger facilitam análise dos logs gerados.
+

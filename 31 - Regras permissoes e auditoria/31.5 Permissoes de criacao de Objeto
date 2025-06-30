@@ -1,10 +1,59 @@
+Slide 1: O que são permissões de criação de objeto
+Título: Criar com ordem e controle
 
-🧪 Exemplo:
+No PostgreSQL, a criação de objetos é controlada em dois níveis:
+
+Criação de objetos no banco inteiro
+
+Criação dentro de um schema específico
+
+Isso evita que qualquer usuário saia criando objetos sem controle.
+
+Slide 2: Permissão para criar em todo o banco
+Título: Criar schemas ou extensões no banco
+
 sql
 Copy
 Edit
--- Permitir conexão ao banco
-GRANT CONNECT ON DATABASE sistema TO equipe_dados;
+-- Permite ao usuário criar esquemas ou extensões
+GRANT CREATE ON DATABASE minha_base TO joao;
+joao agora pode:
 
--- Permitir criação de tabelas em um schema
-GRANT CREATE ON SCHEMA public TO ana;
+Criar schemas com CREATE SCHEMA
+
+Criar extensões (como uuid-ossp, pgcrypto, etc.)
+
+Slide 3: Permissão para criar objetos em um schema
+Título: Criar tabelas, funções e views em um schema
+
+sql
+Copy
+Edit
+-- Permitir que o usuário crie objetos no schema público
+GRANT CREATE ON SCHEMA public TO joao;
+joao agora pode:
+
+Criar tabelas, views, funções dentro do schema public
+
+Ele ainda precisa de USAGE para acessar o schema
+
+Slide 4: Removendo permissão de criação (boa prática!)
+Título: Evitando bagunça no schema public
+
+sql
+Copy
+Edit
+-- Impede novos objetos no schema public por padrão
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+Por padrão, todos os usuários têm permissão de criação no schema public!
+
+Revogar isso é altamente recomendado em ambientes de produção.
+
+Slide 5: Resumo e boas práticas
+Título: Criação com responsabilidade
+
+✅ Controle quem pode criar schemas no banco (GRANT CREATE ON DATABASE)
+✅ Controle quem pode criar objetos em schemas (GRANT CREATE ON SCHEMA)
+✅ Sempre combine com USAGE para acesso total ao schema
+✅ Revogue permissões desnecessárias no schema public
+✅ Organize os criadores em roles específicas (ex: devs_criadores)

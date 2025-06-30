@@ -1,20 +1,20 @@
-Aplicacoes praticas
- Necessidade vs  excesso 
+Slide 1: Introdução a Permissões e Auditoria
+Título: Segurança em primeiro lugar
 
- Concentios  
-      Roles
-      Usuarios
-      Grupos 
-      Grant 
-      Revoke
-      Heranca
-      Schema
-      Auditoria
-      Logs
-      
+Em um banco multiusuário, nem todos devem ter acesso a tudo.
 
-      -- Criação de um usuário com senha
-CREATE ROLE ana LOGIN PASSWORD 'senha123';
+O PostgreSQL oferece mecanismos robustos de:
 
--- Criando um grupo
-CREATE ROLE equipe_dados;
+Controle de permissões (GRANT/REVOKE)
+
+Auditoria de ações e acessos
+
+Objetivo: garantir segurança, integridade e rastreabilidade das operações.
+
+Slide 2: Por que isso é importante?
+Título: Por que controlar acesso e auditar?
+
+✅ Evita que usuários façam alterações não autorizadas
+✅ Garante que dados sensíveis fiquem protegidos
+✅ Ajuda a identificar quem fez o quê, quando e onde
+✅ É obrigatório em ambientes com requisitos de conformidade (ex: LGPD, GDPR, HIPAA)

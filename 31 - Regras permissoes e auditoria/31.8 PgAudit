@@ -1,0 +1,107 @@
+Slide 1: O que é o pgAudit?
+Título: Auditoria avançada com pgAudit
+
+Extensão oficial para PostgreSQL focada em auditoria detalhada.
+
+Registra atividades no log do PostgreSQL com muito mais detalhes.
+
+Facilita conformidade com normas como SOX, PCI-DSS, LGPD, GDPR.
+
+Slide 2: Instalação do pgAudit
+Título: Como instalar pgAudit
+
+Normalmente vem no pacote postgresql-contrib ou similar.
+
+No Linux (Debian/Ubuntu):
+
+bash
+Copy
+Edit
+sudo apt-get install postgresql-contrib
+Depois, no banco:
+
+sql
+Copy
+Edit
+CREATE EXTENSION pgaudit;
+Verifique se a extensão está ativa:
+
+sql
+Copy
+Edit
+\dx
+Slide 3: Configuração básica
+Título: Ajustando o postgresql.conf
+
+Principais parâmetros:
+
+Parâmetro	Descrição	Exemplo
+pgaudit.log	O que será auditado (none, role, write, ddl, function, etc)	pgaudit.log = 'all'
+pgaudit.log_relation	Log de acesso a tabelas e views	pgaudit.log_relation = on
+pgaudit.log_parameter	Log dos parâmetros das queries	pgaudit.log_parameter = on
+
+Após alterar, reinicie o PostgreSQL.
+
+Slide 4: Modos de auditoria
+Título: Tipos de eventos auditados
+
+DDL: comandos de definição (CREATE, ALTER, DROP)
+
+DML: comandos que modificam dados (INSERT, UPDATE, DELETE)
+
+ROLE: comandos relacionados a roles e permissões
+
+FUNCTION: chamadas a funções
+
+READ: consultas SELECT (opcional, pode gerar muito log)
+
+Pode combinar vários:
+
+conf
+Copy
+Edit
+pgaudit.log = 'ddl, role, write'
+Slide 5: Exemplo de log gerado
+Título: Como fica o log do pgAudit
+
+sql
+Copy
+Edit
+AUDIT: SESSION,1,1,DDL,CREATE TABLE,CREATE TABLE clientes (...);
+AUDIT: SESSION,1,2,WRITE,INSERT,INSERT INTO clientes VALUES (...);
+AUDIT: SESSION,1,3,ROLE,GRANT,GRANT SELECT ON clientes TO joao;
+Logs são detalhados e estruturados, facilitando análise automatizada.
+
+Slide 6: Filtrando logs com pgAudit
+Título: Evitando excesso de dados
+
+Importante configurar o nível certo para não sobrecarregar logs.
+
+Pode filtrar por usuário, função, esquema, tipo de comando.
+
+Combine com ferramentas de análise (ELK, Splunk, Graylog).
+
+Slide 7: Integração com ferramentas externas
+Título: Monitoramento e análise avançada
+
+Envie logs do PostgreSQL para sistemas centralizados.
+
+Utilize ferramentas como:
+
+ELK Stack (Elasticsearch, Logstash, Kibana)
+
+Splunk
+
+Graylog
+
+Permite criar alertas, dashboards e relatórios.
+
+Slide 8: Boas práticas com pgAudit
+Título: Usando pgAudit com segurança e eficiência
+
+✅ Planeje quais eventos realmente precisam de auditoria.
+✅ Proteja arquivos de log contra alterações.
+✅ Teste configurações em ambiente de homologação antes de produção.
+✅ Revise periodicamente os logs e adapte filtros.
+✅ Combine pgAudit com roles e permissões para controle completo.
+

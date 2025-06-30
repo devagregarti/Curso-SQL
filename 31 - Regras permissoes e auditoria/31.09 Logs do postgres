@@ -1,0 +1,70 @@
+Slide 1: O que são logs do PostgreSQL?
+Título: Registrando tudo para controle e análise
+
+Logs são arquivos onde o PostgreSQL grava informações sobre:
+
+Atividades realizadas
+
+Erros e avisos
+
+Performance e tempo de execução de comandos
+
+Essenciais para monitoramento, troubleshooting e auditoria
+
+Slide 2: Configurações básicas de logging
+Título: Parâmetros principais no postgresql.conf
+
+Parâmetro	Função	Exemplo
+logging_collector	Habilita o coletor de logs	on
+log_directory	Diretório onde os logs são salvos	pg_log
+log_filename	Nome do arquivo de log	postgresql-%Y-%m-%d.log
+log_statement	Quais comandos registrar (none, ddl, mod, all)	mod (modificação)
+log_min_duration_statement	Registra comandos que ultrapassam X ms	500 (meio segundo)
+
+Slide 3: Níveis de log
+Título: Quanto detalhe você quer?
+
+log_statement pode ser:
+
+none: sem logs de comandos SQL
+
+ddl: só comandos de definição (CREATE, ALTER, DROP)
+
+mod: comandos que modificam dados (INSERT, UPDATE, DELETE)
+
+all: tudo, incluindo SELECT (pode gerar muitos logs)
+
+log_min_duration_statement registra queries lentas (útil para performance)
+
+Slide 4: Logs de erros e warnings
+Título: Diagnóstico e estabilidade
+
+Parâmetros importantes:
+
+log_error_verbosity (terse, default, verbose) controla o nível de detalhes dos erros
+
+log_min_error_statement para registrar statements que geram erro
+
+log_checkpoints para registrar checkpoints do banco
+
+Slide 5: Rotação e manutenção dos logs
+Título: Evitando arquivos gigantes
+
+log_rotation_age: tempo para rodar o arquivo de log (ex: 1d = 1 dia)
+
+log_rotation_size: tamanho máximo do arquivo antes de rotacionar
+
+Automatizar limpeza para não ocupar espaço excessivo no disco
+
+Slide 6: Analisando logs
+Título: Extraindo valor dos registros
+
+Ferramentas para análise:
+
+pgBadger: gera relatórios HTML detalhados
+
+pgFouine: análise histórica de logs
+
+Scripts customizados para identificar erros e lentidões
+
+Logs são a base para entender comportamento e falhas
