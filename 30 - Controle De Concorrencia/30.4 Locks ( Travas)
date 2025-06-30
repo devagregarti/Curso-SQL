@@ -1,12 +1,136 @@
-🔄 4. Locks (Travas)
-PostgreSQL usa diferentes tipos de locks para proteger dados:
+Slide 1: Introdução aos Locks
+Título: O que são Locks?
 
-🔐 Tipos de Locks mais comuns:
-Row-level locks (linha): SELECT ... FOR UPDATE
+Locks (travas) controlam o acesso simultâneo aos dados.
 
-Table-level locks: LOCK TABLE
+Impedem que duas transações modifiquem ou leiam dados ao mesmo tempo de forma insegura.
 
+São automáticos, mas também podem ser usados manualmente.
+
+Slide 2: Por que o banco precisa de locks?
+Título: Concorrência sem caos
+
+Garantem integridade dos dados mesmo com várias transações simultâneas.
+
+Exemplo: duas pessoas tentando transferir dinheiro da mesma conta.
+
+Sem lock, podem ocorrer condições de corrida e dados corrompidos.
+
+Slide 3: Tipos de Locks no PostgreSQL
+Título: Tipos principais de locks
+
+Row-level Locks (por linha)
+
+FOR UPDATE, FOR SHARE
+
+Table-level Locks (por tabela)
+
+ACCESS SHARE, ACCESS EXCLUSIVE, etc.
+
+Advisory Locks (travamento manual, opcional)
+
+Slide 4: Row-level Locks
+Título: Travas por linha
+
+Aplicadas quando você modifica linhas específicas.
+
+Exemplo:
+
+sql
+Copy
+Edit
+SELECT * FROM contas WHERE id = 1 FOR UPDATE;
+Outras transações que tentarem modificar a mesma linha ficam esperando o COMMIT/ROLLBACK.
+
+Slide 5: Table-level Locks
+Título: Travas por tabela
+
+Afetam toda a tabela.
+
+PostgreSQL aplica esses locks automaticamente em operações como:
+
+ALTER TABLE
+
+DROP TABLE
+
+VACUUM FULL
+
+Exemplo manual:
+
+sql
+Copy
+Edit
+LOCK TABLE contas IN ACCESS EXCLUSIVE MODE;
+Slide 6: Matriz de compatibilidade (simplificada)
+Título: Quem bloqueia quem?
+
+Lock atual \ Novo lock	SHARE	EXCLUSIVE
+SHARE	✅	❌
+EXCLUSIVE	❌	❌
+
+Algumas combinações de locks são compatíveis, outras causam espera.
+
+Slide 7: Exemplo prático de conflito
+Título: Dois usuários, uma linha
+
+sql
+Copy
+Edit
+-- Terminal A
 BEGIN;
-SELECT * FROM produtos WHERE id = 1 FOR UPDATE;
--- essa linha fica bloqueada até COMMIT
-COMMIT;
+SELECT * FROM contas WHERE id = 1 FOR UPDATE;
+
+-- Terminal B
+BEGIN;
+UPDATE contas SET saldo = saldo - 50 WHERE id = 1;
+-- Fica bloqueado até A fazer COMMIT/ROLLBACK
+Terminal B espera o lock ser liberado.
+
+Slide 8: Como evitar problemas com locks?
+Título: Boas práticas com travas
+
+Transações curtas e objetivas.
+
+Sempre acessar objetos na mesma ordem para evitar deadlocks.
+
+Usar FOR UPDATE apenas quando necessário.
+
+Verificar locks em tempo real com:
+
+sql
+Copy
+Edit
+SELECT * FROM pg_locks;
+Slide 9: Deadlocks
+Título: O que é um Deadlock?
+
+Duas (ou mais) transações esperando uma pela outra — eternamente.
+
+PostgreSQL detecta automaticamente e finaliza uma delas:
+
+makefile
+Copy
+Edit
+ERROR: deadlock detected
+Exemplo:
+
+Transação A bloqueia linha 1 e quer a 2.
+
+Transação B bloqueia linha 2 e quer a 1.
+
+Slide 10: Conclusão
+Título: O que aprendemos sobre locks?
+
+Locks são essenciais para segurança em ambiente concorrente.
+
+PostgreSQL usa locks automáticos, mas podemos aplicar manualmente.
+
+É importante saber:
+
+Quando ocorre lock.
+
+Como visualizar locks.
+
+Como evitar conflitos e deadlocks.
+
+

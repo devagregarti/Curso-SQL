@@ -1,0 +1,133 @@
+Slide 1: Introdução aos Níveis de Isolamento
+Título: O que são níveis de isolamento?
+
+Definem como e quando as alterações feitas por uma transação se tornam visíveis para outras.
+
+Quanto maior o isolamento, mais consistência, mas também mais custo e lentidão.
+
+SQL define 4 níveis: cada um evita certos problemas de concorrência.
+
+Slide 2: Os 3 problemas clássicos
+Título: O que pode dar errado sem isolamento?
+
+Dirty Read: ler dados não confirmados por outra transação.
+
+Non-repeatable Read: valor muda entre duas leituras na mesma transação.
+
+Phantom Read: número de registros muda (ex: SELECT COUNT(*) muda).
+
+Slide 3: Os 4 Níveis de Isolamento (SQL ANSI)
+Título: Níveis de isolamento definidos pelo padrão SQL
+
+Read Uncommitted
+
+Read Committed (padrão no PostgreSQL)
+
+Repeatable Read
+
+Serializable
+
+Slide 4: Read Uncommitted
+Título: Nível mais baixo: Read Uncommitted
+
+Permite dirty reads.
+
+Quase nunca usado em PostgreSQL (não é suportado).
+
+Exemplo:
+
+sql
+Copy
+Edit
+BEGIN;
+SELECT saldo FROM contas;
+-- Pode ler algo que será desfeito por outra transação
+Slide 5: Read Committed (padrão no PostgreSQL)
+Título: Read Committed: seguro e rápido
+
+Leitura só enxerga dados confirmados (committed).
+
+Mas a mesma query pode dar resultados diferentes dentro da mesma transação.
+
+Evita dirty reads, mas não evita non-repeatable ou phantom reads.
+
+Slide 6: Exemplo - Read Committed
+Título: O que acontece na prática?
+
+sql
+Copy
+Edit
+BEGIN;
+SELECT saldo FROM contas WHERE id = 1;
+-- Retorna 100
+
+-- Outra transação altera para 80 e faz COMMIT
+
+SELECT saldo FROM contas WHERE id = 1;
+-- Agora retorna 80 (mudou durante a transação!)
+Slide 7: Repeatable Read
+Título: Repeatable Read: estabilidade nas leituras
+
+Todas as leituras dentro da transação veem a mesma foto do banco.
+
+Garante que dados lidos não mudam até o fim da transação.
+
+Evita dirty e non-repeatable reads.
+
+Mas phantoms ainda podem ocorrer no padrão ANSI. No PostgreSQL, phantoms são evitados.
+
+Slide 8: Exemplo - Repeatable Read
+sql
+Copy
+Edit
+BEGIN ISOLATION LEVEL REPEATABLE READ;
+SELECT * FROM contas WHERE saldo > 100;
+
+-- Outra transação insere nova conta com saldo = 200 e COMMIT
+
+SELECT * FROM contas WHERE saldo > 100;
+-- Mesmo assim, o novo registro não aparece!
+Snapshot fixo durante a transação.
+
+Slide 9: Serializable
+Título: Serializable: o mais seguro (e pesado)
+
+Emula execução como se as transações fossem em série.
+
+Nenhuma interferência entre transações.
+
+Mais bloqueios, risco de erros de serialização (falha com sugestão de tentar de novo).
+
+Slide 10: Exemplo - Serializable
+sql
+Copy
+Edit
+BEGIN ISOLATION LEVEL SERIALIZABLE;
+-- Lê saldo da conta
+
+-- Outra transação modifica saldo e COMMIT
+
+-- Ao tentar COMMIT:
+ERROR: could not serialize access due to concurrent update
+Slide 11: Comparação geral
+Título: Comparando os níveis
+
+Nível	Dirty Read	Non-repeatable	Phantom	Performance
+Read Uncommitted	✅	✅	✅	🚀 Muito rápido
+Read Committed	❌	✅	✅	⚡ Rápido
+Repeatable Read	❌	❌	❌*	🐢 Médio
+Serializable	❌	❌	❌	🐌 Lento, mais seguro
+
+* PostgreSQL evita phantoms em Repeatable Read.
+
+Slide 12: Conclusão e boas práticas
+Título: Quando usar cada um?
+
+Read Committed: padrão, bom equilíbrio (usar na maioria dos casos).
+
+Repeatable Read: quando você precisa de consistência maior sem phantoms.
+
+Serializable: para transações críticas e com validações complexas.
+
+Use transações curtas e objetivas para evitar conflitos e bloqueios.
+

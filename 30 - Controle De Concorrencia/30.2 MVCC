@@ -1,10 +1,113 @@
-🔒 2. MVCC (Multi-Version Concurrency Control)
-Sistema usado pelo PostgreSQL para lidar com concorrência.
+Slide 1: O que é MVCC?
+Título: MVCC - Multi-Version Concurrency Control
 
-Cada transação vê um snapshot dos dados, evitando bloqueios de leitura.
+Técnica usada para garantir concorrência sem travar leituras.
 
-🧠 Conceito:
-Ao invés de bloquear, o PostgreSQL cria versões dos dados modificados.
+Permite que múltiplas transações leiam e escrevam dados ao mesmo tempo.
 
-Leitores não bloqueiam escritores e vice-versa.
+Cada transação vê uma “versão estável” do banco no momento em que começa.
+
+Slide 2: Por que o MVCC é necessário?
+Título: O problema da concorrência
+
+Sem MVCC:
+
+Leitores e escritores precisam se bloquear.
+
+Transações podem demorar ou falhar.
+
+Com MVCC:
+
+Leitores não bloqueiam escritores.
+
+Escritores não bloqueiam leitores.
+
+Slide 3: Como funciona o MVCC no PostgreSQL
+Título: Versões dos dados
+
+Cada linha tem duas colunas invisíveis:
+
+xmin: ID da transação que criou a linha.
+
+xmax: ID da transação que deletou ou substituiu a linha.
+
+Quando você faz UPDATE, o PostgreSQL cria uma nova linha (nova versão) e marca a antiga como invisível para futuras transações.
+
+Slide 4: Exemplo prático de MVCC
+Título: O que acontece em um UPDATE?
+
+sql
+Copy
+Edit
+-- Suponha que temos a linha: saldo = 100 (xmin = 100, xmax = null)
+
+-- Transação A (ID 200)
+UPDATE contas SET saldo = 90 WHERE id = 1;
+-- PostgreSQL cria uma nova linha: saldo = 90 (xmin = 200, xmax = null)
+-- Linha antiga recebe xmax = 200
+
+-- Transação B (ID 201) ainda pode ver a linha antiga (100)
+Slide 5: Snapshot - a "fotografia" da transação
+Título: Visão estática do banco
+
+Cada transação tira um “instantâneo” do banco quando começa.
+
+Só enxerga:
+
+Linhas criadas por transações anteriores e confirmadas.
+
+Linhas não deletadas até o início da transação.
+
+Slide 6: Leitura sem bloqueio
+Título: MVCC evita travamentos
+
+Leitura ocorre sem bloquear escrita:
+
+sql
+Copy
+Edit
+SELECT * FROM contas WHERE id = 1;
+Mesmo que outra transação esteja atualizando a mesma linha, a leitura continua normalmente — ela acessa a versão antiga.
+
+Slide 7: De onde vem o custo?
+Título: Limpeza de versões antigas
+
+Como cada alteração cria uma nova versão, o banco acumula "lixo".
+
+PostgreSQL usa o processo de VACUUM para limpar versões antigas que não são mais visíveis para nenhuma transação.
+
+Slide 8: VACUUM e Autovacuum
+Título: Limpeza automática
+
+VACUUM: limpa manualmente as versões antigas.
+
+AUTOVACUUM: serviço interno do PostgreSQL que executa o VACUUM automaticamente.
+
+Sem VACUUM, o banco cresce indefinidamente.
+
+Slide 9: Vantagens e limitações do MVCC
+Título: Pontos fortes e desafios
+
+Vantagens:
+
+Excelente desempenho para leitura.
+
+Transações simultâneas sem bloqueio.
+
+Limitações:
+
+Pode gerar consumo alto de disco.
+
+Requer manutenção com VACUUM.
+
+Complexidade na gestão de versões.
+
+Slide 10: Conclusão
+Título: Por que MVCC é importante?
+
+MVCC permite alta concorrência com consistência.
+
+No PostgreSQL, ele é a base do comportamento de transações e leitura.
+
+Entender MVCC ajuda a prever comportamento de queries, travamentos e performance.
 
