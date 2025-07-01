@@ -1,19 +1,6 @@
+1. Conceito de Cloud Computing
+O que é computação em nuvem
 
-📌 1. O que significa "na nuvem"?
-Armazenar e gerenciar seu banco de dados em infraestrutura gerenciada por provedores de nuvem como:
+Vantagens e desvantagens em relação a servidores locais
 
-Amazon Web Services (AWS)
-
-Google Cloud Platform (GCP)
-
-Microsoft Azure
-
-Heroku (focado em simplicidade)
-
-| Vantagem                         | O que significa na prática                               |
-| -------------------------------- | -------------------------------------------------------- |
-| Alta disponibilidade             | Réplicas e failover automático                           |
-| Backup e recuperação automáticos | Backups diários, restauração rápida                      |
-| Escalabilidade                   | Aumenta recursos (CPU, RAM, disco) sob demanda           |
-| Segurança                        | Conexão SSL, VPCs, criptografia em repouso e em trânsito |
-| Menor manutenção                 | Provedor cuida de atualizações, patches, monitoração     |
+Tipos de serviço: IaaS, PaaS, SaaS (enfatizando PaaS para bancos)
