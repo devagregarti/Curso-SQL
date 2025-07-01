@@ -1,18 +1,88 @@
-| Comando                 | O que faz                                       |
-| ----------------------- | ----------------------------------------------- |
-| `SELECT ... FOR UPDATE` | Bloqueia linhas para edição por outra transação |
-| `SELECT ... FOR SHARE`  | Permite leitura, mas bloqueia escrita           |
-| `LOCK TABLE tabela`     | Bloqueia a tabela inteira                       |
-| `NOWAIT`                | Erro se a linha/tabela já estiver bloqueada     |
-| `SKIP LOCKED`           | Ignora registros já travados                    |
+ Tópico: Comandos úteis para lidar com concorrência em SQL
+✅ O que é concorrência?
+Concorrência acontece quando dois ou mais usuários tentam acessar ou modificar os mesmos dados ao mesmo tempo. Para evitar problemas, os SGBDs usam controle de concorrência.
 
+🧱 Conceitos-chave
+1. Transações (BEGIN, COMMIT, ROLLBACK)
+Uma transação agrupa várias operações SQL que devem ser executadas como uma unidade. Ou seja, ou tudo dá certo (COMMIT), ou nada é salvo (ROLLBACK).
 
-🧪 Exemplo:
 sql
 Copy
 Edit
--- Pega o primeiro pedido não processado, evitando bloqueios:
-SELECT * FROM pedidos
-WHERE status = 'pendente'
-FOR UPDATE SKIP LOCKED
-LIMIT 1;
+BEGIN;
+
+UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+
+COMMIT;
+Se houver um erro no meio, usamos:
+
+sql
+Copy
+Edit
+ROLLBACK;
+2. Níveis de Isolamento
+Controlam como as transações veem as mudanças feitas por outras transações. Os níveis são:
+
+READ UNCOMMITTED (não seguro – pode ler dados sujos)
+
+READ COMMITTED (padrão no PostgreSQL – lê apenas dados confirmados)
+
+REPEATABLE READ (a leitura dentro da transação sempre verá os mesmos dados)
+
+SERIALIZABLE (máxima segurança – executa como se fosse uma por vez)
+
+Exemplo:
+
+sql
+Copy
+Edit
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+BEGIN;
+-- suas consultas aqui
+COMMIT;
+3. Bloqueios (LOCK)
+Se quiser garantir que ninguém mais modifique uma linha ou tabela enquanto você trabalha nela:
+
+sql
+Copy
+Edit
+LOCK TABLE clientes IN EXCLUSIVE MODE;
+Ou:
+
+sql
+Copy
+Edit
+SELECT * FROM clientes WHERE id = 5 FOR UPDATE;
+Esse último bloqueia a linha até a transação ser finalizada.
+
+4. Deadlocks
+Ocorrem quando duas transações esperam uma pela outra para continuar. Exemplo:
+
+Transação A bloqueia a linha 1 e quer acessar a linha 2
+
+Transação B bloqueia a linha 2 e quer acessar a linha 1
+→ Nenhuma consegue continuar. O banco detecta isso e cancela uma delas.
+
+💡 Dica para evitar: sempre acesse os dados na mesma ordem em todas as transações.
+
+5. NOWAIT e SKIP LOCKED
+Permitem que a transação não fique esperando se os dados estiverem bloqueados.
+
+sql
+Copy
+Edit
+-- Dá erro se a linha já estiver bloqueada
+SELECT * FROM pedidos WHERE status = 'PENDENTE' FOR UPDATE NOWAIT;
+
+-- Ignora as linhas bloqueadas
+SELECT * FROM pedidos WHERE status = 'PENDENTE' FOR UPDATE SKIP LOCKED;
+Útil para sistemas de fila/processamento paralelo.
+
+📌 Resumo para o slide
+Comando / Conceito	O que faz
+BEGIN / COMMIT / ROLLBACK	Inicia, confirma ou desfaz uma transação
+SET TRANSACTION ISOLATION LEVEL	Define o nível de isolamento
+LOCK TABLE / FOR UPDATE	Bloqueia tabela ou linha para evitar conflitos
+NOWAIT / SKIP LOCKED	Controla o comportamento ao tentar acessar dados bloqueados
+Deadlock	Quando duas transações se travam mutuamente (evitar com boas práticas)

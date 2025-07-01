@@ -1,6 +1,85 @@
-📉 7. Visualizar locks em andamento
+ Visualização de Locks no PostgreSQL
+🧠 Por que visualizar locks?
+Imagine que você está em uma lanchonete com um único caixa. Cada cliente (transação) precisa de acesso exclusivo ao caixa (dados). Se dois clientes tentarem pagar ao mesmo tempo, um precisa esperar. Se ninguém sabe quem está no caixa, todos ficam perdidos. O mesmo acontece com o banco de dados. Ver os locks ajuda a entender quem está usando o quê e por quê.
+
+📊 Tabela para ver locks: pg_locks
+Essa tabela mostra todos os locks ativos no momento no banco de dados.
+
 sql
 Copy
 Edit
-SELECT * FROM pg_locks pl
-JOIN pg_stat_activity sa ON pl.pid = sa.pid;
+SELECT * FROM pg_locks;
+Só que ela traz muita informação crua. Vamos filtrá-la e deixá-la mais útil:
+
+🔎 Visualizando locks com mais detalhes
+sql
+Copy
+Edit
+SELECT
+    pg_stat_activity.pid,
+    pg_stat_activity.query,
+    pg_locks.locktype,
+    pg_locks.mode,
+    pg_locks.granted,
+    pg_class.relname AS tabela
+FROM pg_locks
+JOIN pg_stat_activity ON pg_locks.pid = pg_stat_activity.pid
+LEFT JOIN pg_class ON pg_locks.relation = pg_class.oid
+WHERE pg_stat_activity.datname = current_database();
+🧾 O que essas colunas mostram?
+Coluna	Significado
+pid	ID do processo (transação)
+query	Consulta que está sendo executada
+locktype	Tipo de lock (linha, tabela etc.)
+mode	Tipo de bloqueio (ex: RowExclusiveLock, AccessShareLock...)
+granted	Se o lock já foi concedido (true) ou está esperando (false)
+relname	Nome da tabela bloqueada
+
+🔁 Exemplo da vida real
+Imagine um sistema de pedidos de pizzaria.
+O funcionário 1 começa a atualizar o pedido do cliente A:
+
+sql
+Copy
+Edit
+BEGIN;
+UPDATE pedidos SET status = 'Em produção' WHERE id = 101;
+-- pausa aqui sem COMMIT
+Enquanto isso, o funcionário 2 tenta:
+
+sql
+Copy
+Edit
+UPDATE pedidos SET status = 'Entregue' WHERE id = 101;
+Essa segunda consulta vai ficar esperando, porque a linha já está bloqueada.
+Se você rodar a consulta da pg_locks, verá que há um processo com lock concedido e outro esperando.
+
+🔧 Dica prática: ver apenas os locks em espera
+sql
+Copy
+Edit
+SELECT 
+    a.pid,
+    a.query,
+    l.mode,
+    l.locktype,
+    c.relname
+FROM pg_locks l
+JOIN pg_stat_activity a ON l.pid = a.pid
+LEFT JOIN pg_class c ON l.relation = c.oid
+WHERE NOT l.granted;
+💣 Quer matar uma transação que está travando o banco?
+Você pode encerrar uma transação travada (com cuidado!):
+
+sql
+Copy
+Edit
+SELECT pg_terminate_backend(PID);
+Substitua PID pelo número do processo travado que você viu na consulta anterior.
+
+📌 Slide resumo sugerido
+Comando / Consulta	Utilidade
+SELECT * FROM pg_locks	Mostra todos os locks
+Consulta com pg_locks + pg_stat_activity	Mostra quem está bloqueando o quê
+WHERE NOT granted	Vê quem está esperando por lock
+pg_terminate_backend(pid)	Encerra a transação que está travando

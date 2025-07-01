@@ -1,8 +1,67 @@
-| Conceito                 | O que faz                                      |
-| ------------------------ | ---------------------------------------------- |
-| MVCC                     | Evita bloqueios entre leitores e escritores    |
-| Nível de Isolamento      | Define visibilidade dos dados entre transações |
-| Locks                    | Controla acesso a linhas/tabelas               |
-| Deadlock                 | Ocorre quando duas transações se bloqueiam     |
-| FOR UPDATE / SKIP LOCKED | Técnicas para concorrência em processamento    |
-| pg\_locks / pg\_stat     | Monitoramento de transações                    |
+✅ RESUMO – Controle de Concorrência no PostgreSQL
+🔒 1. Transações
+Utilizamos BEGIN, COMMIT e ROLLBACK para garantir que um conjunto de operações seja tratado como uma única unidade.
+
+Evitam que o banco fique em estado inconsistente em caso de falhas.
+
+🔄 2. Níveis de Isolamento
+Controlam o que cada transação pode "ver" das outras:
+
+Nível	Comportamento
+READ UNCOMMITTED	Lê dados ainda não confirmados (raro/evite)
+READ COMMITTED	Vê apenas dados já confirmados (padrão no PG)
+REPEATABLE READ	Garante que os dados lidos não mudam
+SERIALIZABLE	Garante total isolamento, simula execuções em série
+
+🔐 3. Locks (Bloqueios)
+O PostgreSQL usa locks para evitar que dois usuários alterem o mesmo dado ao mesmo tempo.
+
+Tipos comuns:
+
+RowExclusiveLock – usado em atualizações de linhas
+
+AccessShareLock – usado em leituras
+
+Comandos úteis:
+
+LOCK TABLE
+
+SELECT ... FOR UPDATE
+
+🔁 4. Deadlocks
+Ocorrem quando duas transações se bloqueiam mutuamente.
+
+O PostgreSQL detecta e aborta automaticamente uma delas.
+
+Evite acessando os dados sempre na mesma ordem.
+
+👀 5. Visualização de Locks
+Ferramentas internas para diagnóstico:
+
+Comando	Utilidade
+pg_stat_activity	Mostra transações ativas e seu estado
+pg_locks	Mostra locks ativos
+Consulta "quem bloqueia quem"	Mostra quem está travando quem
+pg_terminate_backend(pid)	Encerra processo travado (com cautela)
+
+🧪 6. Diagnóstico de Problemas de Concorrência
+Identifique transações longas, locks não concedidos e deadlocks.
+
+Ferramentas:
+
+Logs do PostgreSQL (log_lock_waits, deadlock_timeout)
+
+Consultas de monitoramento com pg_locks, pg_stat_activity, pg_class
+
+🎯 CONCLUSÃO
+O controle de concorrência no PostgreSQL é um dos pilares para manter consistência, performance e integridade dos dados, especialmente em sistemas com muitos acessos simultâneos.
+
+Saber utilizar transações, níveis de isolamento, e entender o que está acontecendo com os locks permite:
+
+✅ Evitar travamentos
+✅ Diagnosticar lentidão de forma precisa
+✅ Construir aplicações robustas e confiáveis
+✅ Trabalhar com bancos de produção de forma segura
+
+💬 Frase de encerramento para a aula
+“Concorrência é como uma coreografia invisível entre usuários. Quando bem coordenada, tudo flui. Quando mal feita, é um pisão no pé atrás do outro. Saber como o PostgreSQL gerencia essa dança é o que diferencia um operador casual de um profissional de banco de dados.”

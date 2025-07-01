@@ -1,16 +1,140 @@
-🔍 8. Diagnóstico de problemas de concorrência
-Query lenta? Veja se está esperando por lock.
+🧪 Diagnóstico de Problemas com Concorrência em SQL (PostgreSQL)
+🧠 Por que diagnosticar problemas de concorrência?
+Concorrência mal gerenciada pode causar:
 
-Use pg_stat_activity para identificar sessões bloqueadas:
+Transações travadas (usuários esperando indefinidamente)
+
+Deadlocks (duas transações presas uma esperando a outra)
+
+Tempo de resposta alto
+
+Perda de performance
+
+Saber identificar e resolver esses problemas é essencial para qualquer DBA, dev backend ou engenheiro de dados.
+
+🔍 Sintomas comuns
+Sintoma	Possível causa
+Consultas que "nunca terminam"	Locks não liberados (transação aberta demais)
+Transações canceladas	Deadlocks
+Escritas lentas	Muitos locks simultâneos
+Leitura "inconsistente"	Baixo nível de isolamento
+
+🧰 Ferramentas e Comandos para Diagnóstico
+1. pg_stat_activity – vê o que está rodando
+sql
+Copy
+Edit
+SELECT pid, state, query, wait_event_type, wait_event, backend_start
+FROM pg_stat_activity
+WHERE state != 'idle';
+Coluna	O que mostra
+state	running, idle, waiting
+wait_event	lock, IO, etc.
+query	A query que está sendo executada
+backend_start	Quando começou (bom para pegar transações longas)
+
+2. pg_locks – vê os bloqueios
+Use com pg_stat_activity:
 
 sql
 Copy
 Edit
-SELECT pid, wait_event_type, wait_event, query
-FROM pg_stat_activity
-WHERE state != 'idle';
+SELECT
+    a.pid,
+    a.query,
+    l.locktype,
+    l.mode,
+    l.granted,
+    c.relname AS tabela
+FROM pg_locks l
+JOIN pg_stat_activity a ON l.pid = a.pid
+LEFT JOIN pg_class c ON l.relation = c.oid
+WHERE a.state != 'idle';
+granted = false: está esperando o lock (provavelmente travado)
 
-🧠 9. Estratégias para lidar com concorrência
-Otimismo: assume que conflitos são raros (ex: UPDATE ... WHERE versão = x)
+3. Ver quem está bloqueando quem
+sql
+Copy
+Edit
+SELECT 
+    blocked_locks.pid     AS blocked_pid,
+    blocking_locks.pid    AS blocking_pid,
+    blocked_activity.query AS blocked_query,
+    blocking_activity.query AS blocking_query
+FROM pg_locks blocked_locks
+JOIN pg_locks blocking_locks 
+    ON blocked_locks.locktype = blocking_locks.locktype
+    AND blocked_locks.database IS NOT DISTINCT FROM blocking_locks.database
+    AND blocked_locks.relation IS NOT DISTINCT FROM blocking_locks.relation
+    AND blocked_locks.page IS NOT DISTINCT FROM blocking_locks.page
+    AND blocked_locks.tuple IS NOT DISTINCT FROM blocking_locks.tuple
+    AND blocked_locks.pid != blocking_locks.pid
+    AND NOT blocked_locks.granted AND blocking_locks.granted
+JOIN pg_stat_activity blocked_activity ON blocked_activity.pid = blocked_locks.pid
+JOIN pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid;
+Essa consulta mostra:
 
-Pessimismo: bloqueia o recurso até a transação acabar (ex: FOR UPDATE)
+Quem está bloqueado
+
+Quem está causando o bloqueio
+
+O que cada um está tentando executar
+
+4. Deadlocks
+Um deadlock é automaticamente detectado e abortado pelo PostgreSQL.
+
+Mas para identificar a frequência e detalhes:
+
+bash
+Copy
+Edit
+# No terminal do servidor:
+cat /var/log/postgresql/postgresql-*.log | grep deadlock
+Ou ative log_lock_waits = on e deadlock_timeout no postgresql.conf para logar automaticamente.
+
+🔁 Exemplo de diagnóstico na prática
+Cenário:
+Dois caixas de supermercado (usuários) acessando o mesmo estoque.
+
+sql
+Copy
+Edit
+-- Transação A
+BEGIN;
+UPDATE produtos SET estoque = estoque - 1 WHERE id = 1;
+
+-- Transação B (ao mesmo tempo)
+BEGIN;
+UPDATE produtos SET estoque = estoque + 5 WHERE id = 1;
+Se Transação A não finalizar (COMMIT ou ROLLBACK), a B ficará travada.
+
+Use os comandos acima para descobrir:
+
+Quem está bloqueando
+
+Quem está travado
+
+O que eles estão fazendo
+
+🛠️ Estratégias para resolver e evitar problemas
+Estratégia	O que faz
+Feche transações rapidamente	Nunca deixe um BEGIN sem COMMIT ou ROLLBACK
+Use SELECT ... FOR UPDATE SKIP LOCKED	Ignora registros já bloqueados, ideal para filas
+Defina deadlock_timeout	O PostgreSQL aborta deadlocks após um tempo
+Acesse dados na mesma ordem	Ajuda a evitar deadlocks
+Use índices corretamente	Ajuda a evitar locks desnecessários
+Monitore com scripts ou ferramentas	Pode usar ferramentas como pgAdmin, pg_stat_monitor
+
+📌 Slide Resumo
+Diagnóstico de Concorrência no PostgreSQL
+
+Ferramenta / Comando	Para quê serve
+pg_stat_activity	Ver transações ativas e se estão esperando
+pg_locks	Ver bloqueios ativos
+Consulta “quem bloqueia quem”	Descobrir quem está travando quem
+pg_terminate_backend(pid)	Encerrar processo que está travando tudo
+Logs de deadlock	Ver se o banco está enfrentando deadlocks
+
+🧠 Dica para analogia na aula
+"Imagine um estacionamento com uma entrada e saída únicas. Se dois carros entrarem ao mesmo tempo e cada um tentar dar a ré para sair pela mesma vaga, eles ficam presos — um esperando o outro. No banco, isso é um deadlock. Se você não tem um guardinha (diagnóstico), ninguém sai do lugar."
+
