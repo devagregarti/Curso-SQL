@@ -1,80 +1,104 @@
-🧱 1. Índice B-tree (padrão)
-Usado para: igualdade, <, >, BETWEEN, ORDER BY, JOIN, etc.
+✅ 1. Criação da Tabela produtos
+Essa tabela terá colunas que se encaixam bem com cada tipo de índice:
 
 sql
 Copy
 Edit
-CREATE INDEX idx_nome_cliente ON clientes (nome);
-🔍 2. Índice Hash
-Usado somente para buscas de igualdade = (não ordena, não serve para <, > etc.)
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome TEXT,
+    preco NUMERIC,
+    tags TEXT[],              -- para GIN
+    localizacao POINT         -- para GiST
+);
+✅ 2. Inserção de Dados
+Vamos inserir 1.000 linhas com dados simulados. No seu ambiente real, gere esses dados com uma linguagem como Python ou use a extensão generate_series.
+
+Aqui vai uma versão compacta:
 
 sql
 Copy
 Edit
-CREATE INDEX idx_email_hash ON usuarios USING HASH (email);
-📚 3. Índice GIN (Generalized Inverted Index)
-Usado para: JSONB, ARRAY, tsvector, full-text search, etc.
+INSERT INTO produtos (nome, preco, tags, localizacao)
+SELECT
+    'Produto ' || g,
+    round(random() * 100, 2),
+    ARRAY[
+        (ARRAY['eletronico', 'livro', 'roupa', 'brinquedo'])[floor(random() * 4 + 1)::int],
+        (ARRAY['novo', 'usado'])[floor(random() * 2 + 1)::int]
+    ],
+    point(random() * 180 - 90, random() * 180 - 90)
+FROM generate_series(1, 1000) AS g;
+
+✅ 3. Consultas SEM índice para medir desempenho base
+Use EXPLAIN ANALYZE para ver o tempo de execução:
+
+B-tree (ordenado, exato):
+sql
+Copy
+Edit
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE preco = 50.00;
+Hash (igualdade pura):
+sql
+Copy
+Edit
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE nome = 'Produto 500';
+GIN (array com operador @>):
+sql
+Copy
+Edit
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE tags @> ARRAY['eletronico'];
+GiST (busca espacial por proximidade):
+sql
+Copy
+Edit
+EXPLAIN ANALYZE
+SELECT * FROM produtos
+WHERE localizacao <@ circle( point(0, 0), 50 );
+
+✅ 4. Criação dos Índices
+sql
+Copy
+Edit
+-- Índice B-tree padrão em preco
+CREATE INDEX idx_btree_preco ON produtos(preco);
+
+-- Índice Hash em nome (exige ativar suporte no PostgreSQL)
+CREATE INDEX idx_hash_nome ON produtos USING HASH(nome);
+
+-- Índice GIN para array de tags
+CREATE INDEX idx_gin_tags ON produtos USING GIN(tags);
+
+-- Índice GiST para localização com tipo POINT
+CREATE INDEX idx_gist_localizacao ON produtos USING GiST(localizacao);
+✅ 5. Consultas COM índice e comparação de desempenho
+Repita as consultas do passo 3. Agora com os índices, o plano de execução (EXPLAIN ANALYZE) deve mostrar que os índices estão sendo utilizados.
+
+Por exemplo:
 
 sql
 Copy
 Edit
--- Para JSONB
-CREATE INDEX idx_jsonb_gin ON produtos USING GIN (atributos_jsonb);
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE preco = 50.00;
 
--- Para full-text search
-CREATE INDEX idx_tsv_gin ON artigos USING GIN (to_tsvector('portuguese', conteudo));
-🌳 4. Índice GiST (Generalized Search Tree)
-Usado para: buscas espaciais, aproximação, trigramas, etc.
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE nome = 'Produto 500';
 
-sql
-Copy
-Edit
--- Para extensão PostGIS (geometria)
-CREATE INDEX idx_mapa_gist ON mapas USING GIST (localizacao);
+EXPLAIN ANALYZE
+SELECT * FROM produtos WHERE tags @> ARRAY['eletronico'];
 
--- Para trigramas (com extensão pg_trgm instalada)
-CREATE INDEX idx_nome_trgm ON clientes USING GIST (nome gist_trgm_ops);
-🧮 5. Índice BRIN (Block Range INdex)
-Leve e eficiente para colunas ordenadas naturalmente (como id, data, etc.)
+EXPLAIN ANALYZE
+SELECT * FROM produtos
+WHERE localizacao <@ circle( point(0, 0), 50 );
+Você verá diferenças como:
 
-sql
-Copy
-Edit
-CREATE INDEX idx_data_brin ON vendas USING BRIN (data_compra);
-🔍 6. Índice parcial
-Cria índice só para parte da tabela (útil quando só consulta uma parte dos dados)
+Tipo de plano: Index Scan ao invés de Seq Scan
 
-sql
-Copy
-Edit
-CREATE INDEX idx_ativos ON usuarios (email) WHERE ativo = true;
-📏 7. Índice multicoluna
-Usado quando a consulta filtra ou ordena por duas ou mais colunas combinadas
+Tempo menor de execução
 
-sql
-Copy
-Edit
-CREATE INDEX idx_cliente_data ON pedidos (cliente_id, data_pedido);
-🧠 8. Índice único (UNIQUE)
-Garante unicidade e também acelera buscas
+Uso explícito do índice criado (ver no plano)
 
-sql
-Copy
-Edit
-CREATE UNIQUE INDEX idx_unico_email ON usuarios (email);
-🧼 9. Remover um índice
-sql
-Copy
-Edit
-DROP INDEX idx_nome_cliente;
-📋 Extras
-Ver todos os índices de uma tabela:
-sql
-Copy
-Edit
-\d clientes
-Ver detalhes com consulta:
-sql
-Copy
-Edit
-SELECT * FROM pg_indexes WHERE tablename = 'clientes';
